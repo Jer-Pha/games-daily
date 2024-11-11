@@ -168,6 +168,8 @@ def build_article_data(articles, limit):
     """This function passes all articles to Gemini and builds a dictionary"""
     data = []
 
+    print(f"Total articles for Gemini: {len(articles)}")
+
     # Send URLs to Gemini
     for i in range(ceil(len(articles) / limit)):
         _articles = articles[i * limit : (i + 1) * limit]
