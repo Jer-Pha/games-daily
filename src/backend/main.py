@@ -21,11 +21,12 @@ if __name__ == "__main__":
             ARTICLE_LIMIT,
             site=test_site,
         )
-        print(dumps(new_articles, indent=4, ensure_ascii=False))
+        # print(dumps(new_articles, indent=4, ensure_ascii=False))
         article_data = (
             build_article_data(new_articles, PROMPT_LIMIT) + existing_articles
         )
-        print(dumps(article_data, indent=4, ensure_ascii=False))
+        # print(dumps(article_data, indent=4, ensure_ascii=False))
+        print(len(article_data))
         topic_data = gd_utils.build_topic_data(article_data)
         core_data = gd_utils.organize_news_data(
             article_data,
@@ -34,8 +35,10 @@ if __name__ == "__main__":
         )
         print(dumps(core_data, indent=4, ensure_ascii=False))
     else:
-        articles = scrape_headlines(ARTICLE_LIMIT)
-        article_data = build_article_data(articles, PROMPT_LIMIT)
+        existing_articles, new_articles = scrape_headlines(ARTICLE_LIMIT)
+        article_data = (
+            build_article_data(new_articles, PROMPT_LIMIT) + existing_articles
+        )
         topic_data = gd_utils.build_topic_data(article_data)
         core_data = gd_utils.organize_news_data(
             article_data,
