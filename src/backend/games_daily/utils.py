@@ -37,7 +37,9 @@ def build_topic_data(article_data):
         topic = article["topic"]
 
         # Remove surrounding quotes that Gemini sometimes adds
-        if topic.startswith(("'", '"')) and topic.endswith(("'", '"')):
+        if (topic[0] == "'" and topic[-1] == "'") or (
+            topic[0] == '"' and topic[-1] == '"'
+        ):
             topic = topic[1:-1]
 
         if topic not in topics_seen:
@@ -114,6 +116,7 @@ def organize_news_data(articles, topics, limit):
         if article["weight"] == limit:
             data["trending"].append(article)
             seen_ids.add(article["id"])
+    data["trending"].sort(key=lambda x: x["id"])
 
     # Create sections
     for topic in topics:
