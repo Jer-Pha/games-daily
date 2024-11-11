@@ -2,6 +2,7 @@
 
 src/backend/games_daily/utils/config.json
 .env
+*.pyc
 
 # dependencies
 /node_modules
