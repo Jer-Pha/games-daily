@@ -97,18 +97,13 @@ export default function ArticleList({
       const containerRect = container.getBoundingClientRect();
       const articleRect = articleRef.getBoundingClientRect();
 
-      const isFullyVisible =
-        articleRect.left >= containerRect.left &&
-        articleRect.right <= containerRect.right &&
-        Math.abs(articleRect.left - containerRect.left) < ARTICLE_TOLERANCE;
-
-      if (!isFullyVisible && articleRect.left < containerRect.left) {
+      if (articleRect.left < containerRect.left) {
         // Article is partially hidden on the left
         container.scrollBy({
           left: articleRect.left - containerRect.left,
           behavior: "smooth",
         });
-      } else if (!isFullyVisible && articleRect.right > containerRect.right) {
+      } else if (articleRect.right > containerRect.right + ARTICLE_TOLERANCE) {
         // Article is partially hidden on the right
         container.scrollBy({
           left: articleRect.right - containerRect.right,
