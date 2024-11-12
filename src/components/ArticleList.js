@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Article from "./Article";
 import ArticleDetails from "./ArticleDetails";
-import { ARTICLE_TOLERANCE } from "./Constants";
 
 export default function ArticleList({
   articles,
@@ -9,7 +8,6 @@ export default function ArticleList({
   selectedArticle,
   onArticleClick,
   containerRef,
-  scrollArticleList,
 }) {
   const [expandCheck, setExpandCheck] = useState(false);
   const [showArticleDetails, setShowArticleDetails] = useState(false);
