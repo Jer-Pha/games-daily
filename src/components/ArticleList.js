@@ -9,6 +9,7 @@ export default function ArticleList({
   selectedArticle,
   onArticleClick,
   containerRef,
+  scrollArticleList,
 }) {
   const [expandCheck, setExpandCheck] = useState(false);
   const [showArticleDetails, setShowArticleDetails] = useState(false);
@@ -52,7 +53,7 @@ export default function ArticleList({
 
       const isVisible =
         articleRect.left >= containerRect.left &&
-        articleRect.right <= containerRect.right;
+        articleRect.right <= containerRect.right + ARTICLE_TOLERANCE;
 
       if (!isVisible) {
         handleClose(); // Close ArticleDetails if not visible
@@ -99,16 +100,10 @@ export default function ArticleList({
 
       if (articleRect.left < containerRect.left) {
         // Article is partially hidden on the left
-        container.scrollBy({
-          left: articleRect.left - containerRect.left,
-          behavior: "smooth",
-        });
+        scrollArticleList(-1);
       } else if (articleRect.right > containerRect.right + ARTICLE_TOLERANCE) {
         // Article is partially hidden on the right
-        container.scrollBy({
-          left: articleRect.right - containerRect.right,
-          behavior: "smooth",
-        });
+        scrollArticleList(1);
       }
     }
   };
