@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Article from "./Article";
 import ArticleDetails from "./ArticleDetails";
 
@@ -8,13 +8,25 @@ export default function ArticleList({
   selectedArticle,
   onArticleClick,
   containerRef,
+  scrollArticleList,
 }) {
   const [expandCheck, setExpandCheck] = useState(false);
   const [showArticleDetails, setShowArticleDetails] = useState(false);
+  const [drawerStatus, setDrawerStatus] = useState("open");
+  const articleRefs = useRef({});
+
+  const handleClose = useCallback(() => {
+    setDrawerStatus("close");
+    setTimeout(() => {
+      onArticleClick(null);
+      setShowArticleDetails(false);
+    }, 250);
+  }, [onArticleClick]);
 
   useEffect(() => {
     const container = containerRef.current;
 
+    // Check if the articles need to be expanded
     const updateExpandCheck = () => {
       if (!container) return;
 
@@ -25,6 +37,28 @@ export default function ArticleList({
       setExpandCheck(articleRowWidth <= containerWidth);
     };
 
+    // Check if the selected article is visible
+    const checkArticleVisibility = () => {
+      if (
+        !container ||
+        !selectedArticle ||
+        !articleRefs.current[selectedArticle.id]
+      )
+        return;
+
+      const containerRect = container.getBoundingClientRect();
+      const articleRect =
+        articleRefs.current[selectedArticle.id].getBoundingClientRect();
+
+      const isVisible =
+        articleRect.left >= containerRect.left &&
+        articleRect.right <= containerRect.right;
+
+      if (!isVisible) {
+        handleClose(); // Close ArticleDetails if not visible
+      }
+    };
+
     // Initial call
     updateExpandCheck();
 
@@ -32,37 +66,74 @@ export default function ArticleList({
     const resizeObserver = new ResizeObserver(updateExpandCheck);
     if (container) resizeObserver.observe(container);
 
+    // Check each time the container is scrolled
+    const isScrollendSupported = "onscrollend" in container;
+    if (isScrollendSupported) {
+      container?.addEventListener("scrollend", checkArticleVisibility);
+    } else {
+      container?.addEventListener("scroll", checkArticleVisibility);
+    }
+
     return () => {
       // Clean up event listeners
       resizeObserver.disconnect();
+      if (isScrollendSupported) {
+        container?.removeEventListener("scrollend", checkArticleVisibility);
+      } else {
+        container?.removeEventListener("scroll", checkArticleVisibility);
+      }
     };
-  }, [containerRef, articles]);
+  }, [containerRef, articles, selectedArticle, handleClose]);
 
   const handleArticleClick = (article) => {
     onArticleClick(article, sectionTopic);
     setShowArticleDetails(true);
-  };
+    setDrawerStatus("open");
 
-  const handleClose = () => {
-    onArticleClick(null);
-    setShowArticleDetails(false);
+    // Check if article is fully visible
+    const container = containerRef.current;
+    const articleRef = articleRefs.current[article.id];
+    if (container && articleRef) {
+      const containerRect = container.getBoundingClientRect();
+      const articleRect = articleRef.getBoundingClientRect();
+
+      if (articleRect.left < containerRect.left) {
+        // Article is partially hidden on the left
+        scrollArticleList(-1);
+      } else if (articleRect.right > containerRect.right) {
+        // Article is partially hidden on the right
+        scrollArticleList(1);
+      }
+    }
   };
 
   return (
     <React.Fragment>
-      <div ref={containerRef} className="overflow-hidden articles-container">
+      <div
+        ref={containerRef}
+        className="overflow-x-auto overflow-y-hidden scrollbar-hide articles-container snap-x snap-mandatory"
+      >
         <div
           className={
             expandCheck
-              ? "flex gap-2 article-row"
-              : "flex gap-2 w-max article-row"
+              ? "flex gap-1 w-max tablet:w-auto article-row"
+              : "flex gap-1 w-max article-row"
           }
         >
           {articles.map((article) => (
             <Article
               key={article.id}
               item={article}
-              addClasses={expandCheck ? "flex-1 flex-grow" : "w-[article-card]"}
+              innerRef={(el) => (articleRefs.current[article.id] = el)}
+              addClasses={`${
+                expandCheck
+                  ? "tablet:flex-1 tablet:flex-grow"
+                  : "tablet:w-[article-card]"
+              } ${
+                selectedArticle && selectedArticle.id === article.id
+                  ? "selected"
+                  : ""
+              }`}
               isSelected={selectedArticle && selectedArticle.id === article.id}
               onArticleClick={() => handleArticleClick(article)}
               handleClose={handleClose}
@@ -72,8 +143,12 @@ export default function ArticleList({
       </div>
       {showArticleDetails &&
         selectedArticle &&
-        selectedArticle.sectionTopic === sectionTopic && ( // Check sectionTopic
-          <ArticleDetails item={selectedArticle} onClose={handleClose} />
+        selectedArticle.sectionTopic === sectionTopic && (
+          <ArticleDetails
+            item={selectedArticle}
+            status={drawerStatus}
+            onClose={handleClose}
+          />
         )}
     </React.Fragment>
   );
