@@ -36,8 +36,7 @@ export default function ArticleHub({ searchQuery }) {
   }, []);
 
   const handleArticleClick = (article, sectionTopic) => {
-    // Add sectionTopic parameter
-    setSelectedArticle({ ...article, sectionTopic }); // Include sectionTopic in selectedArticle state
+    setSelectedArticle({ ...article, sectionTopic });
   };
 
   // Handle loading
