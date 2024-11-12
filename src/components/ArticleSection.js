@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import ArticleList from "./ArticleList";
 import { ArrowLeftIcon, ArrowRightIcon } from "./Icons";
-import { ARROW_OPACITY } from "./Constants";
+import { ARROW_OPACITY, ARTICLE_WIDTH } from "./Constants";
 
 export default function ArticleSection({
   title,
@@ -48,29 +48,34 @@ export default function ArticleSection({
   }, [articles]);
 
   // Scroll functions
-  const scrollLeft = useCallback(() => {
-    containerRef.current.scrollLeft -= 308;
-  }, []);
-
-  const scrollRight = useCallback(() => {
-    containerRef.current.scrollLeft += 308;
+  const scrollArticleList = useCallback((dir) => {
+    containerRef.current.scrollBy({
+      left: (ARTICLE_WIDTH + 4) * dir, // gap: 4px
+      behavior: "smooth",
+    });
   }, []);
 
   return (
-    <section className={`px-4 pb-4 relative ${backgroundColor}`}>
-      <h2 className="text-2xl font-semibold text-left py-2">{title}</h2>
+    <section
+      id={sectionTopic}
+      className={`tablet:px-4 pb-4 relative ${backgroundColor}`}
+    >
+      <h2 className="text-2xl font-semibold text-left py-2 pl-4 tablet:px-0">
+        {title}
+      </h2>
       <ArticleList
         articles={articles}
         sectionTopic={sectionTopic}
         selectedArticle={selectedArticle}
         onArticleClick={onArticleClick}
         containerRef={containerRef}
+        scrollArticleList={scrollArticleList}
       />
 
       {arrowBtnDisplayKey && arrowBtnDisplayKey?.showLeft && (
         <button
           className={`arrow-left ${ARROW_OPACITY}`}
-          onClick={() => scrollLeft(containerRef)}
+          onClick={() => scrollArticleList(-1)}
         >
           <ArrowLeftIcon />
         </button>
@@ -78,7 +83,7 @@ export default function ArticleSection({
       {arrowBtnDisplayKey && arrowBtnDisplayKey?.showRight && (
         <button
           className={`arrow-right ${ARROW_OPACITY}`}
-          onClick={() => scrollRight(containerRef)}
+          onClick={() => scrollArticleList(1)}
         >
           <ArrowRightIcon />
         </button>
