@@ -52,7 +52,7 @@ export default function ArticleSection({
   // Scroll functions
   const scrollArticleList = useCallback((dir) => {
     containerRef.current.scrollBy({
-      left: (ARTICLE_WIDTH + 4) * dir, // gap: 4px
+      left: ARTICLE_WIDTH * dir,
       behavior: "smooth",
     });
   }, []);
