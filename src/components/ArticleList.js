@@ -115,11 +115,9 @@ export default function ArticleList({
         className="overflow-x-auto overflow-y-hidden scrollbar-hide articles-container snap-x snap-mandatory"
       >
         <div
-          className={
-            expandCheck
-              ? "flex gap-1 w-max tablet:w-auto article-row"
-              : "flex gap-1 w-max article-row"
-          }
+          className={`flex gap-0 tablet:gap-1 w-max article-row ${
+            expandCheck ? "tablet:w-auto" : ""
+          }`}
         >
           {articles.map((article) => (
             <Article
