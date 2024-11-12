@@ -98,17 +98,18 @@ export default function ArticleList({
       const containerRect = container.getBoundingClientRect();
       const articleRect = articleRef.getBoundingClientRect();
 
-      const isFullyVisible =
-        articleRect.left >= containerRect.left &&
-        articleRect.right <= containerRect.right &&
-        Math.abs(articleRect.left - containerRect.left) < ARTICLE_TOLERANCE;
-
-      if (!isFullyVisible && articleRect.left < containerRect.left) {
+      if (articleRect.left < containerRect.left) {
         // Article is partially hidden on the left
-        scrollArticleList(-1);
-      } else if (!isFullyVisible && articleRect.right > containerRect.right) {
+        container.scrollBy({
+          left: articleRect.left - containerRect.left,
+          behavior: "smooth",
+        });
+      } else if (articleRect.right > containerRect.right) {
         // Article is partially hidden on the right
-        scrollArticleList(1);
+        container.scrollBy({
+          left: articleRect.right - containerRect.right,
+          behavior: "smooth",
+        });
       }
     }
   };
