@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function ArticleDetails({ item, onClose }) {
+export default function ArticleDetails({ item, status, onClose }) {
   return (
-    <div className="p-4">
+    <div className={`animate-drawer-${status}`}>
       <p>Site: {item.site}</p>
       <p>URL: {item.url}</p>
       <h3 className="font-bold">{item.headline}</h3>
