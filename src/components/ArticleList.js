@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Article from "./Article";
 import ArticleDetails from "./ArticleDetails";
+import { ARTICLE_TOLERANCE } from "./Constants";
 
 export default function ArticleList({
   articles,
@@ -97,10 +98,15 @@ export default function ArticleList({
       const containerRect = container.getBoundingClientRect();
       const articleRect = articleRef.getBoundingClientRect();
 
-      if (articleRect.left < containerRect.left) {
+      const isFullyVisible =
+        articleRect.left >= containerRect.left &&
+        articleRect.right <= containerRect.right &&
+        Math.abs(articleRect.left - containerRect.left) < ARTICLE_TOLERANCE;
+
+      if (!isFullyVisible && articleRect.left < containerRect.left) {
         // Article is partially hidden on the left
         scrollArticleList(-1);
-      } else if (articleRect.right > containerRect.right) {
+      } else if (!isFullyVisible && articleRect.right > containerRect.right) {
         // Article is partially hidden on the right
         scrollArticleList(1);
       }

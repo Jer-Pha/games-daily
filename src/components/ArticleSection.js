@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import ArticleList from "./ArticleList";
 import { ArrowLeftIcon, ArrowRightIcon } from "./Icons";
-import { ARROW_OPACITY, ARTICLE_WIDTH } from "./Constants";
+import { ARROW_OPACITY, ARTICLE_TOLERANCE, ARTICLE_WIDTH } from "./Constants";
 
 export default function ArticleSection({
   title,
@@ -27,7 +27,9 @@ export default function ArticleSection({
 
       setArrowBtnDisplayKey({
         showLeft: container.scrollLeft > 0,
-        showRight: container.scrollLeft + containerWidth < articleRowWidth,
+        showRight:
+          container.scrollLeft + containerWidth <
+          articleRowWidth - ARTICLE_TOLERANCE,
       });
     };
 

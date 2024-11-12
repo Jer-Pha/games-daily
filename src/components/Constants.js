@@ -1,4 +1,5 @@
 export const ARTICLE_WIDTH = 300;
+export const ARTICLE_TOLERANCE = 10;
 export const IMAGE_HEIGHT = 158;
 export const SCROLL_ARROWS_BORDER = 2;
 export const ARROW_OPACITY =
