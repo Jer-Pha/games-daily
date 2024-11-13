@@ -38,6 +38,16 @@ code {
     monospace;
 }
 
+#article-details {
+  --drawer-height: 400px;
+}
+
+@screen tablet {
+  #article-details {
+    --drawer-height: 200px;
+  }
+}
+
 
 /***************************
 ******** Scrollbar *********

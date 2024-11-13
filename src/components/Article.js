@@ -19,18 +19,18 @@ export default function Article({
 
   return (
     <article
-      className={`${addClasses} w-screen min-w-[100vw] tablet:min-w-[article-card] cursor-pointer pb-1.5 overflow-hidden border-2 border-transparent snap-start snap-always`}
+      className={`${addClasses} w-screen min-w-[100vw] tablet:min-w-[article-card] cursor-pointer overflow-hidden border-t-2 border-x-2 border-transparent snap-start snap-always relative`}
       onClick={handleClick}
       ref={innerRef}
     >
       <img
         src={item.image}
         alt={item.headline}
-        className="w-full aspect-video object-cover tablet:max-h-[article-img] border-b-2 border-transparent"
+        className="w-full aspect-video object-cover tablet:max-h-[article-img]"
         loading="lazy"
       />
-      <div className="flex flex-col">
-        <h3 className="pt-1 px-1.5 text-sm font-semibold line-clamp-2 align-middle">
+      <div className="absolute bottom-0 left-0 w-full bg-black/55 p-2 border-t-2 border-transparent">
+        <h3 className="text-white text-xs font-semibold line-clamp-1">
           {item.headline}
         </h3>
       </div>

@@ -1,4 +1,6 @@
 // UI
+import { ReactComponent as ArrowDropDown } from "../img/svg/arrow-drop-down.svg";
+import { ReactComponent as ArrowDropUp } from "../img/svg/arrow-drop-up.svg";
 import { ReactComponent as ArrowLeft } from "../img/svg/arrow-left.svg";
 import { ReactComponent as ArrowRight } from "../img/svg/arrow-right.svg";
 
@@ -10,4 +12,12 @@ function ArrowRightIcon() {
   return <ArrowRight />;
 }
 
-export { ArrowLeftIcon, ArrowRightIcon };
+function ArrowDropDownIcon() {
+  return <ArrowDropDown />;
+}
+
+function ArrowDropUpIcon() {
+  return <ArrowDropUp />;
+}
+
+export { ArrowLeftIcon, ArrowRightIcon, ArrowDropDownIcon, ArrowDropUpIcon };

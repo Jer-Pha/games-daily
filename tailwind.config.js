@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// import { backIn } from "framer-motion";
 import * as constants from "./src/components/Constants";
 
 module.exports = {
@@ -33,33 +34,24 @@ module.exports = {
             height: "0",
             paddingTop: "0",
           },
-          "99%": {
-            height: "200px",
-          },
           "100%": {
             opacity: "1",
             transform: "none",
-            minHeight: "200px",
-            height: "auto",
-            paddingTop: "1rem",
+            height: "var(--drawer-height)",
           },
         },
         "close-drawer": {
           "0%": {
             opacity: "1",
             transform: "none",
-            height: "auto",
+            height: "var(--drawer-height)",
             paddingTop: "1rem",
-          },
-          "1%": {
-            height: "200px",
           },
           "100%": {
             opacity: "0",
             transform: "rotateX(-90deg)",
             transformOrigin: "top center",
             height: "0",
-            paddingTop: "0",
           },
         },
       },
@@ -114,20 +106,34 @@ module.exports = {
     function ({ addComponents }) {
       const activeArticle = {
         "article.selected": {
+          borderTop: "2px solid var(--text-color)",
+          borderRight: "2px solid var(--text-color)",
+          borderBottom: "0",
+          borderLeft: "2px solid var(--text-color)",
+        },
+        "article.selected div:has(h3)": {
+          borderTop: "2px solid var(--text-color)",
           backgroundColor: "var(--text-color)",
-          border: "2px solid var(--text-color)",
           color: "var(--bg-color)",
         },
-        "article.selected > img": {
-          borderBottom: "2px solid var(--text-color)",
+        "article.selected h3": {
+          color: "var(--bg-color)",
         },
         "@media (hover: hover)": {
           "article:hover:not(.selected)": {
             backgroundColor: "var(--accent-color)",
-            border: "2px solid var(--text-color)",
+            borderTop: "2px solid var(--text-color)",
+            borderRight: "2px solid var(--text-color)",
+            borderBottom: "0",
+            borderLeft: "2px solid var(--text-color)",
           },
-          "article:hover:not(.selected) > img": {
+          "article:hover:not(.selected) div:has(h3)": {
+            borderTop: "2px solid var(--text-color)",
             borderBottom: "2px solid var(--text-color)",
+            backgroundColor: "var(--bg-color)",
+          },
+          "article:hover:not(.selected) h3": {
+            color: "var(--text-color)",
           },
         },
       };
