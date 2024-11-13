@@ -76,16 +76,18 @@ export default function ArticleSection({
 
       {arrowBtnDisplayKey && arrowBtnDisplayKey?.showLeft && (
         <button
-          className={`arrow-left ${ARROW_OPACITY}`}
+          className={`arrow-left z-50 ${ARROW_OPACITY}`}
           onClick={() => scrollArticleList(-1)}
+          type="button"
         >
           <ArrowLeftIcon />
         </button>
       )}
       {arrowBtnDisplayKey && arrowBtnDisplayKey?.showRight && (
         <button
-          className={`arrow-right ${ARROW_OPACITY}`}
+          className={`arrow-right z-50 ${ARROW_OPACITY}`}
           onClick={() => scrollArticleList(1)}
+          type="button"
         >
           <ArrowRightIcon />
         </button>

@@ -19,7 +19,7 @@ export default function Article({
 
   return (
     <article
-      className={`${addClasses} w-screen min-w-[100vw] tablet:min-w-[article-card] cursor-pointer overflow-hidden border-t-2 border-x-2 border-transparent snap-start snap-always relative`}
+      className={`${addClasses} w-screen min-w-[100vw] tablet:min-w-[article-card] cursor-pointer overflow-hidden border-t-2 border-x-2 border-transparent snap-start snap-always relative z-10`}
       onClick={handleClick}
       ref={innerRef}
     >
