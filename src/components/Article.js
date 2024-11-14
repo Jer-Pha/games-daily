@@ -1,5 +1,5 @@
-// import { motion } from "framer-motion";
 import React from "react";
+import * as Icons from "./Icons";
 
 export default function Article({
   item,
@@ -9,6 +9,8 @@ export default function Article({
   handleClose,
   innerRef,
 }) {
+  const SvgIcon = Icons[item.site] || (() => <div></div>);
+
   const handleClick = () => {
     if (isSelected) {
       handleClose();
@@ -33,6 +35,9 @@ export default function Article({
         <h3 className="text-white text-xs font-semibold line-clamp-1">
           {item.headline}
         </h3>
+      </div>
+      <div className="absolute top-0 left-0 bg-black/55 p-2 text-white">
+        <SvgIcon key={item.site} className="h-5" />
       </div>
     </article>
   );
