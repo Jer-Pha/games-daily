@@ -37,7 +37,7 @@ export default function Article({
         </h3>
       </div>
       <div className="absolute top-0 left-0 bg-black/55 p-2 text-white">
-        <SvgIcon key={item.site} className="h-5" />
+        <SvgIcon key={item.site} className="h-7 tablet:h-5" />
       </div>
     </article>
   );
