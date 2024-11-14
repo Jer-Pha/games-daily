@@ -13,7 +13,9 @@ export default function ArticleHub({ searchQuery }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("https://www.kfdb.app/api/news/articles");
+        const response = await fetch(
+          "https://www.kfdb.app/api/news/articles-by-topic"
+        );
 
         if (!response.ok) {
           throw new Error("Network response error");

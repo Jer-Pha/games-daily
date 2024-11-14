@@ -22,6 +22,7 @@ def send_to_redis_cache(data, key):
             db=0,
             password=REDIS_PW,
         )
+        key = f"games-daily::{key}"
 
         # Store JSON data in Redis with specified key
         redis_client.set(

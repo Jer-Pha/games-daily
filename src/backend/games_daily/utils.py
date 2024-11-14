@@ -2,6 +2,8 @@ from collections import defaultdict
 from json import dumps
 from requests import get
 
+from .settings import SITES
+
 
 def format_duration(seconds):
     """Formats a duration in seconds into hours, minutes, and seconds."""
@@ -102,7 +104,7 @@ def build_topic_data(article_data):
     return data
 
 
-def organize_news_data(articles, topics, limit):
+def organize_by_topic(articles, topics, limit):
     """Organizes article and topic data into the desired JSON structure."""
     data = {
         "trending": [],
@@ -152,6 +154,21 @@ def organize_news_data(articles, topics, limit):
         ),
         reverse=True,
     )
+
+    return data
+
+
+def organize_by_site(articles):
+    data = defaultdict(list)
+    for article in articles:
+        data[SITES[article["site"]]].append(article)
+
+    # Sort each site list
+    for val in data.values():
+        val.sort(key=lambda article: article["weight"], reverse=True)
+
+    # Sort site order
+    data = dict(sorted(data.items(), key=lambda item: item[1][0]["id"]))
 
     return data
 
