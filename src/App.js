@@ -23,7 +23,7 @@ export default function App() {
       <main className="max-w-[1400px] mx-auto bg-[var(--bg-color)]">
         <ArticleHub searchQuery={""} />
         <button
-          className="fixed bottom-0 left-0 p-2 m-4 bg-[var(--accent-color)] desktop:bg-[var(--bg-color)] rounded-full aspect-square z-[999]"
+          className="fixed bottom-0 left-0 p-2 m-4 bg-[var(--accent-color)] desktop:bg-[var(--bg-color)] rounded-full aspect-square z-[999] h-10 w-10"
           onClick={toggleMode}
           type="button"
         >
