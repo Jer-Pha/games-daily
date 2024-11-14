@@ -48,7 +48,7 @@ export default function ArticleDetails({ item, status, onClose }) {
         <div className="w-full tablet:w-3/4 bg-[var(--surface-color)] p-4 rounded-lg">
           <div className="flex gap-2">
             <p className="text-left font-semibold">Summary</p>
-            <button type="button">
+            <button type="button" class="h-5 w-5">
               <QuestionMarkIcon onClick={handleQuestionMarkClick} />
             </button>
           </div>
@@ -67,7 +67,7 @@ export default function ArticleDetails({ item, status, onClose }) {
               </p>
               <button
                 onClick={handlePopupClose}
-                className="absolute right-1 top-1"
+                className="absolute right-1 top-1 h-6 w-6"
                 type="button"
               >
                 <CloseIcon />
@@ -78,12 +78,14 @@ export default function ArticleDetails({ item, status, onClose }) {
         </div>
       </div>
       <button
-        className={`h-4 absolute bottom-0 left-0 right-0 bg-[var(--text-color)] fill-[var(--bg-color)] flex justify-center items-center opacity-0`}
+        className={`h-4 absolute bottom-0 left-0 right-0 bg-[var(--text-color)] text-[var(--bg-color)] flex justify-center items-center opacity-0`}
         onClick={onClose}
         ref={buttonRef}
         type="button"
       >
-        <ArrowDropUpIcon />
+        <div className="w-5 h-5">
+          <ArrowDropUpIcon />
+        </div>
       </button>
     </div>
   );
