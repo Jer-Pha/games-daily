@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./App.css";
-import ArticleHub from "./components/ArticleHub";
+import ArticleView from "./components/ArticleViewContainer";
 import { ModeToggleIcon } from "./components/Icons";
 
 export default function App() {
@@ -20,8 +20,8 @@ export default function App() {
 
   return (
     <div className="App">
-      <main className="max-w-[1400px] mx-auto bg-[var(--bg-color)]">
-        <ArticleHub searchQuery={""} />
+      <main className="max-w-[1400px] mx-auto bg-[var(--bg-color)] min-h-screen">
+        <ArticleView />
         <button
           className="fixed bottom-0 left-0 p-2 m-4 bg-[var(--accent-color)] desktop:bg-[var(--bg-color)] rounded-full aspect-square z-[999] h-10 w-10"
           onClick={toggleMode}

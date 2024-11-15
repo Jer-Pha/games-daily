@@ -176,7 +176,7 @@ def organize_by_site(articles):
 def get_previous_scrape():
     """Returns a dictionary of articles from thelast scrape,
     transformed into the desired format."""
-    response = get("https://www.kfdb.app/api/news/articles").json()
+    response = get("https://www.kfdb.app/api/news/articles-by-topic").json()
 
     transformed_data = {
         article["url"]: {

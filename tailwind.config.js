@@ -154,5 +154,19 @@ module.exports = {
 
       addComponents(hideScrollbar);
     },
+    function ({ addComponents }) {
+      const innerShadows = {
+        ".shadow-inner-bottom-left": {
+          boxShadow:
+            "inset 0px -4px 3px -4px var(--text-color), inset 4px 0px 3px -4px var(--text-color)",
+        },
+        ".shadow-inner-bottom-right": {
+          boxShadow:
+            "inset 0px -4px 3px -4px var(--text-color), inset -4px 0px 3px -4px var(--text-color)",
+        },
+      };
+
+      addComponents(innerShadows);
+    },
   ],
 };
