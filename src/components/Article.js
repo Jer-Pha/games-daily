@@ -25,12 +25,18 @@ export default function Article({
       onClick={handleClick}
       ref={innerRef}
     >
-      <img
-        src={item.image}
-        alt={item.headline}
-        className="w-full aspect-video object-cover tablet:max-h-[article-img]"
-        loading="lazy"
-      />
+      <div className="">
+        <img
+          src={item.image}
+          alt={item.headline}
+          className="w-full aspect-video object-cover tablet:max-h-[article-img] z-10"
+          loading="lazy"
+        />
+        <div
+          className="absolute left-0 top-0 w-full h-full blur-[40px] -z-10 animate-pulse slow"
+          style={{ backgroundColor: item.color }}
+        ></div>
+      </div>
       <div className="absolute bottom-0 left-0 w-full bg-black/55 p-2 border-t-2 border-transparent">
         <h3 className="text-white text-xs font-semibold line-clamp-1">
           {item.headline}

@@ -5,7 +5,7 @@ from random import randint
 from requests import get, head
 from time import sleep
 
-from games_daily.utils import get_previous_scrape
+from games_daily.utils import get_image_dominant_color, get_previous_scrape
 
 
 def check_is_image_url(url):
@@ -162,6 +162,11 @@ def scrape_headlines(limit, site=None):
                         image = get_image_url(url, request_headers, site_data)
 
                         if url in prev_scrape:
+                            if image == prev_scrape[url]["image"]:
+                                image_color = prev_scrape[url]["color"]
+                            else:
+                                image_color = get_image_dominant_color(image)
+
                             existing_articles.append(
                                 {
                                     "id": curr_id,
@@ -169,12 +174,14 @@ def scrape_headlines(limit, site=None):
                                     "headline": headline,
                                     "url": url,
                                     "image": image,
+                                    "color": image_color,
                                     "weight": weight,
                                     "summary": prev_scrape[url]["summary"],
                                     "topic": prev_scrape[url]["topic"],
                                 }
                             )
                         else:
+                            image_color = get_image_dominant_color(image)
                             new_articles.append(
                                 {
                                     "id": curr_id,
@@ -182,6 +189,7 @@ def scrape_headlines(limit, site=None):
                                     "headline": headline,
                                     "url": url,
                                     "image": image,
+                                    "color": image_color,
                                     "weight": weight,
                                 }
                             )

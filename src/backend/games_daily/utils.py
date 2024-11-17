@@ -1,6 +1,10 @@
 from collections import defaultdict
+from io import BytesIO
 from json import dumps
+from numpy import array
+from PIL import Image
 from requests import get
+from scipy.cluster.vq import kmeans, vq
 
 from .settings import SITES
 
@@ -182,6 +186,8 @@ def get_previous_scrape():
         article["url"]: {
             "summary": article["summary"],
             "topic": article["topic"],
+            "image": article["image"],
+            "color": article["color"],
         }
         for article in response["trending"]
         + [
@@ -193,3 +199,43 @@ def get_previous_scrape():
     }
 
     return transformed_data
+
+
+def convert_image(url):
+
+    response = get(url, stream=True)
+    response.raise_for_status()  # Raise an exception for bad responses
+
+    return response.content
+
+
+def get_image_dominant_color(url):
+    """Gets the dominant color from an image URL using k-means clustering."""
+
+    # Wrap in a try/except block to guarantee a default value
+    try:
+        # Get image and convert it to an in-memory file
+        response = get(url, stream=True)
+        response.raise_for_status()  # Raise an exception for bad responses
+        image = BytesIO(response.content)
+
+        # Open the image using Pillow then resize for efficiency
+        image = Image.open(image).resize((150, 150))
+
+        # Convert the image to a NumPy array
+        image_array = array(image)
+
+        # Reshape the array to a list of RGB pixels
+        pixels = image_array.reshape((-1, 3))
+
+        # Perform k-means clustering with k=1 (for dominant color)
+        centroids, _ = kmeans(pixels.astype(float), 1)
+
+        # Get the closest pixel to the centroid (dominant color)
+        dominant_color, _ = vq(pixels, centroids)
+
+        # Get the dominant color from an RGB tuple
+        r, g, b = centroids[dominant_color[0]].astype(int)
+        return f"rgb({r},{g},{b})"
+    except:
+        return f"rgb(122,122,122)"

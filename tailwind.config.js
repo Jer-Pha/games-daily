@@ -168,5 +168,14 @@ module.exports = {
 
       addComponents(innerShadows);
     },
+    function ({ addComponents }) {
+      const slowPulse = {
+        ".animate-pulse.slow": {
+          animationDuration: "3.5s",
+        },
+      };
+
+      addComponents(slowPulse);
+    },
   ],
 };

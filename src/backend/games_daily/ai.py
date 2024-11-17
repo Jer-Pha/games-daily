@@ -28,12 +28,10 @@ def clean_article_data(data):
     # Temporarily swap out correct double quotes to look for unescaped
     # double quotes
     x = "@#@"
-    data = data.replace('"headline": "', f"{x}headline{x}: {x}")
-    data = data.replace('"url": "', f"{x}url{x}: {x}")
     data = data.replace('"summary": "', f"{x}summary{x}: {x}")
     data = data.replace('"topic": "', f"{x}topic{x}: {x}")
-    data = data.replace('"image": "', f"{x}image{x}: {x}")
     data = data.replace('"id": "', f"{x}id{x}: {x}")
+    data = data.replace('"url": "', f"{x}url{x}: {x}")
     data = sub(
         r'"( *\t*)(,? *\t*\n)',
         lambda m: x + m.group(2).rstrip() + "\n",
@@ -113,6 +111,7 @@ def add_data_to_gemini_response(data, articles):
         article["id"]: {
             "headline": article["headline"],
             "image": article["image"],
+            "color": article["color"],
             "site": article["site"],
             "url": article["url"],
             "weight": article["weight"],
@@ -120,7 +119,7 @@ def add_data_to_gemini_response(data, articles):
         for article in articles
     }
 
-    # Update response data with headline and weight
+    # Update response data with all article data
     for item in data:
         id = int(item["id"])  # Change back to integer
         if id in article_dict:
@@ -129,6 +128,7 @@ def add_data_to_gemini_response(data, articles):
                 item["url"] = article_dict[id]["url"]
                 item["headline"] = article_dict[id]["headline"]
                 item["image"] = article_dict[id]["image"]
+                item["color"] = article_dict[id]["color"]
                 item["site"] = article_dict[id]["site"]
                 item["weight"] = article_dict[id]["weight"]
             except KeyError as e:
