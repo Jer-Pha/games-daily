@@ -39,12 +39,12 @@ code {
 }
 
 #article-details {
-  --drawer-height: 380px;
+  --drawer-height: 320px;
 }
 
 @screen tablet {
   #article-details {
-    --drawer-height: 140px;
+    --drawer-height: 160px;
   }
 }
 
