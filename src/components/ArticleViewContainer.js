@@ -107,7 +107,7 @@ export default function ArticleViewContainer() {
         </button>
         <button
           ref={sitesButtonRef}
-          className={`w-1/2 px-4 py-1 text-center bg-[var(--surface-color)] uppercase text-md ${
+          className={`w-1/2 px-4 py-3 tablet:py-1 text-center bg-[var(--surface-color)] uppercase text-md ${
             selectedView === "topics"
               ? "shadow-inner-bottom-left"
               : "font-semibold"
@@ -130,7 +130,7 @@ export default function ArticleViewContainer() {
         ) : (
           <div className="article-view">
             <ArticlesByTopicView
-              sliceSize={sliceSize}
+              sliceSize={sliceSize - 2} // Exclude Trending/Other sections
               trendingNewsArticles={trendingNewsArticles}
               topicSections={topicSections}
               otherNewsArticles={otherNewsArticles}
