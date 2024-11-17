@@ -62,7 +62,7 @@ export default function ArticleSection({
       id={sectionTopic}
       className={`tablet:px-4 pb-4 relative ${backgroundColor}`}
     >
-      <h2 className="text-2xl font-semibold text-left py-2 pl-4 tablet:px-0">
+      <h2 className="text-xl tablet:text-2xl font-semibold text-left py-2 pl-4 tablet:px-0">
         {title}
       </h2>
       <ArticleList
