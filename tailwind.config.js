@@ -156,13 +156,16 @@ module.exports = {
     },
     function ({ addComponents }) {
       const innerShadows = {
-        ".shadow-inner-bottom-left": {
+        ".inner-bottom-left": {
           boxShadow:
             "inset 0px -4px 3px -4px var(--text-color), inset 4px 0px 3px -4px var(--text-color)",
         },
-        ".shadow-inner-bottom-right": {
+        ".inner-bottom-right": {
           boxShadow:
             "inset 0px -4px 3px -4px var(--text-color), inset -4px 0px 3px -4px var(--text-color)",
+        },
+        ".inner-bottom": {
+          boxShadow: "inset 0px -4px 3px -4px var(--text-color)",
         },
       };
 
