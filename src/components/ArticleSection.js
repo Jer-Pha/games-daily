@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useCallback, useState } from "react";
 import ArticleList from "./ArticleList";
 import { ArrowLeftIcon, ArrowRightIcon } from "./Icons";
 import { ARROW_OPACITY, ARTICLE_TOLERANCE, ARTICLE_WIDTH } from "./Constants";
+import { sanitizeId } from "../utils/utils";
 
 export default function ArticleSection({
   title,
@@ -59,7 +60,7 @@ export default function ArticleSection({
 
   return (
     <section
-      id={sectionTopic}
+      id={sanitizeId(sectionTopic)}
       className={`tablet:px-4 pb-4 relative ${backgroundColor}`}
     >
       <h2 className="text-xl tablet:text-2xl font-semibold text-left py-2 pl-4 tablet:px-0">
