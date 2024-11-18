@@ -25,7 +25,7 @@ export default function Article({
       onClick={handleClick}
       ref={innerRef}
     >
-      <div className="">
+      <div>
         <img
           src={item.image}
           alt={item.headline}
