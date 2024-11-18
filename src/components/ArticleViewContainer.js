@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import ArticlesByTopicView from "./ArticlesByTopicView";
 import ArticlesBySiteView from "./ArticlesBySiteView";
+import ArticlesSearchFilterView from "./ArticlesSearchFilterView";
+import ViewButtonGroup from "./ViewButtonGroup";
 
 export default function ArticleViewContainer() {
   const [error, setError] = useState(null);
   const [trendingNewsArticles, setTrendingNewsArticles] = useState([]);
   const [topicSections, setTopicSections] = useState([]);
   const [siteSections, setSiteSections] = useState([]);
+  const [allArticles, setAllArticles] = useState([]);
   const [otherNewsArticles, setOtherArticles] = useState([]);
   const [selectedView, setSelectedView] = useState("topics");
   const [selectedArticle, setSelectedArticle] = useState(null);
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
   const [sliceSize, setSliceSize] = useState(6);
-  const topicsButtonRef = useRef(null);
-  const sitesButtonRef = useRef(null);
 
   // Fetch article data from API
   useEffect(() => {
@@ -68,6 +69,18 @@ export default function ArticleViewContainer() {
 
           setError(null);
           setSiteSections(data);
+
+          const articles = Object.values(data).flat();
+
+          articles.sort((a, b) => {
+            if (a.weight !== b.weight) {
+              return b.weight - a.weight; // Sort by weight in descending order
+            } else {
+              return a.id - b.id; // Sort by id in ascending order
+            }
+          });
+
+          setAllArticles(articles);
         } catch (error) {
           setError(error);
         }
@@ -92,52 +105,35 @@ export default function ArticleViewContainer() {
   }
 
   return (
-    <div>
-      <div className="flex">
-        <button
-          ref={topicsButtonRef}
-          className={`w-1/2 px-4 py-1 text-center bg-[var(--bg-color)] uppercase text-sm ${
-            selectedView === "sites"
-              ? "shadow-inner-bottom-right"
-              : "font-semibold"
-          }`}
-          onClick={() => setSelectedView("topics")}
-        >
-          Topics{" "}
-        </button>
-        <button
-          ref={sitesButtonRef}
-          className={`w-1/2 px-4 py-3 tablet:py-1 text-center bg-[var(--surface-color)] uppercase text-md ${
-            selectedView === "topics"
-              ? "shadow-inner-bottom-left"
-              : "font-semibold"
-          }`}
-          onClick={() => setSelectedView("sites")}
-        >
-          Outlets
-        </button>
-      </div>
+    <div className="bg-[var(--alt-color)]">
+      <ViewButtonGroup
+        selectedView={selectedView}
+        setSelectedView={setSelectedView}
+      />
       <div className="flex flex-col relative overflow-hidden">
-        {selectedView === "sites" ? (
-          <div className="article-view active">
-            <ArticlesBySiteView
-              sliceSize={sliceSize}
-              siteSections={siteSections}
-              selectedArticle={selectedArticle}
-              handleArticleClick={handleArticleClick}
-            />
-          </div>
-        ) : (
-          <div className="article-view">
-            <ArticlesByTopicView
-              sliceSize={sliceSize - 2} // Exclude Trending/Other sections
-              trendingNewsArticles={trendingNewsArticles}
-              topicSections={topicSections}
-              otherNewsArticles={otherNewsArticles}
-              selectedArticle={selectedArticle}
-              handleArticleClick={handleArticleClick}
-            />
-          </div>
+        {selectedView === "sites" && (
+          <ArticlesBySiteView
+            sliceSize={sliceSize}
+            siteSections={siteSections}
+            selectedArticle={selectedArticle}
+            handleArticleClick={handleArticleClick}
+          />
+        )}
+        {selectedView === "topics" && (
+          <ArticlesByTopicView
+            sliceSize={sliceSize - 2}
+            trendingNewsArticles={trendingNewsArticles}
+            topicSections={topicSections}
+            otherNewsArticles={otherNewsArticles}
+            selectedArticle={selectedArticle}
+            handleArticleClick={handleArticleClick}
+          />
+        )}
+        {selectedView === "filter" && (
+          <ArticlesSearchFilterView
+            sliceSize={sliceSize * 5}
+            allArticles={allArticles}
+          />
         )}
       </div>
     </div>
