@@ -43,7 +43,7 @@ export default function ArticlesByTopicView({
   }, [topicSections, loadedSections, sliceSize, allSectionsLoaded]);
 
   return (
-    <div>
+    <div className="bg-[var(--bg-color)]">
       {/* Trending News */}
       <ArticleSection // Use ArticleSection component
         title="Trending News"
@@ -60,9 +60,7 @@ export default function ArticlesByTopicView({
           title={section.topic}
           articles={section.articles}
           sectionTopic={section.topic}
-          backgroundColor={
-            index % 2 === 0 ? "bg-[var(--surface-color)]" : "-[var(--bg-color)]"
-          }
+          backgroundColor={index % 2 === 0 ? "bg-[var(--surface-color)]" : ""}
           selectedArticle={selectedArticle}
           onArticleClick={(article) =>
             handleArticleClick(article, section.topic)

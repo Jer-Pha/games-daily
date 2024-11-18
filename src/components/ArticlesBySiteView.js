@@ -41,7 +41,7 @@ export default function ArticlesBySiteView({
   }, [siteSections, loadedSections, sliceSize, allSectionsLoaded]);
 
   return (
-    <div>
+    <div className="bg-[var(--surface-color)]">
       {siteSections &&
         loadedSections.map((section, index) => (
           <ArticleSection
@@ -49,11 +49,7 @@ export default function ArticlesBySiteView({
             title={section[0]}
             articles={section[1]}
             sectionTopic={section[0]}
-            backgroundColor={
-              index % 2 === 0
-                ? "bg-[var(--surface-color)]"
-                : "-[var(--bg-color)]"
-            }
+            backgroundColor={index % 2 !== 0 ? "bg-[var(--bg-color)]" : ""}
             selectedArticle={selectedArticle}
             onArticleClick={(article) =>
               handleArticleClick(article, section[0])

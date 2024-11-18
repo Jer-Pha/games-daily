@@ -36,7 +36,7 @@ export default function ArticlesSearchFilterView({ sliceSize, allArticles }) {
   }, [allArticles, loadedSections, sliceSize, allSectionsLoaded]);
 
   return (
-    <div>
+    <div className="bg-[var(--alt-color)]">
       <p className="p-4 text-sm">
         Search/Filter coming soon...
         <br />

@@ -105,7 +105,7 @@ export default function ArticleViewContainer() {
   }
 
   return (
-    <div className="bg-[var(--alt-color)]">
+    <div>
       <ViewButtonGroup
         selectedView={selectedView}
         setSelectedView={setSelectedView}
