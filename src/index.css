@@ -12,6 +12,7 @@
   --bg-color: #FFF;
   --text-color: black;
   --surface-color: #E4E6E6;
+  --alt-color: #D2D2D2;
   --accent-color: #93C5fD;
   --scrollbar-color: #D2D2D2;
 }
@@ -20,6 +21,7 @@ html.dark {
   --bg-color: #121212;
   --text-color: white;
   --surface-color: #262626;
+  --alt-color: #3F3F3F;
   --accent-color: #004C98;
   --scrollbar-color: #484848;
 }
