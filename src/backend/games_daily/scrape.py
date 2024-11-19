@@ -43,7 +43,8 @@ def scrape_article_image(url, selector, headers, domain):
             img = build_url(img["src"].split("?")[0], domain)
 
         # Ensure the image source is the correct file type
-        if check_is_image_url(img):
+        # and Kotaku-specific tracking image catch
+        if check_is_image_url(img) and "scorecardresearch" not in img:
             return img
     return ""
 
