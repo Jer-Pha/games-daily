@@ -1,15 +1,29 @@
 import React from "react";
 
 export default function ViewButtonGroup({ selectedView, setSelectedView }) {
+  const buttonStyles = {
+    topics: {
+      topics: "font-semibold",
+      outlets: "inner-bottom-left",
+      filter: "inner-bottom",
+    },
+    outlets: {
+      topics: "inner-bottom-right",
+      outlets: "font-semibold",
+      filter: "inner-bottom-left",
+    },
+    filter: {
+      topics: "inner-bottom",
+      outlets: "inner-bottom-right",
+      filter: "font-semibold",
+    },
+  };
+
   return (
-    <div className="flex">
+    <div className="flex bg-transparent">
       <button
-        className={`w-1/3 px-4 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--bg-color)] ${
-          selectedView === "sites"
-            ? "inner-bottom-right"
-            : selectedView === "filter"
-            ? "inner-bottom"
-            : "font-semibold"
+        className={`w-1/3 desktop:w-auto px-2 desktop:px-6 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--bg-color)] ${
+          buttonStyles[selectedView]?.topics || ""
         }`}
         onClick={() => {
           selectedView !== "topics" && setSelectedView("topics");
@@ -19,35 +33,34 @@ export default function ViewButtonGroup({ selectedView, setSelectedView }) {
         Topics
       </button>
       <button
-        className={`w-1/3 px-4 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--surface-color)] ${
-          selectedView === "topics"
-            ? "inner-bottom-left"
-            : selectedView === "filter"
-            ? "inner-bottom-right"
-            : "font-semibold"
+        className={`w-1/3 desktop:w-auto px-2 desktop:px-6 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--surface-color)] ${
+          buttonStyles[selectedView]?.outlets || ""
         }`}
         onClick={() => {
-          selectedView !== "sites" && setSelectedView("sites");
+          selectedView !== "outlets" && setSelectedView("outlets");
         }}
-        disabled={selectedView === "sites"}
+        disabled={selectedView === "outlets"}
       >
         Outlets
       </button>
       <button
-        className={`w-1/3 px-4 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--alt-color)] ${
-          selectedView === "topics"
-            ? "inner-bottom"
-            : selectedView === "sites"
-            ? "inner-bottom-left"
-            : "font-semibold"
+        className={`w-1/3 desktop:w-auto px-2 desktop:px-6 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--bg-color)] ${
+          buttonStyles[selectedView]?.filter || ""
         }`}
         onClick={() => {
           selectedView !== "filter" && setSelectedView("filter");
         }}
         disabled={selectedView === "filter"}
       >
-        Filter&nbsp;/&nbsp;Search
+        Filter
       </button>
+      <div
+        className={`desktop:flex-1 ${
+          selectedView === "filter"
+            ? "desktop:inner-bottom-left"
+            : "desktop:inner-bottom"
+        }`}
+      ></div>
     </div>
   );
 }

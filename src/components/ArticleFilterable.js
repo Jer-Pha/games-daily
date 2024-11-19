@@ -1,7 +1,7 @@
 import React from "react";
 import * as Icons from "./Icons";
 
-export default function ArticleFilterSearchable({
+export default function ArticleFilterable({
   article,
   // onArticleClick,
   // isSelected,
@@ -20,7 +20,7 @@ export default function ArticleFilterSearchable({
 
   return (
     <article
-      className="w-screen flex-grow tablet:w-[article-card] min-w-[100vw] tablet:min-w-[article-card] cursor-pointer overflow-hidden border-t-2 border-x-2 border-transparent snap-start snap-always relative z-10"
+      className="tablet:max-h-[article-img] tablet:mb-4 w-screen tablet:w-[article-card] min-w-[100vw] tablet:min-w-[article-card] cursor-pointer overflow-hidden border-t-2 border-x-2 border-transparent relative z-10"
       // onClick={handleClick}
       // ref={innerRef}
     >
@@ -28,7 +28,7 @@ export default function ArticleFilterSearchable({
         <img
           src={article.image}
           alt={article.headline}
-          className="w-full aspect-video object-cover tablet:max-h-[article-img] z-10"
+          className="w-full aspect-video object-cover z-10"
           loading="lazy"
         />
         <div

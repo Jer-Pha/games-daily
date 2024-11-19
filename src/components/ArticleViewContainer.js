@@ -6,15 +6,17 @@ import ViewButtonGroup from "./ViewButtonGroup";
 
 export default function ArticleViewContainer() {
   const [error, setError] = useState(null);
+  const [initialDataLoaded, setInitialDataLoaded] = useState(false);
   const [trendingNewsArticles, setTrendingNewsArticles] = useState([]);
   const [topicSections, setTopicSections] = useState([]);
   const [siteSections, setSiteSections] = useState([]);
   const [allArticles, setAllArticles] = useState([]);
   const [otherNewsArticles, setOtherArticles] = useState([]);
+  const [sliceSize, setSliceSize] = useState(6);
+  const [outletNames, setOutletNames] = useState([]);
+  const [topicData, setTopicData] = useState([]);
   const [selectedView, setSelectedView] = useState("topics");
   const [selectedArticle, setSelectedArticle] = useState(null);
-  const [initialDataLoaded, setInitialDataLoaded] = useState(false);
-  const [sliceSize, setSliceSize] = useState(6);
 
   // Fetch article data from API
   useEffect(() => {
@@ -55,24 +57,35 @@ export default function ArticleViewContainer() {
 
   useEffect(() => {
     if (initialDataLoaded) {
-      const fetchDataBySite = async () => {
+      const fetchSiteAndTopicData = async () => {
         try {
-          const response = await fetch(
+          const articlesResponse = await fetch(
             "https://www.kfdb.app/api/news/articles-by-site"
           );
-
-          if (!response.ok) {
+          if (!articlesResponse.ok) {
             throw new Error("Network response error");
           }
+          const articlesData = await articlesResponse.json();
+          const outletNames = Object.keys(articlesData).map((outletName) => {
+            const firstArticle = articlesData[outletName][0]; // Get the first article for the outlet
+            const outletSlug = firstArticle.site; // Extract the site key (slugified version)
+            return { name: outletName, slug: outletSlug }; // Return an object with both name and slug
+          });
 
-          const data = await response.json();
+          const topicResponse = await fetch(
+            "https://www.kfdb.app/api/news/topics"
+          );
+          if (!topicResponse.ok) {
+            throw new Error("Network response error");
+          }
+          const topicData = await topicResponse.json();
+          const topics = topicData.map((topic) => topic.topic);
 
           setError(null);
-          setSiteSections(data);
 
-          const articles = Object.values(data).flat();
+          const articlesAll = Object.values(articlesData).flat();
 
-          articles.sort((a, b) => {
+          articlesAll.sort((a, b) => {
             if (a.weight !== b.weight) {
               return b.weight - a.weight; // Sort by weight in descending order
             } else {
@@ -80,13 +93,16 @@ export default function ArticleViewContainer() {
             }
           });
 
-          setAllArticles(articles);
+          setSiteSections(articlesData);
+          setAllArticles(articlesAll);
+          setOutletNames(outletNames);
+          setTopicData(topics);
         } catch (error) {
           setError(error);
         }
       };
 
-      fetchDataBySite();
+      fetchSiteAndTopicData();
     }
   }, [initialDataLoaded]);
 
@@ -111,7 +127,7 @@ export default function ArticleViewContainer() {
         setSelectedView={setSelectedView}
       />
       <div className="flex flex-col relative overflow-hidden">
-        {selectedView === "sites" && (
+        {selectedView === "outlets" && (
           <ArticlesBySiteView
             sliceSize={sliceSize}
             siteSections={siteSections}
@@ -131,8 +147,10 @@ export default function ArticleViewContainer() {
         )}
         {selectedView === "filter" && (
           <ArticlesSearchFilterView
-            sliceSize={sliceSize * 5}
+            sliceSize={sliceSize * 4}
             allArticles={allArticles}
+            topicData={topicData}
+            outletNames={outletNames}
           />
         )}
       </div>

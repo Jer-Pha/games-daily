@@ -48,7 +48,7 @@ export default function ArticleDetails({ item, status, onClose }) {
         <div className="w-full tablet:w-3/4 bg-[var(--surface-color)] p-4 rounded-lg">
           <div className="flex gap-2">
             <p className="text-left font-semibold">Summary</p>
-            <button type="button" class="h-5 w-5">
+            <button type="button" className="h-5 w-5">
               <QuestionMarkIcon onClick={handleQuestionMarkClick} />
             </button>
           </div>

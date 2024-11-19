@@ -1,11 +1,27 @@
 import React, { useEffect, useState } from "react";
-import ArticleFilterSearchable from "./ArticleFilterSearchable";
+import ArticleFilterable from "./ArticleFilterable";
+import ArticleFilterMenu from "./ArticleFilterMenu";
 
-export default function ArticlesSearchFilterView({ sliceSize, allArticles }) {
+export default function ArticlesSearchFilterView({
+  sliceSize,
+  allArticles,
+  topicData,
+  outletNames,
+}) {
   const [loadedSections, setLoadedSections] = useState(
     allArticles.slice(0, sliceSize)
   );
   const [allSectionsLoaded, setAllSectionsLoaded] = useState(false);
+  const [selectedOutlets, setSelectedOutlets] = useState([]);
+  const [selectedTopics, setSelectedTopics] = useState([]);
+
+  const filteredSections = loadedSections.filter((article) => {
+    const outletMatch =
+      selectedOutlets.length === 0 || selectedOutlets.includes(article.site);
+    const topicMatch =
+      selectedTopics.length === 0 || selectedTopics.includes(article.topic);
+    return outletMatch && topicMatch;
+  });
 
   useEffect(() => {
     if (allArticles && !allSectionsLoaded && loadedSections) {
@@ -36,17 +52,28 @@ export default function ArticlesSearchFilterView({ sliceSize, allArticles }) {
   }, [allArticles, loadedSections, sliceSize, allSectionsLoaded]);
 
   return (
-    <div className="bg-[var(--alt-color)]">
-      <p className="p-4 text-sm">
-        Search/Filter coming soon...
-        <br />
-        For now, here are all of the articles:
-      </p>
-      <div className="flex flex-wrap">
-        {loadedSections.map((article) => (
-          <ArticleFilterSearchable article={article} />
-        ))}
+    <>
+      <div className="block tablet:hidden p-4">
+        <p>
+          Filter view is not available on mobile yet. Please use a larger
+          device.
+        </p>
       </div>
-    </div>
+      <div className="hidden tablet:flex bg-[var(--bg-color)] p-4 min-h-[calc(100vh-36px)]">
+        <ArticleFilterMenu
+          topicData={topicData}
+          outletNames={outletNames}
+          selectedOutlets={selectedOutlets}
+          setSelectedOutlets={setSelectedOutlets}
+          setSelectedTopics={setSelectedTopics}
+          selectedTopics={selectedTopics}
+        />
+        <div className="pl-64 desktop:pl-[336px] flex flex-wrap justify-around items-start h-min">
+          {filteredSections.map((article) => (
+            <ArticleFilterable article={article} key={article.id} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }

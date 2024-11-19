@@ -164,8 +164,25 @@ module.exports = {
           boxShadow:
             "inset 0px -4px 3px -4px var(--text-color), inset -4px 0px 3px -4px var(--text-color)",
         },
+        ".inner-top-left": {
+          boxShadow:
+            "inset 0px 4px 3px -4px var(--text-color), inset 4px 0px 3px -4px var(--text-color)",
+        },
+        ".inner-top-right": {
+          boxShadow:
+            "inset 0px 4px 3px -4px var(--text-color), inset -4px 0px 3px -4px var(--text-color)",
+        },
+        ".inner-top": {
+          boxShadow: "inset 0px 4px 3px -4px var(--text-color)",
+        },
         ".inner-bottom": {
           boxShadow: "inset 0px -4px 3px -4px var(--text-color)",
+        },
+        ".inner-left": {
+          boxShadow: "inset 4px 0px 3px -4px var(--text-color)",
+        },
+        ".inner-right": {
+          boxShadow: "inset -4px 0px 3px -4px var(--text-color)",
         },
       };
 
