@@ -49,7 +49,7 @@ export default function ArticlesBySiteView({
             title={section[0]}
             articles={section[1]}
             sectionTopic={section[0]}
-            backgroundColor={index % 2 !== 0 ? "bg-[var(--bg-color)]" : ""}
+            backgroundColor={index % 2 !== 0 ? "bg-[var(--primary-color)]" : ""}
             selectedArticle={selectedArticle}
             onArticleClick={(article) =>
               handleArticleClick(article, section[0])

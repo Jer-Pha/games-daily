@@ -43,13 +43,13 @@ export default function ArticlesByTopicView({
   }, [topicSections, loadedSections, sliceSize, allSectionsLoaded]);
 
   return (
-    <div className="bg-[var(--bg-color)]">
+    <div className="bg-[var(--primary-color)]">
       {/* Trending News */}
       <ArticleSection // Use ArticleSection component
         title="Trending News"
         articles={trendingNewsArticles}
         sectionTopic="trending"
-        backgroundColor="bg-[var(--bg-color)]"
+        backgroundColor="bg-[var(--primary-color)]"
         selectedArticle={selectedArticle}
         onArticleClick={(article) => handleArticleClick(article, "trending")}
       />

@@ -106,7 +106,7 @@ export default function ArticleFilterMenu({
         </button>
         <button
           type="button"
-          className={`w-1/2 py-2 text-sm bg-[var(--bg-color)] border-[var(--text-color)] rounded-t-md ${
+          className={`w-1/2 py-2 text-sm bg-[var(--primary-color)] border-[var(--text-color)] rounded-t-md ${
             activeTab === "outlet"
               ? "border-b-0 border-[1px]"
               : "border-b-[1px] inner-top-right"
@@ -118,9 +118,9 @@ export default function ArticleFilterMenu({
       </div>
       <div
         id="filter-options"
-        className={`px-4 py-2 border-t-0 border-[1px] border-[var(--text-color)] max-h-[calc(100vh-160px)] overflow-y-auto overflow-c-hidden text-left ${
+        className={`px-4 py-2 border-t-0 border-[1px] border-[var(--text-color)] max-h-[calc(100vh-162px)] overflow-y-auto overflow-c-hidden text-left ${
           activeTab === "outlet"
-            ? "bg-[var(--bg-color)]"
+            ? "bg-[var(--primary-color)]"
             : "bg-[var(--surface-color)]"
         }`}
       >
@@ -154,7 +154,7 @@ export default function ArticleFilterMenu({
                 placeholder="Search topics..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-[var(--bg-color)] rounded-lg px-4 py-1 w-full"
+                className="bg-[var(--primary-color)] rounded-lg px-4 py-1 w-full"
               />
               {searchQuery && (
                 <button
@@ -195,10 +195,10 @@ export default function ArticleFilterMenu({
         <button
           id="filter-clear"
           type="reset"
-          className="px-4 py-2 bg-[var(--text-color)] text-[var(--bg-color)] rounded-lg"
+          className="px-4 py-2 bg-[var(--text-color)] text-[var(--primary-color)] rounded-lg"
           onClick={handleClearFilter}
         >
-          Clear
+          Clear all
         </button>
         <button
           id="filter-all"

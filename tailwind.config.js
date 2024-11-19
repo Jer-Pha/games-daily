@@ -106,31 +106,31 @@ module.exports = {
     function ({ addComponents }) {
       const activeArticle = {
         "article.selected": {
-          borderTop: "2px solid var(--text-color)",
-          borderRight: "2px solid var(--text-color)",
+          borderTop: "2px solid var(--accent-color)",
+          borderRight: "2px solid var(--accent-color)",
           borderBottom: "0",
-          borderLeft: "2px solid var(--text-color)",
+          borderLeft: "2px solid var(--accent-color)",
         },
         "article.selected div:has(h3)": {
-          borderTop: "2px solid var(--text-color)",
-          backgroundColor: "var(--text-color)",
-          color: "var(--bg-color)",
+          borderTop: "2px solid var(--accent-color)",
+          backgroundColor: "var(--accent-color)",
+          color: "var(--primary-color)",
         },
         "article.selected h3": {
-          color: "var(--bg-color)",
+          color: "var(--text-color)",
         },
         "@media (hover: hover)": {
           "article:hover:not(.selected)": {
             backgroundColor: "var(--accent-color)",
-            borderTop: "2px solid var(--text-color)",
-            borderRight: "2px solid var(--text-color)",
+            borderTop: "2px solid var(--accent-color)",
+            borderRight: "2px solid var(--accent-color)",
             borderBottom: "0",
-            borderLeft: "2px solid var(--text-color)",
+            borderLeft: "2px solid var(--accent-color)",
           },
           "article:hover:not(.selected) div:has(h3)": {
-            borderTop: "2px solid var(--text-color)",
-            borderBottom: "2px solid var(--text-color)",
-            backgroundColor: "var(--bg-color)",
+            borderTop: "2px solid var(--accent-color)",
+            borderBottom: "2px solid var(--accent-color)",
+            backgroundColor: "var(--primary-color)",
           },
           "article:hover:not(.selected) h3": {
             color: "var(--text-color)",

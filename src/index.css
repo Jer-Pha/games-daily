@@ -9,17 +9,19 @@
 }
 
 :root {
-  --bg-color: #FFF;
+  --bg-color: #F5F5F5;
+  --primary-color: #FFF;
   --text-color: black;
-  --surface-color: #E4E6E6;
+  --surface-color: #F2F2F2;
   --accent-color: #93C5fD;
   --scrollbar-color: #D2D2D2;
 }
 
 html.dark {
-  --bg-color: #121212;
+  --bg-color: #181818;
+  --primary-color: #121212;
   --text-color: white;
-  --surface-color: #262626;
+  --surface-color: #242424;
   --accent-color: #004C98;
   --scrollbar-color: #484848;
 }
@@ -67,7 +69,7 @@ code {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--bg-color);
+  background: var(--primary-color);
 }
 
 /* For Firefox */

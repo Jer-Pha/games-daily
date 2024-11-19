@@ -36,7 +36,7 @@ export default function ArticleFilterable({
           style={{ backgroundColor: article.color }}
         ></div>
       </div>
-      <div className="absolute bottom-0 left-0 w-full bg-black/55 p-2 border-t-2 border-transparent">
+      <div className="absolute bottom-0 left-0 w-full bg-black/55 p-2 border-y-2 border-transparent">
         <h3 className="text-white text-xs font-semibold line-clamp-1">
           {article.headline}
         </h3>

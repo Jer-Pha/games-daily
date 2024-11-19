@@ -24,7 +24,7 @@ export default function App() {
         <ArticleViewContainer />
       </main>
       <button
-        className="fixed bottom-0 left-0 p-2 tablet:p-2 mx-5 my-10 tablet:m-4 bg-[var(--accent-color)] desktop:bg-[var(--bg-color)] rounded-full aspect-square z-[999] h-12 w-12 tablet:h-10 tablet:w-10"
+        className="fixed bottom-0 left-0 p-2 tablet:p-2 mx-5 my-10 tablet:m-4 bg-[var(--accent-color)] rounded-full aspect-square z-[999] h-12 w-12 tablet:h-10 tablet:w-10"
         onClick={toggleMode}
         type="button"
       >

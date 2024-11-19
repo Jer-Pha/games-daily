@@ -125,8 +125,9 @@ export default function ArticleViewContainer() {
       <ViewButtonGroup
         selectedView={selectedView}
         setSelectedView={setSelectedView}
+        setSelectedArticle={setSelectedArticle}
       />
-      <div className="flex flex-col relative overflow-hidden">
+      <div className="flex flex-col relative overflow-hidden border-t-0 border-[1px] border-[var(--text-color)]">
         {selectedView === "outlets" && (
           <ArticlesBySiteView
             sliceSize={sliceSize}

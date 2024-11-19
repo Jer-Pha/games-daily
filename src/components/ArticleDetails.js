@@ -31,7 +31,7 @@ export default function ArticleDetails({ item, status, onClose }) {
     <div
       id="article-details"
       ref={detailsRef}
-      className={`pb-4 bg-[var(--bg-color)] animate-drawer-${status} border-x-2 border-[var(--text-color)] flex`}
+      className={`pb-4 bg-[var(--primary-color)] animate-drawer-${status} border-x-2 border-[var(--accent-color)] flex`}
     >
       <div className="flex flex-col self-center tablet:flex-row tablet:justify-evenly p-4 text-sm">
         <div className="w-full tablet:w-1/4 pb-2 tablet:pb-0 tablet:pr-2 flex flex-col justify-evenly">
@@ -78,7 +78,7 @@ export default function ArticleDetails({ item, status, onClose }) {
         </div>
       </div>
       <button
-        className={`h-4 absolute bottom-0 left-0 right-0 bg-[var(--text-color)] text-[var(--bg-color)] flex justify-center items-center opacity-0`}
+        className={`h-4 absolute bottom-0 left-0 right-0 bg-[var(--accent-color)] text-[var(--text-color)] flex justify-center items-center opacity-0`}
         onClick={onClose}
         ref={buttonRef}
         type="button"
