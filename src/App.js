@@ -20,7 +20,7 @@ export default function App() {
 
   return (
     <div className="App flex">
-      <main className="w-screen desktop:max-w-[1400px] mx-auto min-h-screen">
+      <main className="w-screen desktop:max-w-[1400px] mx-auto min-h-screen desktop:pt-1">
         <ArticleViewContainer />
       </main>
       <button

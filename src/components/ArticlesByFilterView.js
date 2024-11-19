@@ -65,7 +65,7 @@ export default function ArticlesByFilterView({
           device.
         </p>
       </div>
-      <div className="hidden tablet:flex bg-[var(--primary-color)] p-4 min-h-[calc(100vh-38px)]">
+      <div className="hidden tablet:flex bg-[var(--primary-color)] p-4 min-h-[calc(100vh-42px)]">
         <ArticleFilterMenu
           topicData={topicData}
           outletNames={outletNames}
@@ -77,7 +77,7 @@ export default function ArticlesByFilterView({
         <div
           className={`pl-64 desktop:pl-[336px] flex flex-wrap justify-around items-start h-min w-full ${
             filteredSections.length === 0
-              ? "min-h-[calc(100vh-70px)] content-center"
+              ? "min-h-[calc(100vh-74px)] content-center"
               : ""
           }`}
         >
