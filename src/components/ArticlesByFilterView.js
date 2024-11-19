@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import ArticleFilterable from "./ArticleFilterable";
 import ArticleFilterMenu from "./ArticleFilterMenu";
 
-export default function ArticlesSearchFilterView({
+export default function ArticlesByFilterView({
   sliceSize,
   allArticles,
   topicData,

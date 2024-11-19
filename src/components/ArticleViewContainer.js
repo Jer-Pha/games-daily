@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ArticlesByTopicView from "./ArticlesByTopicView";
 import ArticlesBySiteView from "./ArticlesBySiteView";
-import ArticlesSearchFilterView from "./ArticlesSearchFilterView";
+import ArticlesByFilterView from "./ArticlesByFilterView";
 import ViewButtonGroup from "./ViewButtonGroup";
 
 export default function ArticleViewContainer() {
@@ -146,7 +146,7 @@ export default function ArticleViewContainer() {
           />
         )}
         {selectedView === "filter" && (
-          <ArticlesSearchFilterView
+          <ArticlesByFilterView
             sliceSize={sliceSize * 4}
             allArticles={allArticles}
             topicData={topicData}
