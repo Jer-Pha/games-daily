@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ArticleSection from "./ArticleSection";
 
-export default function ArticlesBySiteView({
-  sliceSize,
-  siteSections,
-  selectedArticle,
-  handleArticleClick,
-}) {
+export default function ArticlesByOutletView({ sliceSize, siteSections }) {
   const [loadedSections, setLoadedSections] = useState(
     Object.entries(siteSections).slice(0, sliceSize)
   );
@@ -41,21 +36,20 @@ export default function ArticlesBySiteView({
   }, [siteSections, loadedSections, sliceSize, allSectionsLoaded]);
 
   return (
-    <div className="bg-[var(--surface-color)]">
-      {siteSections &&
-        loadedSections.map((section, index) => (
-          <ArticleSection
-            key={section[0]}
-            title={section[0]}
-            articles={section[1]}
-            sectionTopic={section[0]}
-            backgroundColor={index % 2 !== 0 ? "bg-[var(--primary-color)]" : ""}
-            selectedArticle={selectedArticle}
-            onArticleClick={(article) =>
-              handleArticleClick(article, section[0])
-            }
-          />
-        ))}
-    </div>
+    <>
+      <div className="bg-[var(--surface-color)] max-h-[calc(100vh-58px)] tablet:max-h-[calc(100vh-42px)] overflow-y-auto overflow-x-hidden ">
+        {siteSections &&
+          loadedSections.map((section, index) => (
+            <ArticleSection
+              key={section[0]}
+              articles={section[1]}
+              sectionTopic={section[0]}
+              backgroundColor={
+                index % 2 !== 0 ? "bg-[var(--primary-color)]" : ""
+              }
+            />
+          ))}
+      </div>
+    </>
   );
 }

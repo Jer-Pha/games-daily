@@ -5,12 +5,9 @@ import { ARROW_OPACITY, ARTICLE_TOLERANCE, ARTICLE_WIDTH } from "./Constants";
 import { sanitizeId } from "../utils/utils";
 
 export default function ArticleSection({
-  title,
   articles,
   sectionTopic,
   backgroundColor,
-  selectedArticle,
-  onArticleClick,
 }) {
   const containerRef = useRef(null);
   const [arrowBtnDisplayKey, setArrowBtnDisplayKey] = useState({});
@@ -64,13 +61,10 @@ export default function ArticleSection({
       className={`tablet:px-4 pb-4 relative ${backgroundColor}`}
     >
       <h2 className="text-xl tablet:text-2xl font-semibold text-left py-2 pl-4 tablet:px-0">
-        {title}
+        {sectionTopic}
       </h2>
       <ArticleList
         articles={articles}
-        sectionTopic={sectionTopic}
-        selectedArticle={selectedArticle}
-        onArticleClick={onArticleClick}
         containerRef={containerRef}
         scrollArticleList={scrollArticleList}
       />

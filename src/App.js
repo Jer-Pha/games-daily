@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
+import { ArticleProvider } from "./context/ArticleContext";
 import ArticleViewContainer from "./components/ArticleViewContainer";
-import { ModeToggleIcon } from "./components/Icons";
 
 export default function App() {
   console.log("App rendered");
@@ -14,22 +14,13 @@ export default function App() {
     }
   }, []);
 
-  const toggleMode = () => {
-    document.documentElement.classList.toggle("dark");
-  };
-
   return (
-    <div className="App flex">
-      <main className="w-screen desktop:max-w-[1400px] mx-auto min-h-screen desktop:pt-1">
-        <ArticleViewContainer />
-      </main>
-      <button
-        className="fixed bottom-0 left-0 p-2 tablet:p-2 mx-5 my-10 tablet:m-4 bg-[var(--accent-color)] rounded-full aspect-square z-[999] h-12 w-12 tablet:h-10 tablet:w-10"
-        onClick={toggleMode}
-        type="button"
-      >
-        <ModeToggleIcon />
-      </button>
-    </div>
+    <ArticleProvider>
+      <div className="App flex">
+        <main className="w-screen mx-auto min-h-screen pt-px relative">
+          <ArticleViewContainer />
+        </main>
+      </div>
+    </ArticleProvider>
   );
 }

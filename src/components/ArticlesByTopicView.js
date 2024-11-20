@@ -6,8 +6,6 @@ export default function ArticlesByTopicView({
   trendingNewsArticles,
   topicSections,
   otherNewsArticles,
-  selectedArticle,
-  handleArticleClick,
 }) {
   const [loadedSections, setLoadedSections] = useState(
     topicSections.slice(0, sliceSize)
@@ -43,39 +41,30 @@ export default function ArticlesByTopicView({
   }, [topicSections, loadedSections, sliceSize, allSectionsLoaded]);
 
   return (
-    <div className="bg-[var(--primary-color)]">
-      {/* Trending News */}
-      <ArticleSection // Use ArticleSection component
-        title="Trending News"
-        articles={trendingNewsArticles}
-        sectionTopic="trending"
-        backgroundColor="bg-[var(--primary-color)]"
-        selectedArticle={selectedArticle}
-        onArticleClick={(article) => handleArticleClick(article, "trending")}
-      />
-      {/* Topic Sections */}
-      {loadedSections.map((section, index) => (
-        <ArticleSection
-          key={section.topic}
-          title={section.topic}
-          articles={section.articles}
-          sectionTopic={section.topic}
-          backgroundColor={index % 2 === 0 ? "bg-[var(--surface-color)]" : ""}
-          selectedArticle={selectedArticle}
-          onArticleClick={(article) =>
-            handleArticleClick(article, section.topic)
-          }
+    <>
+      <div className="bg-[var(--primary-color)] overflow-y-auto ">
+        {/* Trending News */}
+        <ArticleSection // Use ArticleSection component
+          articles={trendingNewsArticles}
+          sectionTopic="Trending News"
+          backgroundColor="bg-[var(--primary-color)]"
         />
-      ))}
-      {/* Other News */}
-      <ArticleSection
-        title="Other News"
-        articles={otherNewsArticles}
-        sectionTopic="other"
-        backgroundColor=""
-        selectedArticle={selectedArticle}
-        onArticleClick={(article) => handleArticleClick(article, "other")}
-      />
-    </div>
+        {/* Topic Sections */}
+        {loadedSections.map((section, index) => (
+          <ArticleSection
+            key={section.topic}
+            articles={section.articles}
+            sectionTopic={section.topic}
+            backgroundColor={index % 2 === 0 ? "bg-[var(--surface-color)]" : ""}
+          />
+        ))}
+        {/* Other News */}
+        <ArticleSection
+          articles={otherNewsArticles}
+          sectionTopic="Other News"
+          backgroundColor=""
+        />
+      </div>
+    </>
   );
 }

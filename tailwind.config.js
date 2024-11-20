@@ -8,11 +8,9 @@ module.exports = {
     "./src/*.{html,js}",
     "./public/*.{html,js}",
   ],
-  safelist: ["animate-drawer-open", "animate-drawer-close"],
   theme: {
     screens: {
-      tablet: "441px", // => @media (min-width: 441px) { ... }
-      laptop: "1024px", // => @media (min-width: 1024px) { ... }
+      tablet: "550px", // => @media (min-width: 550px) { ... }
       desktop: "1400px", // => @media (min-width: 1280px) { ... }
     },
     extend: {
@@ -24,40 +22,6 @@ module.exports = {
       },
       minWidth: {
         "[article-card]": `${constants.ARTICLE_WIDTH}px`,
-      },
-      keyframes: {
-        "open-drawer": {
-          "0%": {
-            opacity: "0",
-            transform: "rotateX(-90deg)",
-            transformOrigin: "top center",
-            height: "0",
-            paddingTop: "0",
-          },
-          "100%": {
-            opacity: "1",
-            transform: "none",
-            height: "var(--drawer-height)",
-          },
-        },
-        "close-drawer": {
-          "0%": {
-            opacity: "1",
-            transform: "none",
-            height: "var(--drawer-height)",
-            paddingTop: "1rem",
-          },
-          "100%": {
-            opacity: "0",
-            transform: "rotateX(-90deg)",
-            transformOrigin: "top center",
-            height: "0",
-          },
-        },
-      },
-      animation: {
-        "drawer-open": "open-drawer 250ms ease-out forwards",
-        "drawer-close": "close-drawer 250ms ease-in forwards",
       },
     },
   },

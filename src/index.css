@@ -12,7 +12,7 @@
   --bg-color: #F5F5F5;
   --primary-color: #FFF;
   --text-color: black;
-  --surface-color: #F2F2F2;
+  --surface-color: #E6E6E6;
   --accent-color: #93C5fD;
   --scrollbar-color: #D2D2D2;
 }
@@ -33,21 +33,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
-
-#article-details {
-  --drawer-height: 320px;
-}
-
-@screen tablet {
-  #article-details {
-    --drawer-height: 160px;
-  }
 }
 
 

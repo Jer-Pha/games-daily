@@ -91,7 +91,7 @@ export default function ArticleFilterMenu({
   };
 
   return (
-    <div className="w-60 desktop:w-80 fixed">
+    <div className="w-60 desktop:w-80 p-4">
       <div id="filter-tabs" className="flex">
         <button
           type="button"
@@ -118,7 +118,7 @@ export default function ArticleFilterMenu({
       </div>
       <div
         id="filter-options"
-        className={`px-4 py-2 border-t-0 border-[1px] border-[var(--text-color)] max-h-[calc(100vh-166px)] overflow-y-auto overflow-c-hidden text-left ${
+        className={`px-4 py-2 border-t-0 border-[1px] border-[var(--text-color)] max-h-[calc(100vh-182px)] tablet:max-h-[calc(100vh-166px)] overflow-y-auto overflow-c-hidden text-left ${
           activeTab === "outlet"
             ? "bg-[var(--primary-color)]"
             : "bg-[var(--surface-color)]"
@@ -191,7 +191,7 @@ export default function ArticleFilterMenu({
           </div>
         )}
       </div>
-      <div class="flex justify-evenly mt-4">
+      <div className="flex justify-evenly mt-4">
         <button
           id="filter-clear"
           type="reset"

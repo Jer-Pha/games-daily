@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import ArticlesByTopicView from "./ArticlesByTopicView";
-import ArticlesBySiteView from "./ArticlesBySiteView";
+import ArticlesByOutletView from "./ArticlesByOutletView";
 import ArticlesByFilterView from "./ArticlesByFilterView";
 import ViewButtonGroup from "./ViewButtonGroup";
+import { ArticleContext } from "../context/ArticleContext";
+import ArticleDetails from "./ArticleDetails";
 
 export default function ArticleViewContainer() {
+  const { selectedArticle } = useContext(ArticleContext);
   const [error, setError] = useState(null);
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
   const [trendingNewsArticles, setTrendingNewsArticles] = useState([]);
@@ -16,7 +19,6 @@ export default function ArticleViewContainer() {
   const [outletNames, setOutletNames] = useState([]);
   const [topicData, setTopicData] = useState([]);
   const [selectedView, setSelectedView] = useState("topics");
-  const [selectedArticle, setSelectedArticle] = useState(null);
 
   // Fetch article data from API
   useEffect(() => {
@@ -106,10 +108,6 @@ export default function ArticleViewContainer() {
     }
   }, [initialDataLoaded]);
 
-  const handleArticleClick = (article, sectionTopic) => {
-    setSelectedArticle({ ...article, sectionTopic });
-  };
-
   // Handle loading
   if (!initialDataLoaded) {
     return <div>Loading...</div>;
@@ -121,40 +119,38 @@ export default function ArticleViewContainer() {
   }
 
   return (
-    <div>
-      <ViewButtonGroup
-        selectedView={selectedView}
-        setSelectedView={setSelectedView}
-        setSelectedArticle={setSelectedArticle}
-      />
-      <div className="flex flex-col relative overflow-hidden border-t-0 border-[1px] border-[var(--text-color)]">
-        {selectedView === "outlets" && (
-          <ArticlesBySiteView
-            sliceSize={sliceSize}
-            siteSections={siteSections}
-            selectedArticle={selectedArticle}
-            handleArticleClick={handleArticleClick}
-          />
-        )}
-        {selectedView === "topics" && (
-          <ArticlesByTopicView
-            sliceSize={sliceSize - 2}
-            trendingNewsArticles={trendingNewsArticles}
-            topicSections={topicSections}
-            otherNewsArticles={otherNewsArticles}
-            selectedArticle={selectedArticle}
-            handleArticleClick={handleArticleClick}
-          />
-        )}
-        {selectedView === "filter" && (
-          <ArticlesByFilterView
-            sliceSize={sliceSize * 4}
-            allArticles={allArticles}
-            topicData={topicData}
-            outletNames={outletNames}
-          />
-        )}
+    <>
+      <div className="tablet:w-[calc(100vw-256px)] desktop:w-[calc(100vw-640px)] max-w-[1400px] desktop:mx-auto">
+        <ViewButtonGroup
+          selectedView={selectedView}
+          setSelectedView={setSelectedView}
+        />
+        <div className="flex overflow-hidden max-h-[calc(100vh-58px)] tablet:max-h-[calc(100vh-42px)] border-t-0 border-[1px] border-[var(--text-color)] bg-[var(--primary-color)]">
+          {selectedView === "outlets" && (
+            <ArticlesByOutletView
+              sliceSize={sliceSize}
+              siteSections={siteSections}
+            />
+          )}
+          {selectedView === "topics" && (
+            <ArticlesByTopicView
+              sliceSize={sliceSize - 2}
+              trendingNewsArticles={trendingNewsArticles}
+              topicSections={topicSections}
+              otherNewsArticles={otherNewsArticles}
+            />
+          )}
+          {selectedView === "filter" && (
+            <ArticlesByFilterView
+              sliceSize={sliceSize * 4}
+              allArticles={allArticles}
+              topicData={topicData}
+              outletNames={outletNames}
+            />
+          )}
+        </div>
       </div>
-    </div>
+      {selectedArticle && <ArticleDetails article={selectedArticle} />}
+    </>
   );
 }

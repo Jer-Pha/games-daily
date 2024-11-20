@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ArticleContext } from "../context/ArticleContext";
+import { ModeToggleIcon } from "./Icons";
 
-export default function ViewButtonGroup({
-  selectedView,
-  setSelectedView,
-  setSelectedArticle,
-}) {
+export default function ViewButtonGroup({ selectedView, setSelectedView }) {
+  const { setSelectedArticle } = useContext(ArticleContext);
   const buttonStyles = {
     topics: {
       topics:
@@ -26,17 +25,21 @@ export default function ViewButtonGroup({
     },
   };
 
+  const toggleMode = () => {
+    document.documentElement.classList.toggle("dark");
+  };
+
   const handleViewClick = (tab) => {
     if (selectedView !== tab) {
-      setSelectedView(tab);
       setSelectedArticle(null);
+      setSelectedView(tab);
     }
   };
 
   return (
     <div className="flex bg-transparent">
       <button
-        className={`w-1/3 desktop:w-auto px-2 desktop:px-6 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--primary-color)] desktop:rounded-t-lg ${
+        className={`px-6 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--primary-color)] rounded-t-lg ${
           buttonStyles[selectedView]?.topics || ""
         }`}
         onClick={() => handleViewClick("topics")}
@@ -45,7 +48,7 @@ export default function ViewButtonGroup({
         Topics
       </button>
       <button
-        className={`w-1/3 desktop:w-auto px-2 desktop:px-6 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--surface-color)] desktop:rounded-t-lg ${
+        className={`px-6 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--surface-color)] rounded-t-lg ${
           buttonStyles[selectedView]?.outlets || ""
         }`}
         onClick={() => handleViewClick("outlets")}
@@ -54,7 +57,7 @@ export default function ViewButtonGroup({
         Outlets
       </button>
       <button
-        className={`w-1/3 desktop:w-auto px-2 desktop:px-6 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--primary-color)] desktop:rounded-t-lg ${
+        className={`px-6 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--primary-color)] rounded-t-lg ${
           buttonStyles[selectedView]?.filter || ""
         }`}
         onClick={() => handleViewClick("filter")}
@@ -62,7 +65,16 @@ export default function ViewButtonGroup({
       >
         Filter
       </button>
-      <div className="desktop:flex-1 desktop:border-b-[1px] desktop:border-r-0 desktop:border-[var(--text-color)]"></div>
+      <div className="flex-1 border-b-[1px] border-[var(--text-color)]"></div>
+      <div className="border-b-[1px] border-[var(--text-color)]">
+        <button
+          className="p-2 tablet:p-1.5 m-2 tablet:m-1 bg-[var(--accent-color)] rounded-full aspect-square h-10 w-10 tablet:h-8 tablet:w-8"
+          onClick={toggleMode}
+          type="button"
+        >
+          <ModeToggleIcon />
+        </button>
+      </div>
     </div>
   );
 }

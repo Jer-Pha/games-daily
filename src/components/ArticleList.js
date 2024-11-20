@@ -1,28 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { ArticleContext } from "../context/ArticleContext";
 import Article from "./Article";
-import ArticleDetails from "./ArticleDetails";
-import { ARTICLE_TOLERANCE } from "./Constants";
 
-export default function ArticleList({
-  articles,
-  sectionTopic,
-  selectedArticle,
-  onArticleClick,
-  containerRef,
-  scrollArticleList,
-}) {
+export default function ArticleList({ articles, containerRef }) {
+  const { selectedArticle } = useContext(ArticleContext);
   const [expandCheck, setExpandCheck] = useState(false);
-  const [showArticleDetails, setShowArticleDetails] = useState(false);
-  const [drawerStatus, setDrawerStatus] = useState("open");
-  const articleRefs = useRef({});
-
-  const handleClose = useCallback(() => {
-    setDrawerStatus("close");
-    setTimeout(() => {
-      onArticleClick(null);
-      setShowArticleDetails(false);
-    }, 250);
-  }, [onArticleClick]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -38,75 +20,20 @@ export default function ArticleList({
       setExpandCheck(articleRowWidth <= containerWidth);
     };
 
-    // Check if the selected article is visible
-    const checkArticleVisibility = () => {
-      if (
-        !container ||
-        !selectedArticle ||
-        !articleRefs.current[selectedArticle.id]
-      )
-        return;
-
-      const containerRect = container.getBoundingClientRect();
-      const articleRect =
-        articleRefs.current[selectedArticle.id].getBoundingClientRect();
-
-      const isVisible =
-        articleRect.left >= containerRect.left &&
-        articleRect.right <= containerRect.right + ARTICLE_TOLERANCE;
-
-      if (!isVisible) {
-        handleClose(); // Close ArticleDetails if not visible
-      }
-    };
-
     // Initial call
     updateExpandCheck();
 
     // Check each time the container is resized
     const resizeObserver = new ResizeObserver(updateExpandCheck);
-    if (container) resizeObserver.observe(container);
-
-    // Check each time the container is scrolled
-    const isScrollendSupported = "onscrollend" in container;
-    if (isScrollendSupported) {
-      container?.addEventListener("scrollend", checkArticleVisibility);
-    } else {
-      container?.addEventListener("scroll", checkArticleVisibility);
+    if (container) {
+      resizeObserver.observe(container);
     }
 
     return () => {
       // Clean up event listeners
       resizeObserver.disconnect();
-      if (isScrollendSupported) {
-        container?.removeEventListener("scrollend", checkArticleVisibility);
-      } else {
-        container?.removeEventListener("scroll", checkArticleVisibility);
-      }
     };
-  }, [containerRef, articles, selectedArticle, handleClose]);
-
-  const handleArticleClick = (article) => {
-    onArticleClick(article, sectionTopic);
-    setShowArticleDetails(true);
-    setDrawerStatus("open");
-
-    // Check if article is fully visible
-    const container = containerRef.current;
-    const articleRef = articleRefs.current[article.id];
-    if (container && articleRef) {
-      const containerRect = container.getBoundingClientRect();
-      const articleRect = articleRef.getBoundingClientRect();
-
-      if (articleRect.left < containerRect.left) {
-        // Article is partially hidden on the left
-        scrollArticleList(-1);
-      } else if (articleRect.right > containerRect.right + ARTICLE_TOLERANCE) {
-        // Article is partially hidden on the right
-        scrollArticleList(1);
-      }
-    }
-  };
+  }, [containerRef, articles]);
 
   return (
     <React.Fragment>
@@ -122,8 +49,7 @@ export default function ArticleList({
           {articles.map((article) => (
             <Article
               key={article.id}
-              item={article}
-              innerRef={(el) => (articleRefs.current[article.id] = el)}
+              article={article}
               addClasses={`${
                 expandCheck
                   ? "tablet:flex-1 tablet:flex-grow"
@@ -133,22 +59,10 @@ export default function ArticleList({
                   ? "selected"
                   : ""
               }`}
-              isSelected={selectedArticle && selectedArticle.id === article.id}
-              onArticleClick={() => handleArticleClick(article)}
-              handleClose={handleClose}
             />
           ))}
         </div>
       </div>
-      {showArticleDetails &&
-        selectedArticle &&
-        selectedArticle.sectionTopic === sectionTopic && (
-          <ArticleDetails
-            item={selectedArticle}
-            status={drawerStatus}
-            onClose={handleClose}
-          />
-        )}
     </React.Fragment>
   );
 }

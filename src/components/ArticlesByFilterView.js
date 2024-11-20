@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ArticleFilterable from "./ArticleFilterable";
+import Article from "./Article";
 import ArticleFilterMenu from "./ArticleFilterMenu";
+
 import { ArrowLeftWideIcon } from "./Icons";
 
 export default function ArticlesByFilterView({
@@ -65,7 +66,7 @@ export default function ArticlesByFilterView({
           device.
         </p>
       </div>
-      <div className="hidden tablet:flex bg-[var(--primary-color)] p-4 min-h-[calc(100vh-42px)]">
+      <div className="hidden tablet:flex flex-1 min-h-[calc(100vh-58px)] tablet:min-h-[calc(100vh-42px)]">
         <ArticleFilterMenu
           topicData={topicData}
           outletNames={outletNames}
@@ -75,15 +76,19 @@ export default function ArticlesByFilterView({
           selectedTopics={selectedTopics}
         />
         <div
-          className={`pl-64 desktop:pl-[336px] flex flex-wrap justify-around items-start h-min w-full ${
+          className={`flex flex-wrap justify-around items-start w-full overflow-y-auto ${
             filteredSections.length === 0
-              ? "min-h-[calc(100vh-74px)] content-center"
+              ? "min-h-[calc(100vh-90px)] tablet:min-h-[calc(100vh-74px)] content-center"
               : ""
           }`}
         >
           {filteredSections.length > 0 ? (
             filteredSections.map((article) => (
-              <ArticleFilterable article={article} key={article.id} />
+              <Article
+                article={article}
+                key={article.id}
+                addClasses="tablet:max-h-[article-img] tablet:mb-4 w-screen tablet:w-[article-card]"
+              />
             ))
           ) : (
             <div className="flex flex-col items-center justify-center w-full">
@@ -95,7 +100,7 @@ export default function ArticlesByFilterView({
               </div>
             </div>
           )}
-        </div>
+        </div>{" "}
       </div>
     </>
   );
