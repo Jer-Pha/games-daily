@@ -73,7 +73,7 @@ def build_gemini_prompt(articles):
     4. Take a breath, don't rush. Accuracy to the prompt is much more important than speed. When you're ready, go ahead and start the next article.
 
     Response:
-    Please return the information in the following structured JSON format, matching your response data with the correct URLs. The only change to the following format that you should make is replacing $YOUR_SUMMARY with your summary and replacing  $YOUR_TOPIC with your topic. The matching URL for each article will be directly after the topic in the JSON array. Please note: all four values are strings, including `id`. I have included an example response after the JSON format. Before submitting your response, look over it one last time with fresh eyes and make sure it meets these instructions. You're doing great, thank you!
+    Please return the information in the following structured JSON format, matching your response data with the correct URLs. The only change to the following format that you should make is replacing $YOUR_SUMMARY with your summary and replacing $YOUR_TOPIC with your topic. The matching URL for each article will be directly after the topic in the JSON array. Please note: all four values are strings, including `id`. I have included an example response after the JSON format. Before submitting your response, look over it one last time with fresh eyes and make sure it meets these instructions. You're doing great, thank you!
 
     JSON Format:
     [

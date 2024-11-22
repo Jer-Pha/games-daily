@@ -7,7 +7,7 @@ export default function ViewButtonGroup({ selectedView, setSelectedView }) {
   const buttonStyles = {
     topics: {
       topics:
-        "font-semibold border-b-transparent border-[1px] border-[var(--text-color)] ",
+        "font-semibold border-b-transparent border-[1px] border-[var(--text-color)]",
       outlets: "inner-top-right border-b-[1px] border-[var(--text-color)]",
       filter: "inner-top-right border-b-[1px] border-[var(--text-color)]",
     },

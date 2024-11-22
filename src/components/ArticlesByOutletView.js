@@ -61,7 +61,7 @@ export default function ArticlesByOutletView({
     <>
       <div
         ref={containerRef}
-        className={`content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content  ${
+        className={`content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content ${
           previousView === "topics" ? "right" : "left"
         }`}
       >
