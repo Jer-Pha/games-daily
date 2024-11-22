@@ -19,9 +19,28 @@ module.exports = {
       },
       width: {
         "[article-card]": `${constants.ARTICLE_WIDTH}px`,
+        "[content-t]": "calc(100vw - 256px)",
+        "[content-d]": "calc(100vw - 640px)",
       },
       minWidth: {
         "[article-card]": `${constants.ARTICLE_WIDTH}px`,
+      },
+      maxWidth: {
+        "[content-t]": "calc(100vw - 256px)",
+        "[content-d]": "calc(100vw - 640px)",
+      },
+      keyframes: {
+        shimmer: {
+          "0%": {
+            backgroundPosition: "-100% 0",
+          },
+          "100%": {
+            backgroundPosition: "100% 0",
+          },
+        },
+      },
+      animation: {
+        shimmer: "shimmer 1.5s infinite linear",
       },
     },
   },
@@ -160,6 +179,39 @@ module.exports = {
       };
 
       addComponents(slowPulse);
+    },
+    function ({ addComponents }) {
+      const contentBorder = {
+        ".border-content": {
+          borderWidth: "1px",
+          borderStyle: "solid",
+          borderTop: "0",
+          borderColor: "var(--text-color)",
+        },
+        ".tab-corners": {
+          position: "relative",
+          "&:before": {
+            content: '""',
+            position: "absolute",
+            bottom: "0",
+            left: "0",
+            width: "1px",
+            height: "1px",
+            backgroundColor: "var(--text-color)",
+          },
+          "&:after": {
+            content: '""',
+            position: "absolute",
+            bottom: "0",
+            right: "-1px",
+            width: "1px",
+            height: "1px",
+            backgroundColor: "var(--text-color)",
+          },
+        },
+      };
+
+      addComponents(contentBorder);
     },
   ],
 };

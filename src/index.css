@@ -17,9 +17,13 @@
   --scrollbar-color: #D2D2D2;
 }
 
+.gutter {
+  scrollbar-gutter: stable;
+}
+
 html.dark {
-  --bg-color: #181818;
-  --primary-color: #121212;
+  --primary-color: #181818;
+  --bg-color: #121212;
   --text-color: white;
   --surface-color: #242424;
   --accent-color: #004C98;
@@ -33,6 +37,46 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.skeleton {
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(to right, rgba(143, 142, 141, 20%) 0%, rgba(237, 235, 233, 20%) 50%, rgba(143, 142, 141, 20%) 100%) 0px 0px / 100% 100% rgba(243, 242, 241, 20%);
+  animation: shimmer 3s infinite linear;
+  background-color: var(--text-color);
+  opacity: 25%;
+}
+
+.shimmer {
+  background: linear-gradient(to right, rgba(143, 142, 141, 40%) 0%, rgba(237, 235, 233, 40%) 50%, rgba(143, 142, 141, 40%) 100%) 0px 0px / 100% 100% rgba(243, 242, 241, 40%);
+  animation: shimmer 3s infinite linear;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0px 0px;
+  }
+  100% {
+    background-position: 296px 0px;
+  }
+}
+
+.content-view.left {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: transform 350ms ease-in-out, opacity 350ms ease-in-out;
+}
+
+.content-view.right {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 350ms ease-in-out, opacity 350ms ease-in-out;
+}
+
+.content-view.active {
+  transform: translateX(0);
+  opacity: 1;
 }
 
 

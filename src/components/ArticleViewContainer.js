@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import ArticlesByTopicView from "./ArticlesByTopicView";
 import ArticlesByOutletView from "./ArticlesByOutletView";
 import ArticlesByFilterView from "./ArticlesByFilterView";
 import ViewButtonGroup from "./ViewButtonGroup";
 import { ArticleContext } from "../context/ArticleContext";
 import ArticleDetails from "./ArticleDetails";
+import SkeletonView from "./SkeletonView";
 
 export default function ArticleViewContainer() {
   const { selectedArticle } = useContext(ArticleContext);
@@ -19,6 +20,9 @@ export default function ArticleViewContainer() {
   const [outletNames, setOutletNames] = useState([]);
   const [topicData, setTopicData] = useState([]);
   const [selectedView, setSelectedView] = useState("topics");
+  const [previousView, setPreviousView] = useState(null);
+  const [clickedView, setClickedView] = useState(null);
+  const scrollContainerRef = useRef(null);
 
   // Fetch article data from API
   useEffect(() => {
@@ -69,9 +73,9 @@ export default function ArticleViewContainer() {
           }
           const articlesData = await articlesResponse.json();
           const outletNames = Object.keys(articlesData).map((outletName) => {
-            const firstArticle = articlesData[outletName][0]; // Get the first article for the outlet
-            const outletSlug = firstArticle.site; // Extract the site key (slugified version)
-            return { name: outletName, slug: outletSlug }; // Return an object with both name and slug
+            const firstArticle = articlesData[outletName][0];
+            const outletSlug = firstArticle.site;
+            return { name: outletName, slug: outletSlug };
           });
 
           const topicResponse = await fetch(
@@ -108,9 +112,17 @@ export default function ArticleViewContainer() {
     }
   }, [initialDataLoaded]);
 
-  // Handle loading
+  const handleViewChange = (newView) => {
+    setPreviousView(selectedView); // Store the current view as previousView
+    setClickedView(newView); // Store the current view as previousView
+    setTimeout(() => {
+      setSelectedView(newView); // Update selectedView after a short delay
+    }, 350); // A delay of 0 milliseconds is enough to defer the state update
+  };
+
+  // Handle loading (render skeleton view)
   if (!initialDataLoaded) {
-    return <div>Loading...</div>;
+    return <SkeletonView sliceSize={sliceSize} />;
   }
 
   // Handle errors
@@ -120,24 +132,34 @@ export default function ArticleViewContainer() {
 
   return (
     <>
-      <div className="tablet:w-[calc(100vw-256px)] desktop:w-[calc(100vw-640px)] max-w-[1400px] desktop:mx-auto">
-        <ViewButtonGroup
-          selectedView={selectedView}
-          setSelectedView={setSelectedView}
-        />
-        <div className="flex overflow-hidden max-h-[calc(100vh-58px)] tablet:max-h-[calc(100vh-42px)] border-t-0 border-[1px] border-[var(--text-color)] bg-[var(--primary-color)]">
-          {selectedView === "outlets" && (
-            <ArticlesByOutletView
-              sliceSize={sliceSize}
-              siteSections={siteSections}
-            />
-          )}
+      <div className="">
+        <div className="flex flex-col desktop:items-center w-full overflow-y-auto gutter pr-1 tablet:pr-0">
+          <ViewButtonGroup
+            selectedView={selectedView}
+            setSelectedView={handleViewChange}
+          />
+        </div>
+        <div
+          ref={scrollContainerRef}
+          className="flex flex-col w-full desktop:items-center overflow-x-hidden overflow-y-auto gutter max-h-[calc(100vh-58px)] tablet:max-h-[calc(100vh-42px)] pr-1 tablet:pr-0"
+        >
           {selectedView === "topics" && (
             <ArticlesByTopicView
               sliceSize={sliceSize - 2}
               trendingNewsArticles={trendingNewsArticles}
               topicSections={topicSections}
               otherNewsArticles={otherNewsArticles}
+              previousView={previousView}
+              scrollContainerRef={scrollContainerRef}
+            />
+          )}
+          {selectedView === "outlets" && (
+            <ArticlesByOutletView
+              sliceSize={sliceSize}
+              siteSections={siteSections}
+              previousView={previousView}
+              clickedView={clickedView}
+              scrollContainerRef={scrollContainerRef}
             />
           )}
           {selectedView === "filter" && (
@@ -146,6 +168,8 @@ export default function ArticleViewContainer() {
               allArticles={allArticles}
               topicData={topicData}
               outletNames={outletNames}
+              previousView={previousView}
+              scrollContainerRef={scrollContainerRef}
             />
           )}
         </div>

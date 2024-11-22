@@ -17,7 +17,7 @@ export default function App() {
   return (
     <ArticleProvider>
       <div className="App flex">
-        <main className="w-screen mx-auto min-h-screen pt-px relative">
+        <main className="w-screen min-h-screen pt-px relative">
           <ArticleViewContainer />
         </main>
       </div>

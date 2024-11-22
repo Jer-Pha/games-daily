@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
+import { ArticleContext } from "../context/ArticleContext";
 import Article from "./Article";
 import ArticleFilterMenu from "./ArticleFilterMenu";
 
@@ -9,13 +10,18 @@ export default function ArticlesByFilterView({
   allArticles,
   topicData,
   outletNames,
+  previousView,
+  scrollContainerRef,
 }) {
+  const { selectedArticle } = useContext(ArticleContext);
   const [loadedSections, setLoadedSections] = useState(
     allArticles.slice(0, sliceSize)
   );
   const [allSectionsLoaded, setAllSectionsLoaded] = useState(false);
   const [selectedOutlets, setSelectedOutlets] = useState([]);
   const [selectedTopics, setSelectedTopics] = useState([]);
+  const containerRef = useRef(null);
+  const viewRef = useRef(null);
 
   const filteredSections =
     selectedOutlets.length > 0 || selectedTopics.length > 0
@@ -58,6 +64,17 @@ export default function ArticlesByFilterView({
     }
   }, [allArticles, loadedSections, sliceSize, allSectionsLoaded]);
 
+  useEffect(() => {
+    if (viewRef.current && !viewRef.current.className.includes("active")) {
+      viewRef.current.classList.add("active");
+    } else if (
+      previousView === "filter" &&
+      viewRef.current.className.includes("active")
+    ) {
+      viewRef.current.classList.remove("active");
+    }
+  }, [viewRef, previousView]);
+
   return (
     <>
       <div className="block tablet:hidden p-4">
@@ -66,7 +83,10 @@ export default function ArticlesByFilterView({
           device.
         </p>
       </div>
-      <div className="hidden tablet:flex flex-1 min-h-[calc(100vh-58px)] tablet:min-h-[calc(100vh-42px)]">
+      <div
+        ref={viewRef}
+        className="hidden tablet:flex min-h-[calc(100vh-58px)] tablet:min-h-[calc(100vh-42px)] content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content right"
+      >
         <ArticleFilterMenu
           topicData={topicData}
           outletNames={outletNames}
@@ -76,10 +96,11 @@ export default function ArticlesByFilterView({
           selectedTopics={selectedTopics}
         />
         <div
-          className={`flex flex-wrap justify-around items-start w-full overflow-y-auto ${
+          ref={containerRef}
+          className={`flex flex-wrap justify-around flex-1 overflow-y-auto ${
             filteredSections.length === 0
               ? "min-h-[calc(100vh-90px)] tablet:min-h-[calc(100vh-74px)] content-center"
-              : ""
+              : "content-start"
           }`}
         >
           {filteredSections.length > 0 ? (
@@ -87,7 +108,12 @@ export default function ArticlesByFilterView({
               <Article
                 article={article}
                 key={article.id}
-                addClasses="tablet:max-h-[article-img] tablet:mb-4 w-screen tablet:w-[article-card]"
+                scrollContainerRef={scrollContainerRef}
+                addClasses={`tablet:max-h-[article-img] tablet:mb-4 w-screen tablet:w-[article-card] ${
+                  selectedArticle && selectedArticle.id === article.id
+                    ? "selected"
+                    : ""
+                }`}
               />
             ))
           ) : (
@@ -100,7 +126,7 @@ export default function ArticlesByFilterView({
               </div>
             </div>
           )}
-        </div>{" "}
+        </div>
       </div>
     </>
   );

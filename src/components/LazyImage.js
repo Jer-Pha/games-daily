@@ -5,38 +5,59 @@ export default function LazyImage({
   alt,
   className,
   color,
+  checkCache,
   scrollContainerRef,
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const imgRef = useRef(null);
 
   useEffect(() => {
-    // Check if image is cached
-    const image = new Image();
-    image.src = src;
-
-    image.onload = () => {
-      // Image is cached, load immediately
-      setIsLoaded(true);
+    const options = {
+      root: scrollContainerRef.current,
+      threshold: 0.01,
+      rootMargin: "80px 20px",
     };
 
-    image.onerror = () => {
-      // Image is not cached, proceed with lazy loading
-      if (scrollContainerRef?.current) {
-        const observer = new IntersectionObserver(
-          (entries) => {
+    if (checkCache) {
+      // Check cache only if articleIdx is less than or equal to 4
+      const image = new Image();
+      image.src = src;
+
+      image.onload = () => {
+        setIsLoaded(true);
+      };
+
+      image.onerror = () => {
+        // Image is not cached, proceed with lazy loading
+        if (scrollContainerRef?.current) {
+          const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
               if (entry.isIntersecting) {
                 setIsLoaded(true);
                 observer.unobserve(entry.target);
               }
             });
-          },
-          {
-            root: scrollContainerRef.current,
-            threshold: 0.1,
+          }, options);
+
+          if (imgRef.current) {
+            observer.observe(imgRef.current);
           }
-        );
+
+          return () => {
+            observer.disconnect();
+          };
+        }
+      };
+    } else {
+      if (scrollContainerRef?.current) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setIsLoaded(true);
+              observer.unobserve(entry.target);
+            }
+          });
+        }, options);
 
         if (imgRef.current) {
           observer.observe(imgRef.current);
@@ -46,8 +67,8 @@ export default function LazyImage({
           observer.disconnect();
         };
       }
-    };
-  }, [src, scrollContainerRef]);
+    }
+  }, [checkCache, src, scrollContainerRef]);
 
   return (
     <>

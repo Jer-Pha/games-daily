@@ -2,7 +2,12 @@ import React, { useState, useEffect, useContext } from "react";
 import { ArticleContext } from "../context/ArticleContext";
 import Article from "./Article";
 
-export default function ArticleList({ articles, containerRef }) {
+export default function ArticleList({
+  sectionIdx,
+  articles,
+  containerRef,
+  scrollContainerRef,
+}) {
   const { selectedArticle } = useContext(ArticleContext);
   const [expandCheck, setExpandCheck] = useState(false);
 
@@ -36,7 +41,7 @@ export default function ArticleList({ articles, containerRef }) {
   }, [containerRef, articles]);
 
   return (
-    <React.Fragment>
+    <>
       <div
         ref={containerRef}
         className="overflow-x-auto overflow-y-hidden scrollbar-hide articles-container snap-x snap-mandatory"
@@ -46,10 +51,13 @@ export default function ArticleList({ articles, containerRef }) {
             expandCheck ? "tablet:w-auto" : ""
           }`}
         >
-          {articles.map((article) => (
+          {articles.map((article, index) => (
             <Article
               key={article.id}
+              articleIdx={index}
+              sectionIdx={sectionIdx}
               article={article}
+              scrollContainerRef={scrollContainerRef}
               addClasses={`${
                 expandCheck
                   ? "tablet:flex-1 tablet:flex-grow"
@@ -63,6 +71,6 @@ export default function ArticleList({ articles, containerRef }) {
           ))}
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 }

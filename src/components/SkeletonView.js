@@ -5,7 +5,7 @@ import { ModeToggleIcon } from "./Icons";
 export default function SkeletonView({ sliceSize }) {
   return (
     <>
-      <div className="tablet:w-[calc(100vw-256px)] desktop:w-[calc(100vw-640px)] max-w-[1400px] desktop:mx-auto">
+      <div className="tablet:w-[content-t] desktop:w-[content-d] max-w-[content-t] desktop:mx-auto">
         <div className="flex bg-transparent">
           <button
             className={`px-6 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--primary-color)] rounded-t-lg font-semibold border-b-0 border-[1px] border-[var(--text-color)]`}

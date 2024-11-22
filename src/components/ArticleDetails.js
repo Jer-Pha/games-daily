@@ -37,7 +37,35 @@ export default function ArticleDetails({ article, status }) {
     <div
       id="article-details"
       ref={detailsRef}
-      className="fixed tablet:top-1/2 tablet:right-0 tablet:left-[auto] desktop:right-[auto] tablet:transform tablet:-translate-y-1/2 flex flex-col bg-[var(--accent-color)] w-full tablet:w-56 desktop:w-72 p-2 tablet:p-4 tablet:m-4 text-sm tablet:rounded-lg desktop:left-[min(calc(100vw-320px),calc(50vw+700px))] z-50 left-0 right-0 bottom-0 tablet:bottom-[auto] border-[1px] border-[var(--text-color)] max-h-[calc(100vh-32px)] overflow-y-auto overflow-x-hidden"
+      className={`fixed
+        flex
+        flex-col
+        overflow-y-auto
+        overflow-x-hidden
+        w-[calc(100%-4px)]
+        tablet:w-56
+        desktop:w-72
+        max-h-[calc(100vh-32px)]
+        left-0
+        tablet:left-[auto]
+        desktop:left-[min(calc(100vw-320px),calc(50vw+700px))]
+        right-0
+        desktop:right-[auto]
+        tablet:top-1/2
+        bottom-0
+        tablet:bottom-[auto]
+        tablet:transform
+        tablet:-translate-y-1/2
+        p-2
+        tablet:p-4
+        tablet:m-4
+        border-[1px]
+        border-[var(--text-color)]
+        tablet:rounded-lg
+        bg-[var(--accent-color)]
+        text-sm
+        z-50
+        `}
     >
       <button
         onClick={handleCloseBtnClick}
