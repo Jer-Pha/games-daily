@@ -8,6 +8,7 @@ export default function ArticlesByTopicView({
   otherNewsArticles,
   previousView,
   scrollContainerRef,
+  className,
 }) {
   const [loadedSections, setLoadedSections] = useState(
     topicSections.slice(0, sliceSize)
@@ -55,13 +56,16 @@ export default function ArticlesByTopicView({
     ) {
       containerRef.current.classList.remove("active");
     }
+    if (containerRef.current.className.includes("init")) {
+      containerRef.current.classList.remove("init");
+    }
   }, [containerRef, previousView]);
 
   return (
     <>
       <div
         ref={containerRef}
-        className="content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content left"
+        className={`content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content left ${className}`}
       >
         {/* Trending News */}
         <ArticleSection // Use ArticleSection component

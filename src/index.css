@@ -62,6 +62,12 @@ body {
   }
 }
 
+.content-view.init {
+  transform: none !important;
+  opacity: 1 !important;
+  transition: none !important;
+}
+
 .content-view.left {
   transform: translateX(-100%);
   opacity: 0;

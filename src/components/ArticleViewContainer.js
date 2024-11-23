@@ -22,6 +22,7 @@ export default function ArticleViewContainer() {
   const [selectedView, setSelectedView] = useState("topics");
   const [previousView, setPreviousView] = useState(null);
   const [clickedView, setClickedView] = useState(null);
+  const isInitialRender = useRef(true);
   const scrollContainerRef = useRef(null);
 
   // Fetch article data from API
@@ -112,12 +113,19 @@ export default function ArticleViewContainer() {
     }
   }, [initialDataLoaded]);
 
+  useEffect(() => {
+    if (isInitialRender.current && selectedView !== "topics") {
+      isInitialRender.current = false;
+    }
+  }, [selectedView]);
+
+  // Add delay to match slide animation
   const handleViewChange = (newView) => {
-    setPreviousView(selectedView); // Store the current view as previousView
-    setClickedView(newView); // Store the current view as previousView
+    setPreviousView(selectedView);
+    setClickedView(newView);
     setTimeout(() => {
-      setSelectedView(newView); // Update selectedView after a short delay
-    }, 350); // A delay of 0 milliseconds is enough to defer the state update
+      setSelectedView(newView);
+    }, 350);
   };
 
   // Handle loading (render skeleton view)
@@ -151,6 +159,7 @@ export default function ArticleViewContainer() {
               otherNewsArticles={otherNewsArticles}
               previousView={previousView}
               scrollContainerRef={scrollContainerRef}
+              className={`${isInitialRender.current ? "init" : ""}`}
             />
           )}
           {selectedView === "outlets" && (
