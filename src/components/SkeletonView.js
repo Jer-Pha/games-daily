@@ -26,14 +26,17 @@ export default function SkeletonView() {
             Filter
           </button>
           <div className="flex-1 border-b-[1px] border-[var(--text-color)]"></div>
-          <div className="border-b-[1px] border-[var(--text-color)]">
-            <div className="p-2 tablet:p-1.5 m-2 tablet:m-1 bg-[var(--accent-color)] rounded-full aspect-square h-10 w-10 tablet:h-8 tablet:w-8">
+          <div className="border-[1px] border-[var(--text-color)] bg-[var(--accent-color)] rounded-t-lg -mr-px">
+            <div
+              className="p-2 tablet:p-1.5 m-2 tablet:m-1 h-10 w-10 tablet:h-8 tablet:w-8"
+              type="button"
+            >
               <ModeToggleIcon />
             </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-col w-full desktop:items-center overflow-x-hidden overflow-y-auto gutter max-h-[calc(100vh-58px)] tablet:max-h-[calc(100vh-42px)] pr-1 tablet:pr-0">
+      <div className="flex flex-col w-full desktop:items-center overflow-x-hidden overflow-y-auto gutter max-h-[calc(100vh-59px)] tablet:max-h-[calc(100vh-43px)] pr-1 tablet:pr-0">
         <div className="content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content">
           {Array.from({ length: 11 }).map((_, index) => (
             <section

@@ -47,7 +47,7 @@ export default function ArticlesByFilterView({
   return (
     <div
       ref={viewRef}
-      className="flex min-h-[calc(100vh-58px)] tablet:min-h-[calc(100vh-42px)] content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content right bg-[var(--primary-color)]"
+      className="flex min-h-[calc(100vh-59px)] tablet:min-h-[calc(100vh-43px)] content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content right bg-[var(--primary-color)]"
     >
       <ArticleFilterMenu
         topicData={topicData}
