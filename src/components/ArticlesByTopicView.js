@@ -1,48 +1,17 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import ArticleSection from "./ArticleSection";
 
 export default function ArticlesByTopicView({
-  sliceSize,
   trendingNewsArticles,
   topicSections,
   otherNewsArticles,
   previousView,
   scrollContainerRef,
-  className,
+  isInitialRender,
 }) {
-  const [loadedSections, setLoadedSections] = useState(
-    topicSections.slice(0, sliceSize)
-  );
-  const [allSectionsLoaded, setAllSectionsLoaded] = useState(false);
   const containerRef = useRef(null);
 
-  useEffect(() => {
-    if (topicSections && !allSectionsLoaded && loadedSections) {
-      const sectionsToLoad = topicSections.slice(
-        loadedSections.length,
-        loadedSections.length + sliceSize
-      );
-
-      if (sectionsToLoad.length > 0) {
-        setLoadedSections((prevLoadedSections) => {
-          // Check if sectionsToLoad are already in prevLoadedSections
-          const areSectionsLoaded = sectionsToLoad.every((section) =>
-            prevLoadedSections.some(
-              (existingSection) => existingSection.topic === section.topic
-            )
-          );
-
-          if (!areSectionsLoaded) {
-            return [...prevLoadedSections, ...sectionsToLoad];
-          } else {
-            return prevLoadedSections;
-          }
-        });
-      } else {
-        setAllSectionsLoaded(true);
-      }
-    }
-  }, [topicSections, loadedSections, sliceSize, allSectionsLoaded]);
+  console.log("render view: topics");
 
   useEffect(() => {
     if (
@@ -62,43 +31,43 @@ export default function ArticlesByTopicView({
   }, [containerRef, previousView]);
 
   return (
-    <>
-      <div
-        ref={containerRef}
-        className={`content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content left ${className}`}
-      >
-        {/* Trending News */}
-        <ArticleSection // Use ArticleSection component
-          articles={trendingNewsArticles}
-          sectionTopic="Trending News"
-          backgroundColor="bg-[var(--primary-color)]"
-          scrollContainerRef={scrollContainerRef}
-          sectionIdx={0}
-        />
-        {/* Topic Sections */}
-        {loadedSections.map((section, index) => (
-          <ArticleSection
-            key={section.topic}
-            articles={section.articles}
-            sectionTopic={section.topic}
-            backgroundColor={
-              index % 2 === 0
-                ? "bg-[var(--surface-color)]"
-                : "bg-[var(--primary-color)]"
-            }
-            scrollContainerRef={scrollContainerRef}
-            sectionIdx={index + 1}
-          />
-        ))}
-        {/* Other News */}
+    <div
+      ref={containerRef}
+      className={`content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content left ${
+        isInitialRender.current ? "init" : ""
+      }`}
+    >
+      {/* Trending News */}
+      <ArticleSection // Use ArticleSection component
+        articles={trendingNewsArticles}
+        sectionTopic="Trending News"
+        backgroundColor="bg-[var(--primary-color)]"
+        scrollContainerRef={scrollContainerRef}
+        sectionIdx={0}
+      />
+      {/* Topic Sections */}
+      {topicSections.map((section, index) => (
         <ArticleSection
-          articles={otherNewsArticles}
-          sectionTopic="Other News"
-          backgroundColor=""
+          key={section.topic}
+          articles={section.articles}
+          sectionTopic={section.topic}
+          backgroundColor={
+            index % 2 === 0
+              ? "bg-[var(--surface-color)]"
+              : "bg-[var(--primary-color)]"
+          }
           scrollContainerRef={scrollContainerRef}
-          sectionIdx={99}
+          sectionIdx={index + 1}
         />
-      </div>
-    </>
+      ))}
+      {/* Other News */}
+      <ArticleSection
+        articles={otherNewsArticles}
+        sectionTopic="Other News"
+        backgroundColor=""
+        scrollContainerRef={scrollContainerRef}
+        sectionIdx={99}
+      />
+    </div>
   );
 }

@@ -6,7 +6,6 @@ import ArticleFilterMenu from "./ArticleFilterMenu";
 import { ArrowLeftWideIcon } from "./Icons";
 
 export default function ArticlesByFilterView({
-  sliceSize,
   allArticles,
   topicData,
   outletNames,
@@ -14,18 +13,16 @@ export default function ArticlesByFilterView({
   scrollContainerRef,
 }) {
   const { selectedArticle } = useContext(ArticleContext);
-  const [loadedSections, setLoadedSections] = useState(
-    allArticles.slice(0, sliceSize)
-  );
-  const [allSectionsLoaded, setAllSectionsLoaded] = useState(false);
   const [selectedOutlets, setSelectedOutlets] = useState([]);
   const [selectedTopics, setSelectedTopics] = useState([]);
   const containerRef = useRef(null);
   const viewRef = useRef(null);
 
+  console.log("render view: filter");
+
   const filteredSections =
     selectedOutlets.length > 0 || selectedTopics.length > 0
-      ? loadedSections.filter((article) => {
+      ? allArticles.filter((article) => {
           const outletMatch =
             selectedOutlets.length === 0 ||
             selectedOutlets.includes(article.site);
@@ -35,34 +32,6 @@ export default function ArticlesByFilterView({
           return outletMatch && topicMatch;
         })
       : [];
-
-  useEffect(() => {
-    if (allArticles && !allSectionsLoaded && loadedSections) {
-      const sectionsToLoad = allArticles.slice(
-        loadedSections.length,
-        loadedSections.length + sliceSize
-      );
-
-      if (sectionsToLoad.length > 0) {
-        setLoadedSections((prevLoadedSections) => {
-          // Check if sectionsToLoad are already in prevLoadedSections
-          const areSectionsLoaded = sectionsToLoad.every((section) =>
-            prevLoadedSections.some(
-              (existingSection) => existingSection.topic === section.topic
-            )
-          );
-
-          if (!areSectionsLoaded) {
-            return [...prevLoadedSections, ...sectionsToLoad];
-          } else {
-            return prevLoadedSections;
-          }
-        });
-      } else {
-        setAllSectionsLoaded(true);
-      }
-    }
-  }, [allArticles, loadedSections, sliceSize, allSectionsLoaded]);
 
   useEffect(() => {
     if (viewRef.current && !viewRef.current.className.includes("active")) {

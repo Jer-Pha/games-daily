@@ -13,10 +13,9 @@ export default function ArticleViewContainer() {
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
   const [trendingNewsArticles, setTrendingNewsArticles] = useState([]);
   const [topicSections, setTopicSections] = useState([]);
-  const [siteSections, setSiteSections] = useState([]);
+  const [outletSections, setOutletSections] = useState([]);
   const [allArticles, setAllArticles] = useState([]);
   const [otherNewsArticles, setOtherArticles] = useState([]);
-  const [sliceSize, setSliceSize] = useState(6);
   const [outletNames, setOutletNames] = useState([]);
   const [topicData, setTopicData] = useState([]);
   const [selectedView, setSelectedView] = useState("topics");
@@ -25,6 +24,8 @@ export default function ArticleViewContainer() {
   const isInitialRender = useRef(true);
   const scrollContainerRef = useRef(null);
 
+  console.log("render view container");
+
   // Fetch article data from API
   useEffect(() => {
     const fetchDataByTopic = async () => {
@@ -32,8 +33,6 @@ export default function ArticleViewContainer() {
         const response = await fetch(
           "https://www.kfdb.app/api/news/articles-by-topic"
         );
-
-        handleResize();
 
         if (!response.ok) {
           throw new Error("Network response error");
@@ -50,13 +49,6 @@ export default function ArticleViewContainer() {
       } finally {
         setInitialDataLoaded(true);
       }
-      function handleResize() {
-        setSliceSize(Math.ceil(window.innerHeight / 224));
-      }
-
-      window.addEventListener("resize", handleResize);
-
-      return () => window.removeEventListener("resize", handleResize);
     };
 
     fetchDataByTopic();
@@ -100,7 +92,7 @@ export default function ArticleViewContainer() {
             }
           });
 
-          setSiteSections(articlesData);
+          setOutletSections(Object.entries(articlesData));
           setAllArticles(articlesAll);
           setOutletNames(outletNames);
           setTopicData(topics);
@@ -125,12 +117,12 @@ export default function ArticleViewContainer() {
     setClickedView(newView);
     setTimeout(() => {
       setSelectedView(newView);
-    }, 350);
+    }, 250);
   };
 
   // Handle loading (render skeleton view)
   if (!initialDataLoaded) {
-    return <SkeletonView sliceSize={sliceSize} />;
+    return <SkeletonView />;
   }
 
   // Handle errors
@@ -153,19 +145,17 @@ export default function ArticleViewContainer() {
         >
           {selectedView === "topics" && (
             <ArticlesByTopicView
-              sliceSize={sliceSize - 2}
               trendingNewsArticles={trendingNewsArticles}
               topicSections={topicSections}
               otherNewsArticles={otherNewsArticles}
               previousView={previousView}
               scrollContainerRef={scrollContainerRef}
-              className={`${isInitialRender.current ? "init" : ""}`}
+              isInitialRender={isInitialRender}
             />
           )}
           {selectedView === "outlets" && (
             <ArticlesByOutletView
-              sliceSize={sliceSize}
-              siteSections={siteSections}
+              outletSections={outletSections}
               previousView={previousView}
               clickedView={clickedView}
               scrollContainerRef={scrollContainerRef}
@@ -173,7 +163,6 @@ export default function ArticleViewContainer() {
           )}
           {selectedView === "filter" && (
             <ArticlesByFilterView
-              sliceSize={sliceSize * 4}
               allArticles={allArticles}
               topicData={topicData}
               outletNames={outletNames}

@@ -62,25 +62,19 @@ body {
   }
 }
 
-.content-view.init {
-  transform: none !important;
-  opacity: 1 !important;
-  transition: none !important;
-}
-
-.content-view.left {
+.content-view.left:not(.init) {
   transform: translateX(-100%);
   opacity: 0;
   transition: transform 350ms ease-in-out, opacity 350ms ease-in-out;
 }
 
-.content-view.right {
+.content-view.right:not(.init)  {
   transform: translateX(100%);
   opacity: 0;
   transition: transform 350ms ease-in-out, opacity 350ms ease-in-out;
 }
 
-.content-view.active {
+.content-view.active:not(.init)  {
   transform: translateX(0);
   opacity: 1;
 }
