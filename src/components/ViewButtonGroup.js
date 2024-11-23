@@ -66,15 +66,17 @@ export default function ViewButtonGroup({ selectedView, setSelectedView }) {
         Filter
       </button>
       <div className="flex-1 border-b-[1px] border-[var(--text-color)]"></div>
-      <div className="border-b-[1px] border-[var(--text-color)]">
-        <button
-          className="p-2 tablet:p-1.5 mr-1 m-2 tablet:m-1 bg-[var(--accent-color)] rounded-full aspect-square h-10 w-10 tablet:h-8 tablet:w-8"
-          onClick={toggleMode}
+      <button
+        className="border-[1px] border-[var(--text-color)] bg-[var(--accent-color)] rounded-t-lg -mr-px"
+        onClick={toggleMode}
+      >
+        <div
+          className="p-2 tablet:p-1.5 m-2 tablet:m-1 h-10 w-10 tablet:h-8 tablet:w-8"
           type="button"
         >
           <ModeToggleIcon />
-        </button>
-      </div>
+        </div>
+      </button>
     </div>
   );
 }
