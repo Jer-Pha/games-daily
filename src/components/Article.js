@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ArticleContext } from "../context/ArticleContext";
 import LazyImage from "./LazyImage";
-import * as Icons from "./Icons";
+import * as Icons from "../utils/Icons";
 
 export default function Article({
   articleIdx,

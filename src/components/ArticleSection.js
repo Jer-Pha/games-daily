@@ -1,7 +1,11 @@
 import React, { useRef, useEffect, useCallback, useState } from "react";
 import ArticleList from "./ArticleList";
-import { ArrowLeftIcon, ArrowRightIcon } from "./Icons";
-import { ARROW_OPACITY, ARTICLE_TOLERANCE, ARTICLE_WIDTH } from "./Constants";
+import { ArrowLeftIcon, ArrowRightIcon } from "../utils/Icons";
+import {
+  ARROW_OPACITY,
+  ARTICLE_TOLERANCE,
+  ARTICLE_WIDTH,
+} from "../utils/Constants";
 import { sanitizeId } from "../utils/utils";
 
 export default function ArticleSection({

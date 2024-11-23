@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ArticleContext } from "../context/ArticleContext";
-import { ModeToggleIcon } from "./Icons";
+import { ModeToggleIcon } from "../utils/Icons";
 
 export default function ViewButtonGroup({ selectedView, setSelectedView }) {
   const { setSelectedArticle } = useContext(ArticleContext);

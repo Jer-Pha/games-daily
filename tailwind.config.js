@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 // import { backIn } from "framer-motion";
-import * as constants from "./src/components/Constants";
+import * as constants from "./src/utils/Constants";
 
 module.exports = {
   content: [

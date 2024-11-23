@@ -1,6 +1,6 @@
 import React from "react";
 import SkeletonArticle from "./SkeletonArticle";
-import { ModeToggleIcon } from "./Icons";
+import { ModeToggleIcon } from "../utils/Icons";
 
 export default function SkeletonView() {
   return (

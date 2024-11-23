@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import { ArticleContext } from "../context/ArticleContext";
-import { CloseIcon, QuestionMarkIcon } from "./Icons";
+import { CloseIcon, QuestionMarkIcon } from "../utils/Icons";
 
 export default function ArticleDetails({ article, status }) {
   const { setSelectedArticle } = useContext(ArticleContext);
