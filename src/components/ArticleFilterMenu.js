@@ -104,7 +104,7 @@ export default function ArticleFilterMenu({
     >
       <div
         id="filter-menu"
-        className={`w-80 h-full desktop:h-auto absolute desktop:static top-0 left-0 z-50 bg-[var(--accent-color)] desktop:bg-[var(--primary-color)] border-r-[var(--text-color)] border-transparent border-[1px] border-b-[1px] p-4 pointer-events-auto transform transition-transform desktop:transform-none ${
+        className={`w-80 h-full absolute top-0 left-0 z-50 bg-[var(--accent-color)] desktop:bg-[var(--primary-color)] border-r-[var(--text-color)] border-transparent border-[1px] border-b-[1px] p-4 pointer-events-auto transform transition-transform desktop:transform-none ${
           filterMenuIsOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -143,7 +143,7 @@ export default function ArticleFilterMenu({
         </div>
         <div
           id="filter-options"
-          className={`px-4 py-2 border-t-0 border-[1px] border-[var(--text-color)] max-h-[calc(100vh-185px)] tablet:max-h-[calc(100vh-170px)] overflow-y-auto overflow-x-hidden text-left ${
+          className={`px-4 py-2 border-t-0 border-[1px] border-[var(--text-color)] max-h-[calc(100vh-185px)] tablet:max-h-[calc(100vh-171px)] overflow-y-auto overflow-x-hidden text-left ${
             activeTab === "outlet"
               ? "bg-[var(--surface-color)]"
               : "bg-[var(--bg-color)]"
@@ -162,7 +162,7 @@ export default function ArticleFilterMenu({
                     type="checkbox"
                     value={outlet.slug}
                     name="filter-by-outlet"
-                    className="absolute desktop:static top-1/2 transform -translate-y-1/2"
+                    className="absolute top-1/2 transform -translate-y-1/2"
                     checked={selectedOutlets.includes(outlet.slug)}
                     onChange={() => handleOutletChange(outlet.slug)}
                   />
@@ -183,7 +183,7 @@ export default function ArticleFilterMenu({
                 />
                 {searchQuery && (
                   <button
-                    className="absolute desktop:static right-2 top-1/2 transform -translate-y-1/2"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2"
                     onClick={() => setSearchQuery("")}
                   >
                     <CloseIcon className="h-5 w-5 text-gray-500" />
@@ -204,7 +204,7 @@ export default function ArticleFilterMenu({
                         type="checkbox"
                         value={topic}
                         name="filter-by-topic"
-                        className="absolute desktop:static top-1/2 transform -translate-y-1/2"
+                        className="absolute top-1/2 transform -translate-y-1/2"
                         checked={selectedTopics.includes(topic)}
                         onChange={() => handleTopicChange(topic)}
                       />

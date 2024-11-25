@@ -59,7 +59,7 @@ export default function ArticlesByFilterView({
       />
       <div
         ref={containerRef}
-        className={`flex flex-wrap justify-around flex-1 overflow-y-auto p-4 ${
+        className={`flex flex-wrap justify-around flex-1 overflow-y-auto p-4 desktop:ml-80 ${
           filteredSections.length === 0
             ? "min-h-[calc(100vh-90px)] tablet:min-h-[calc(100vh-74px)] content-center"
             : "content-start"
