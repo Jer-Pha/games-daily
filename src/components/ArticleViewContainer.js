@@ -132,7 +132,7 @@ export default function ArticleViewContainer() {
 
   return (
     <>
-      <div className="">
+      <div>
         <div className="flex flex-col desktop:items-center w-full overflow-y-auto gutter pr-1 tablet:pr-0">
           <ViewButtonGroup
             selectedView={selectedView}
