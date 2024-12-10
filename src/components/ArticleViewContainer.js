@@ -78,6 +78,13 @@ export default function ArticleViewContainer() {
           const topicData = await topicResponse.json();
           const topics = topicData.map((topic) => topic.topic);
 
+          // Update keywordsMeta
+          const keywords = topics.slice(0, 10).join(", ");
+          const keywordsMeta = document.querySelector('meta[name="keywords"]');
+          if (keywordsMeta) {
+            keywordsMeta.content = keywords;
+          }
+
           setError(null);
 
           const articlesAll = Object.values(articlesData).flat();
