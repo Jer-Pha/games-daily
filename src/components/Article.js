@@ -28,11 +28,20 @@ export default function Article({
     }
   }, [sectionIdx, articleIdx, setCheckCache]);
 
+  const handleKeyDown = (event) => {
+    if (event.key === " " || event.key === "Enter") {
+      event.preventDefault(); // Prevent default spacebar/enter behavior
+      handleClick();
+    }
+  };
+
   return (
     <article
       className={`${addClasses} w-screen min-w-[calc(100vw-2px)] tablet:min-w-[article-card] cursor-pointer overflow-hidden border-y-2 border-x-2 border-transparent snap-start snap-always relative z-10 tablet:rounded-lg`}
       title={article.headline}
       onClick={handleClick}
+      tabindex="0"
+      onKeyDown={handleKeyDown}
     >
       <div>
         <LazyImage

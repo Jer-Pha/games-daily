@@ -1,4 +1,10 @@
-import React, { useRef, useEffect, useState, useContext } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useContext,
+  useCallback,
+} from "react";
 import { ArticleContext } from "../context/ArticleContext";
 import { CloseIcon, QuestionMarkIcon } from "../utils/Icons";
 
@@ -17,9 +23,9 @@ export default function ArticleDetails({ article }) {
     }
   }, [article]);
 
-  const handleCloseBtnClick = () => {
+  const handleCloseBtnClick = useCallback(() => {
     setSelectedArticle(null);
-  };
+  }, [setSelectedArticle]);
 
   const handleQuestionMarkClick = () => {
     setShowPopup(!showPopup);
@@ -28,6 +34,20 @@ export default function ArticleDetails({ article }) {
   const handlePopupClose = () => {
     setShowPopup(false);
   };
+
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === "Escape") {
+        handleCloseBtnClick();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [handleCloseBtnClick]);
 
   return (
     <>
