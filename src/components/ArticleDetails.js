@@ -68,6 +68,7 @@ export default function ArticleDetails({ article }) {
           onClick={handleCloseBtnClick}
           className="absolute right-1 top-1 h-6 w-6"
           type="button"
+          aria-label="Close article details"
         >
           <CloseIcon />
         </button>
@@ -85,7 +86,11 @@ export default function ArticleDetails({ article }) {
         <div className="bg-[var(--primary-color)] p-4 rounded-lg">
           <div className="flex gap-2">
             <p className="text-left font-semibold">Summary</p>
-            <button type="button" className="h-5 w-5">
+            <button
+              type="button"
+              aria-label="About summary"
+              className="h-5 w-5"
+            >
               <QuestionMarkIcon onClick={handleQuestionMarkClick} />
             </button>
           </div>
@@ -106,6 +111,7 @@ export default function ArticleDetails({ article }) {
                 onClick={handlePopupClose}
                 className="absolute right-1 top-1 h-6 w-6"
                 type="button"
+                aria-label="Close summary information"
               >
                 <CloseIcon />
               </button>

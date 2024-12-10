@@ -82,6 +82,7 @@ export default function ArticleSection({
           className={`arrow-left z-50 h-8 w-8 ${ARROW_OPACITY}`}
           onClick={() => scrollArticleList(-1)}
           type="button"
+          aria-label="Scroll left"
         >
           <ArrowLeftIcon />
         </button>
@@ -91,6 +92,7 @@ export default function ArticleSection({
           className={`arrow-right z-50 h-8 w-8 ${ARROW_OPACITY}`}
           onClick={() => scrollArticleList(1)}
           type="button"
+          aria-label="Scroll right"
         >
           <ArrowRightIcon />
         </button>

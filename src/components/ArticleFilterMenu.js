@@ -110,6 +110,7 @@ export default function ArticleFilterMenu({
       >
         <button
           type="button"
+          aria-label={filterMenuIsOpen ? "Close filter" : "Open filter"}
           className="absolute desktop:static desktop:hidden top-1/2 -right-0 transform translate-x-full -translate-y-1/2 p-1 border-[var(--text-color)] border-[1px] border-l-[var(--accent-color)] border-l-2 rounded-r-lg bg-[var(--accent-color)] "
           onClick={() => handleFilterMenuToggle(!filterMenuIsOpen)}
         >
@@ -120,6 +121,7 @@ export default function ArticleFilterMenu({
         <div id="filter-tabs" className="flex">
           <button
             type="button"
+            aria-label="Filter by topic"
             className={`w-1/2 py-2 text-sm bg-[var(--bg-color)] border-[var(--text-color)] rounded-t-md ${
               activeTab === "topic"
                 ? "border-b-0 border-[1px]"
@@ -131,6 +133,7 @@ export default function ArticleFilterMenu({
           </button>
           <button
             type="button"
+            aria-label="Filter by outlet"
             className={`w-1/2 py-2 text-sm bg-[var(--surface-color)] border-[var(--text-color)] rounded-t-md ${
               activeTab === "outlet"
                 ? "border-b-0 border-[1px]"
@@ -183,6 +186,8 @@ export default function ArticleFilterMenu({
                 />
                 {searchQuery && (
                   <button
+                    type="button"
+                    aria-label="Clear search"
                     className="absolute right-2 top-1/2 transform -translate-y-1/2"
                     onClick={() => setSearchQuery("")}
                   >
@@ -220,6 +225,9 @@ export default function ArticleFilterMenu({
           <button
             id="filter-clear"
             type="reset"
+            aria-label={
+              activeTab === "topic" ? "Clear all topics" : "Clear all outlets"
+            }
             className="px-4 py-2 bg-[var(--text-color)] text-[var(--bg-color)] rounded-lg"
             onClick={handleClearFilter}
           >
@@ -228,6 +236,9 @@ export default function ArticleFilterMenu({
           <button
             id="filter-all"
             type="button"
+            aria-label={
+              activeTab === "topic" ? "Select all topics" : "Select all outlets"
+            }
             className="px-4 py-2 bg-[var(--primary-color)] desktop:bg-[var(--accent-color)] rounded-lg"
             onClick={handleSelectAllFilter}
           >

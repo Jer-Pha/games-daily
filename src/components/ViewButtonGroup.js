@@ -44,6 +44,8 @@ export default function ViewButtonGroup({ selectedView, setSelectedView }) {
         }`}
         onClick={() => handleViewClick("topics")}
         disabled={selectedView === "topics"}
+        type="button"
+        aria-label="Articles by topic"
       >
         Topics
       </button>
@@ -53,6 +55,8 @@ export default function ViewButtonGroup({ selectedView, setSelectedView }) {
         }`}
         onClick={() => handleViewClick("outlets")}
         disabled={selectedView === "outlets"}
+        type="button"
+        aria-label="Articles by outlet"
       >
         Outlets
       </button>
@@ -62,6 +66,8 @@ export default function ViewButtonGroup({ selectedView, setSelectedView }) {
         }`}
         onClick={() => handleViewClick("filter")}
         disabled={selectedView === "filter"}
+        type="button"
+        aria-label="Filter articles"
       >
         Filter
       </button>
@@ -69,6 +75,8 @@ export default function ViewButtonGroup({ selectedView, setSelectedView }) {
       <button
         className="border-[1px] border-[var(--text-color)] bg-[var(--accent-color)] rounded-t-lg -mr-px"
         onClick={toggleMode}
+        type="button"
+        aria-label="Toggle dark mode"
       >
         <div
           className="p-2 tablet:p-1.5 m-2 tablet:m-1 h-10 w-10 tablet:h-8 tablet:w-8"
