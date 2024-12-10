@@ -12,7 +12,6 @@ export default function ArticleDetails({ article }) {
   useEffect(() => {
     if (detailsRef.current) {
       mobileSpacerRef.current.style.height = `${detailsRef.current.offsetHeight}px`;
-      console.log(detailsRef.current.offsetHeight);
     } else {
       mobileSpacerRef.current.style.height = "0px";
     }

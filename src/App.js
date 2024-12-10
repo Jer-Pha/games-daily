@@ -4,8 +4,6 @@ import { ArticleProvider } from "./context/ArticleContext";
 import ArticleViewContainer from "./components/ArticleViewContainer";
 
 export default function App() {
-  console.log("render app");
-
   useEffect(() => {
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       document.documentElement.classList.add("dark");

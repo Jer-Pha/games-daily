@@ -9,8 +9,6 @@ export default function ArticlesByOutletView({
 }) {
   const containerRef = useRef(null);
 
-  console.log("render view: outlets");
-
   useEffect(() => {
     if (containerRef.current && previousView !== "outlets") {
       containerRef.current.classList.add("active");

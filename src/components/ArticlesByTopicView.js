@@ -11,8 +11,6 @@ export default function ArticlesByTopicView({
 }) {
   const containerRef = useRef(null);
 
-  console.log("render view: topics");
-
   useEffect(() => {
     if (
       containerRef.current &&

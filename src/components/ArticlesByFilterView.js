@@ -18,8 +18,6 @@ export default function ArticlesByFilterView({
   const containerRef = useRef(null);
   const viewRef = useRef(null);
 
-  console.log("render view: filter");
-
   const filteredSections =
     selectedOutlets.length > 0 || selectedTopics.length > 0
       ? allArticles.filter((article) => {

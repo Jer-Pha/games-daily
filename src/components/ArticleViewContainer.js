@@ -24,8 +24,6 @@ export default function ArticleViewContainer() {
   const isInitialRender = useRef(true);
   const scrollContainerRef = useRef(null);
 
-  console.log("render view container");
-
   // Fetch article data from API
   useEffect(() => {
     const fetchDataByTopic = async () => {
