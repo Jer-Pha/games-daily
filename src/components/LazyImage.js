@@ -74,7 +74,7 @@ export default function LazyImage({
     <>
       <img
         ref={imgRef}
-        src={isLoaded ? src : ""}
+        src={isLoaded ? src : null}
         alt={alt}
         className={`${className} ${!isLoaded ? "opacity-0" : ""}`}
       />

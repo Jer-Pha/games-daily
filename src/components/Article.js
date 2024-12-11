@@ -40,7 +40,7 @@ export default function Article({
       className={`${addClasses} w-screen min-w-[calc(100vw-2px)] tablet:min-w-[article-card] cursor-pointer overflow-hidden border-y-2 border-x-2 border-transparent snap-start snap-always relative z-10 tablet:rounded-lg`}
       title={article.headline}
       onClick={handleClick}
-      tabindex="0"
+      tabIndex="0"
       onKeyDown={handleKeyDown}
     >
       <div>

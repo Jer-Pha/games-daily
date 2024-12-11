@@ -83,7 +83,7 @@ export default function ArticleSection({
           onClick={() => scrollArticleList(-1)}
           type="button"
           aria-label="Scroll left"
-          tabindex="-1"
+          tabIndex="-1"
         >
           <ArrowLeftIcon />
         </button>
@@ -94,7 +94,7 @@ export default function ArticleSection({
           onClick={() => scrollArticleList(1)}
           type="button"
           aria-label="Scroll right"
-          tabindex="-1"
+          tabIndex="-1"
         >
           <ArrowRightIcon />
         </button>
