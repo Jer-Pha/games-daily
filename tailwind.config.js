@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-// import { backIn } from "framer-motion";
 import * as constants from "./src/utils/Constants";
 
 module.exports = {
@@ -8,12 +7,18 @@ module.exports = {
     "./src/*.{html,js}",
     "./public/*.{html,js}",
   ],
+  safelist: [
+    "text-opacity-45 border-opacity-45 bg-opacity-35 hover:text-opacity-70 hover:border-opacity-60 hover:bg-opacity-60",
+  ],
   theme: {
     screens: {
       tablet: "550px", // => @media (min-width: 550px) { ... }
       desktop: "1400px", // => @media (min-width: 1280px) { ... }
     },
     extend: {
+      fontFamily: {
+        heavitas: ["Heavitas", "sans-serif"],
+      },
       maxHeight: {
         "[article-img]": `${constants.IMAGE_HEIGHT}px`,
       },
