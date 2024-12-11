@@ -1,9 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { ModalContext } from "../context/ModalContext";
 import { CloseIcon } from "../utils/Icons";
 
 export default function Modal() {
   const { isModalOpen, closeModal, modalContent } = useContext(ModalContext);
+  const closeButtonRef = useRef(null);
+
+  useEffect(() => {
+    if (isModalOpen && closeButtonRef.current) {
+      closeButtonRef.current.focus();
+    }
+  }, [isModalOpen]);
 
   if (!isModalOpen) {
     return null;
@@ -12,16 +19,17 @@ export default function Modal() {
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center">
       <div className="fixed inset-0 bg-black opacity-60" onClick={closeModal} />
-      <div className="bg-[var(--surface-color)] rounded-lg p-4 z-50 max-w-80 relative border-[var(--text-color)] border-2">
+      <div className="bg-[var(--surface-color)] rounded-lg p-4 z-50 max-w-80 tablet:max-w-96 relative border-[var(--text-color)] border-2">
         <button
           onClick={closeModal}
           className="absolute right-2 top-2 h-6 w-6"
           type="button"
           aria-label="Close popup dialog"
+          ref={closeButtonRef}
         >
           <CloseIcon />
         </button>
-        {modalContent}
+        <div className="flex flex-col gap-2">{modalContent}</div>
       </div>
     </div>
   );
