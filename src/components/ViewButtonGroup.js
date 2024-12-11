@@ -67,8 +67,8 @@ export default function ViewButtonGroup({ selectedView, setSelectedView }) {
         <p className="text-sm text-justify">
           We provide a daily snapshot of the most popular, trending, and recent
           gaming news, gathering articles from{" "}
-          <span class="font-heavitas">27</span> leading gaming news outlets and
-          delivering them in an easy-to-browse format.
+          <span className="font-heavitas">27</span> leading gaming news outlets
+          and delivering them in an easy-to-browse format.
         </p>
         <p className="text-sm text-justify">
           With <span className="font-heavitas">Controller Chronicle</span>,

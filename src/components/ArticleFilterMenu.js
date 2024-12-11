@@ -178,6 +178,7 @@ export default function ArticleFilterMenu({
             <div className="flex flex-col">
               <div className="relative my-2">
                 <input
+                  id="topic-search"
                   type="text"
                   placeholder="Search topics..."
                   value={searchQuery}
