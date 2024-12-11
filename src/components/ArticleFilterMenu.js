@@ -146,7 +146,7 @@ export default function ArticleFilterMenu({
         </div>
         <div
           id="filter-options"
-          className={`px-4 py-2 border-t-0 border-[1px] border-[var(--text-color)] max-h-[calc(100vh-185px)] tablet:max-h-[calc(100vh-171px)] overflow-y-auto overflow-x-hidden text-left ${
+          className={`px-4 py-2 border-t-0 border-[1px] border-[var(--text-color)] max-h-[calc(100vh-184px)] tablet:max-h-[calc(100vh-170px)] overflow-y-auto overflow-x-hidden text-left ${
             activeTab === "outlet"
               ? "bg-[var(--surface-color)]"
               : "bg-[var(--bg-color)]"

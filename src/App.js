@@ -18,7 +18,7 @@ export default function App() {
     <ModalProvider>
       <ArticleProvider>
         <div className="App flex">
-          <main className="w-screen min-h-screen pt-px relative">
+          <main className="w-screen min-h-screen relative">
             <ArticleViewContainer />
           </main>
           <Modal />
