@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { ArticleContext } from "../context/ArticleContext";
-import { ModeToggleIcon } from "../utils/Icons";
+import { LogoIcon, ModeToggleIcon } from "../utils/Icons";
 
 export default function ViewButtonGroup({ selectedView, setSelectedView }) {
   const { setSelectedArticle } = useContext(ArticleContext);
@@ -37,7 +37,7 @@ export default function ViewButtonGroup({ selectedView, setSelectedView }) {
   };
 
   return (
-    <div className="flex bg-transparent tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-r-[1px] border-transparent tab-corners">
+    <div className="flex bg-transparent desktop:w-[content-d] max-w-screen-desktop border-r-[1px] border-transparent tab-corners">
       <button
         className={`px-6 py-3 tablet:py-2 text-center uppercase text-sm bg-[var(--primary-color)] rounded-t-lg ${
           buttonStyles[selectedView]?.topics || ""
@@ -71,7 +71,16 @@ export default function ViewButtonGroup({ selectedView, setSelectedView }) {
       >
         Filter
       </button>
-      <div className="flex-1 border-b-[1px] border-[var(--text-color)]"></div>
+      <div className="flex-1 border-b-[1px] border-[var(--text-color)] bg-[var(--bg-color)]">
+        <div className="hidden tablet:flex justify-center items-center h-full">
+          <div className="hidden desktop:block p-0.5 h-10 w-10" type="button">
+            <LogoIcon />
+          </div>
+          <h1 className="font-heavitas text-lg desktop:text-2xl px-2">
+            Controller Chronicle
+          </h1>
+        </div>
+      </div>
       <button
         className="border-[1px] border-[var(--text-color)] bg-[var(--accent-color)] rounded-t-lg -mr-px"
         onClick={toggleMode}
