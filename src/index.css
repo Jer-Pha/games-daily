@@ -37,6 +37,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("img/svg/bg-tile.svg");
+  background-repeat: repeat;
+  background-size: 30px 24px;
+  background-position: center;
 }
 
 .skeleton {
