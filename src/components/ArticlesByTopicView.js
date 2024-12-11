@@ -62,7 +62,11 @@ export default function ArticlesByTopicView({
       <ArticleSection
         articles={otherNewsArticles}
         sectionTopic="Other News"
-        backgroundColor=""
+        backgroundColor={
+          topicSections.length % 2 === 0
+            ? "bg-[var(--surface-color)]"
+            : "bg-[var(--primary-color)]"
+        }
         scrollContainerRef={scrollContainerRef}
         sectionIdx={99}
       />
