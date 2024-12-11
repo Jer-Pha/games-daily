@@ -1,16 +1,9 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext } from "react";
 import { ModalContext } from "../context/ModalContext";
 import { CloseIcon } from "../utils/Icons";
 
 export default function Modal() {
   const { isModalOpen, closeModal, modalContent } = useContext(ModalContext);
-  const closeButtonRef = useRef(null);
-
-  useEffect(() => {
-    if (isModalOpen && closeButtonRef.current) {
-      closeButtonRef.current.focus();
-    }
-  }, [isModalOpen]);
 
   if (!isModalOpen) {
     return null;
@@ -25,7 +18,6 @@ export default function Modal() {
           className="absolute right-2 top-2 h-6 w-6"
           type="button"
           aria-label="Close popup dialog"
-          ref={closeButtonRef}
         >
           <CloseIcon />
         </button>
