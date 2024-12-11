@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import { ArticleProvider } from "./context/ArticleContext";
+import { ModalProvider } from "./context/ModalContext";
 import ArticleViewContainer from "./components/ArticleViewContainer";
+import Modal from "./components/Modal";
 
 export default function App() {
   useEffect(() => {
@@ -13,12 +15,15 @@ export default function App() {
   }, []);
 
   return (
-    <ArticleProvider>
-      <div className="App flex">
-        <main className="w-screen min-h-screen pt-px relative">
-          <ArticleViewContainer />
-        </main>
-      </div>
-    </ArticleProvider>
+    <ModalProvider>
+      <ArticleProvider>
+        <div className="App flex">
+          <main className="w-screen min-h-screen pt-px relative">
+            <ArticleViewContainer />
+          </main>
+          <Modal />
+        </div>
+      </ArticleProvider>
+    </ModalProvider>
   );
 }
