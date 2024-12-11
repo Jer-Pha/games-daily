@@ -7,6 +7,7 @@ import { ReactComponent as ArrowRightIcon } from "../img/svg/arrow-right.svg";
 import { ReactComponent as CloseIcon } from "../img/svg/close.svg";
 import { ReactComponent as FilterOffIcon } from "../img/svg/filter-off.svg";
 import { ReactComponent as FilterOnIcon } from "../img/svg/filter-on.svg";
+import { ReactComponent as InfoIcon } from "../img/svg/info.svg";
 import { ReactComponent as LogoIcon } from "../img/svg/logo.svg";
 import { ReactComponent as ModeToggleIcon } from "../img/svg/mode_toggle.svg";
 import { ReactComponent as QuestionMarkIcon } from "../img/svg/question-mark.svg";
@@ -49,6 +50,7 @@ export {
   CloseIcon,
   FilterOffIcon,
   FilterOnIcon,
+  InfoIcon,
   LogoIcon,
   ModeToggleIcon,
   QuestionMarkIcon,
