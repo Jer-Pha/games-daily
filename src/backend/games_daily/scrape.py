@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from html import unescape
 from json import load
 from os import path
 from random import randint
@@ -65,6 +66,8 @@ def get_headline_text(article, selectors):
             if child.name is None
         )  # Ensure sibling text is not included
     )
+
+    headline = unescape(headline)  # Decode HTML entities
 
     return headline
 
