@@ -8,7 +8,6 @@ import ArticleDetails from "./ArticleDetails";
 import SkeletonView from "./SkeletonView";
 
 export default function ArticleViewContainer() {
-  console.log("render ArticleViewContainer");
   const { selectedArticle } = useContext(ArticleContext);
   const [error, setError] = useState(null);
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);

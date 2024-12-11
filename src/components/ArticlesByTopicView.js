@@ -7,7 +7,6 @@ export default function ArticlesByTopicView({
   otherNewsArticles,
   scrollContainerRef,
 }) {
-  console.log("render ArticlesByTopicView");
   const containerRef = useRef(null);
 
   return (

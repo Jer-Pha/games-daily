@@ -5,7 +5,6 @@ export default function ArticlesByOutletView({
   outletSections,
   scrollContainerRef,
 }) {
-  console.log("render ArticlesByOutletView");
   const containerRef = useRef(null);
 
   return (

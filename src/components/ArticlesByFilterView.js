@@ -11,7 +11,6 @@ export default function ArticlesByFilterView({
   outletNames,
   scrollContainerRef,
 }) {
-  console.log("render ArticlesByFilterView");
   const { selectedArticle } = useContext(ArticleContext);
   const [selectedOutlets, setSelectedOutlets] = useState([]);
   const [selectedTopics, setSelectedTopics] = useState([]);
