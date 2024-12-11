@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { ArticleContext } from "../context/ArticleContext";
 import Article from "./Article";
 import ArticleFilterMenu from "./ArticleFilterMenu";
@@ -9,9 +9,9 @@ export default function ArticlesByFilterView({
   allArticles,
   topicData,
   outletNames,
-  previousView,
   scrollContainerRef,
 }) {
+  console.log("render ArticlesByFilterView");
   const { selectedArticle } = useContext(ArticleContext);
   const [selectedOutlets, setSelectedOutlets] = useState([]);
   const [selectedTopics, setSelectedTopics] = useState([]);
@@ -31,21 +31,10 @@ export default function ArticlesByFilterView({
         })
       : [];
 
-  useEffect(() => {
-    if (viewRef.current && !viewRef.current.className.includes("active")) {
-      viewRef.current.classList.add("active");
-    } else if (
-      previousView === "filter" &&
-      viewRef.current.className.includes("active")
-    ) {
-      viewRef.current.classList.remove("active");
-    }
-  }, [viewRef, previousView]);
-
   return (
     <div
       ref={viewRef}
-      className="flex min-h-[calc(100vh-58px)] tablet:min-h-[calc(100vh-42px)] content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content right bg-[var(--primary-color)]"
+      className="flex min-h-[calc(100vh-58px)] tablet:min-h-[calc(100vh-42px)] content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content bg-[var(--primary-color)]`"
     >
       <ArticleFilterMenu
         topicData={topicData}

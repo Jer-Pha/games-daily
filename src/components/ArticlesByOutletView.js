@@ -1,35 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import ArticleSection from "./ArticleSection";
 
 export default function ArticlesByOutletView({
   outletSections,
-  previousView,
-  clickedView,
   scrollContainerRef,
 }) {
+  console.log("render ArticlesByOutletView");
   const containerRef = useRef(null);
-
-  useEffect(() => {
-    if (containerRef.current && previousView !== "outlets") {
-      containerRef.current.classList.add("active");
-    } else {
-      if (clickedView === "topics") {
-        containerRef.current.classList.add("right");
-        containerRef.current.classList.remove("left");
-      } else {
-        containerRef.current.classList.add("left");
-        containerRef.current.classList.remove("right");
-      }
-      containerRef.current.classList.remove("active");
-    }
-  }, [containerRef, previousView, clickedView]);
 
   return (
     <div
       ref={containerRef}
-      className={`content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content ${
-        previousView === "topics" ? "right" : "left"
-      }`}
+      className="content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content"
     >
       {outletSections &&
         outletSections.map((section, index) => (

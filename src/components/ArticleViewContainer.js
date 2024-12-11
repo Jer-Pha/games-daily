@@ -8,6 +8,7 @@ import ArticleDetails from "./ArticleDetails";
 import SkeletonView from "./SkeletonView";
 
 export default function ArticleViewContainer() {
+  console.log("render ArticleViewContainer");
   const { selectedArticle } = useContext(ArticleContext);
   const [error, setError] = useState(null);
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
@@ -19,9 +20,6 @@ export default function ArticleViewContainer() {
   const [outletNames, setOutletNames] = useState([]);
   const [topicData, setTopicData] = useState([]);
   const [selectedView, setSelectedView] = useState("topics");
-  const [previousView, setPreviousView] = useState(null);
-  const [clickedView, setClickedView] = useState(null);
-  const isInitialRender = useRef(true);
   const scrollContainerRef = useRef(null);
 
   // Fetch article data from API
@@ -110,21 +108,6 @@ export default function ArticleViewContainer() {
     }
   }, [initialDataLoaded]);
 
-  useEffect(() => {
-    if (isInitialRender.current && selectedView !== "topics") {
-      isInitialRender.current = false;
-    }
-  }, [selectedView]);
-
-  // Add delay to match slide animation
-  const handleViewChange = (newView) => {
-    setPreviousView(selectedView);
-    setClickedView(newView);
-    setTimeout(() => {
-      setSelectedView(newView);
-    }, 250);
-  };
-
   // Handle loading (render skeleton view)
   if (!initialDataLoaded) {
     return <SkeletonView />;
@@ -141,40 +124,37 @@ export default function ArticleViewContainer() {
         <div className="flex flex-col desktop:items-center w-full overflow-y-auto gutter pr-1 tablet:pr-0">
           <ViewButtonGroup
             selectedView={selectedView}
-            setSelectedView={handleViewChange}
+            setSelectedView={setSelectedView}
           />
         </div>
         <div
           ref={scrollContainerRef}
           className="flex flex-col w-full desktop:items-center overflow-x-hidden overflow-y-auto gutter max-h-[calc(100vh-58px)] tablet:max-h-[calc(100vh-42px)] pr-1 tablet:pr-0"
         >
-          {selectedView === "topics" && (
-            <ArticlesByTopicView
-              trendingNewsArticles={trendingNewsArticles}
-              topicSections={topicSections}
-              otherNewsArticles={otherNewsArticles}
-              previousView={previousView}
-              scrollContainerRef={scrollContainerRef}
-              isInitialRender={isInitialRender}
-            />
-          )}
-          {selectedView === "outlets" && (
-            <ArticlesByOutletView
-              outletSections={outletSections}
-              previousView={previousView}
-              clickedView={clickedView}
-              scrollContainerRef={scrollContainerRef}
-            />
-          )}
-          {selectedView === "filter" && (
-            <ArticlesByFilterView
-              allArticles={allArticles}
-              topicData={topicData}
-              outletNames={outletNames}
-              previousView={previousView}
-              scrollContainerRef={scrollContainerRef}
-            />
-          )}
+          <div className="relative">
+            {selectedView === "topics" && (
+              <ArticlesByTopicView
+                trendingNewsArticles={trendingNewsArticles}
+                topicSections={topicSections}
+                otherNewsArticles={otherNewsArticles}
+                scrollContainerRef={scrollContainerRef}
+              />
+            )}
+            {selectedView === "outlets" && (
+              <ArticlesByOutletView
+                outletSections={outletSections}
+                scrollContainerRef={scrollContainerRef}
+              />
+            )}
+            {selectedView === "filter" && (
+              <ArticlesByFilterView
+                allArticles={allArticles}
+                topicData={topicData}
+                outletNames={outletNames}
+                scrollContainerRef={scrollContainerRef}
+              />
+            )}
+          </div>
         </div>
       </div>
       {selectedArticle && <ArticleDetails article={selectedArticle} />}

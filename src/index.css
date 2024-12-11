@@ -66,23 +66,6 @@ body {
   }
 }
 
-.content-view.left:not(.init) {
-  transform: translateX(-100%);
-  opacity: 0;
-  transition: transform 350ms ease-in-out, opacity 350ms ease-in-out;
-}
-
-.content-view.right:not(.init)  {
-  transform: translateX(100%);
-  opacity: 0;
-  transition: transform 350ms ease-in-out, opacity 350ms ease-in-out;
-}
-
-.content-view.active:not(.init)  {
-  transform: translateX(0);
-  opacity: 1;
-}
-
 
 /***************************
 ******** Scrollbar *********
