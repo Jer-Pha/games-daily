@@ -33,7 +33,7 @@ export default function ArticlesByFilterView({
   return (
     <div
       ref={viewRef}
-      className="flex min-h-[calc(100vh-58px)] tablet:min-h-[calc(100vh-42px)] content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content bg-[var(--primary-color)]`"
+      className="flex min-h-[calc(100vh-58px)] tablet:min-h-[calc(100vh-42px)] content-view tablet:w-[content-t] desktop:w-[content-d] max-w-screen-desktop border-content bg-[var(--primary-color)]"
     >
       <ArticleFilterMenu
         topicData={topicData}
@@ -45,7 +45,7 @@ export default function ArticlesByFilterView({
       />
       <div
         ref={containerRef}
-        className={`flex flex-wrap justify-around flex-1 overflow-y-auto p-4 desktop:ml-80 ${
+        className={`flex flex-wrap justify-around flex-1 overflow-y-auto desktop:p-4 desktop:ml-80 ${
           filteredSections.length === 0
             ? "min-h-[calc(100vh-89px)] tablet:min-h-[calc(100vh-73px)] content-center"
             : "content-start"
