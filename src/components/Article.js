@@ -37,7 +37,7 @@ export default function Article({
 
   return (
     <article
-      className={`${addClasses} w-screen min-w-[calc(100vw-2px)] tablet:min-w-[article-card] cursor-pointer overflow-hidden border-y-2 border-x-2 border-transparent snap-start snap-always relative z-10 tablet:rounded-lg`}
+      className={`${addClasses} w-[calc(100vw-8px)] tablet:min-w-[article-card] cursor-pointer overflow-hidden border-y-2 border-x-2 border-transparent snap-start snap-always relative z-10 tablet:rounded-lg`}
       title={article.headline}
       onClick={handleClick}
       tabIndex="0"
