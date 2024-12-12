@@ -6,39 +6,25 @@ export default function ArticleList({
   sectionIdx,
   articles,
   containerRef,
+  articleRowRef,
   scrollContainerRef,
+  containerWidth,
+  articleRowWidth,
 }) {
   const { selectedArticle } = useContext(ArticleContext);
   const [expandCheck, setExpandCheck] = useState(false);
 
   useEffect(() => {
-    const container = containerRef.current;
-
     // Check if the articles need to be expanded
     const updateExpandCheck = () => {
-      if (!container) return;
-
-      const containerWidth = container.offsetWidth;
-      const articleRow = container.querySelector(".article-row");
-      const articleRowWidth = articleRow ? articleRow.offsetWidth : 0;
+      if (!containerWidth || !articleRowWidth) return;
 
       setExpandCheck(articleRowWidth <= containerWidth);
     };
 
     // Initial call
     updateExpandCheck();
-
-    // Check each time the container is resized
-    const resizeObserver = new ResizeObserver(updateExpandCheck);
-    if (container) {
-      resizeObserver.observe(container);
-    }
-
-    return () => {
-      // Clean up event listeners
-      resizeObserver.disconnect();
-    };
-  }, [containerRef, articles]);
+  }, [containerWidth, articleRowWidth, articles]);
 
   return (
     <>
@@ -47,6 +33,7 @@ export default function ArticleList({
         className="overflow-x-auto overflow-y-hidden scrollbar-hide articles-container snap-x snap-mandatory"
       >
         <div
+          ref={articleRowRef}
           className={`flex gap-0 tablet:gap-1 w-max article-row ${
             expandCheck ? "tablet:w-auto" : ""
           }`}

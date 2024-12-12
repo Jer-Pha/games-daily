@@ -15,19 +15,23 @@ export default function ArticleSection({
   backgroundColor,
   scrollContainerRef,
 }) {
+  // console.log("render ArticleSection");
   const containerRef = useRef(null);
+  const articleRowRef = useRef(null);
   const [arrowBtnDisplayKey, setArrowBtnDisplayKey] = useState({});
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [articleRowWidth, setArticleRowWidth] = useState(0);
 
   // Check if scrolling buttons are needed
   useEffect(() => {
     const container = containerRef?.current;
+    const articleRow = articleRowRef?.current;
 
     const updateArrowBtnDisplay = () => {
-      if (!container) return;
+      if (!container || !articleRow) return;
 
-      const containerWidth = container.offsetWidth;
-      const articleRow = container.querySelector(".article-row");
-      const articleRowWidth = articleRow ? articleRow.offsetWidth : 0;
+      setContainerWidth(container.offsetWidth);
+      setArticleRowWidth(articleRow.offsetWidth);
 
       setArrowBtnDisplayKey({
         showLeft: container.scrollLeft > 0,
@@ -41,17 +45,20 @@ export default function ArticleSection({
     updateArrowBtnDisplay();
 
     // Check each time the window is resized
-    window.addEventListener("resize", updateArrowBtnDisplay);
+    const resizeObserver = new ResizeObserver(updateArrowBtnDisplay);
+    if (container) {
+      resizeObserver.observe(container);
+    }
 
     // Check scroll button display when container scrolls
     container?.addEventListener("scroll", updateArrowBtnDisplay);
 
     return () => {
       // Clean up event listeners
-      window.removeEventListener("resize", updateArrowBtnDisplay);
+      resizeObserver.disconnect();
       container?.removeEventListener("scroll", updateArrowBtnDisplay);
     };
-  }, [articles]);
+  }, [articleRowWidth, containerWidth]);
 
   // Scroll functions
   const scrollArticleList = useCallback((dir) => {
@@ -73,8 +80,11 @@ export default function ArticleSection({
         sectionIdx={sectionIdx}
         articles={articles}
         containerRef={containerRef}
+        articleRowRef={articleRowRef}
         scrollArticleList={scrollArticleList}
         scrollContainerRef={scrollContainerRef}
+        containerWidth={containerWidth}
+        articleRowWidth={articleRowWidth}
       />
 
       {arrowBtnDisplayKey && arrowBtnDisplayKey?.showLeft && (
