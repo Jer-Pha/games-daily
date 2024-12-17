@@ -12,8 +12,31 @@ from games_daily.utils import get_image_dominant_color, get_previous_scrape
 def check_is_image_url(url):
     """Image URL validation."""
     try:
-        response = head(url)
-        return response.headers["Content-Type"].startswith("image/")
+        lower_url = url.lower()
+
+        # Do not allow .gif images
+        if lower_url.endswith(".gif"):
+            return False
+
+        response = head(url, allow_redirects=True)
+        if "Content-Type" in response.headers and response.headers[
+            "Content-Type"
+        ].startswith("image/"):
+            return True
+
+        # If Content-Type is not image, check to see if the url ends in a
+        # common image file extension
+        return lower_url.endswith(
+            (
+                ".jpg",
+                ".jpeg",
+                ".png",
+                ".gif",
+                ".bmp",
+                ".webp",
+            )
+        )
+
     except:
         return False
 
@@ -30,23 +53,42 @@ def build_url(url, domain):
     return url
 
 
-def scrape_article_image(url, selector, headers, domain):
+def scrape_article_image(selector, domain, response):
     """Get a single image URL from an individual article."""
-    response = get(url, headers=headers)
     soup = BeautifulSoup(response.content, "html.parser")
     images = soup.select(selector)
 
     # Loop until an image matches the following criteria
     for img in images:
-        if img.has_attr("data-src"):  # Fix for Indie Games Plus
-            img = build_url(img["data-src"].split("?")[0], domain)
+        if (
+            domain == "thesixthaxis.com" and "[src]" not in selector
+        ):  # Fix for The Sixth Axis banner
+            style_attribute = img.get("style")
+            if style_attribute:
+                start_index = style_attribute.find("url(")
+                if start_index != -1:
+                    start_index += 4
+                    end_index = style_attribute.find(")", start_index)
+                    if end_index != -1:
+                        img = build_url(
+                            style_attribute[start_index:end_index], domain
+                        )
+        elif (
+            domain == "twistedvoxel.com" and "[src]" not in selector
+        ):  # Fix for Twisted Voxel banner
+            image_url = build_url(img["href"].split("?")[0], domain)
+        elif img.has_attr("data-src"):  # Fix for Indie Games Plus
+            image_url = build_url(img["data-src"].split("?")[0], domain)
         else:
-            img = build_url(img["src"].split("?")[0], domain)
+            image_url = build_url(img["src"].split("?")[0], domain)
 
         # Ensure the image source is the correct file type
         # and Kotaku-specific tracking image catch
-        if check_is_image_url(img) and "scorecardresearch" not in img:
-            return img
+        if (
+            check_is_image_url(image_url)
+            and "scorecardresearch" not in image_url
+        ):
+            return image_url
     return ""
 
 
@@ -72,16 +114,15 @@ def get_headline_text(article, selectors):
     return headline
 
 
-def get_image_url(url, headers, site_data):
+def get_image_url(response, site_data):
     """Gets image URL for selected article."""
     image = ""
 
     for selector in site_data["article"]["image_selectors"]:
         image = scrape_article_image(
-            url,
             selector,
-            headers,
             site_data["domain"],
+            response,
         )
         if image:
             break
@@ -90,6 +131,21 @@ def get_image_url(url, headers, site_data):
         image = site_data["fallback_image"]
 
     return image
+
+
+def get_article_content(response, site_data):
+    """Gets author content for selected article."""
+
+    soup = BeautifulSoup(response.content, "html.parser")
+    content = soup.select_one(site_data["article"]["content"])
+
+    if content:
+        content = content.get_text(separator=" ", strip=True)
+    else:
+        print("no content")
+        content = ""
+
+    return content
 
 
 def scrape_headlines(limit, site=None):
@@ -162,8 +218,9 @@ def scrape_headlines(limit, site=None):
                         "url_filter" not in selectors
                         or selectors["url_filter"] in url
                     ) and url not in urls_seen:
+                        article_html = get(url, headers=request_headers)
                         headline = get_headline_text(article, selectors)
-                        image = get_image_url(url, request_headers, site_data)
+                        image = get_image_url(article_html, site_data)
 
                         if url in prev_scrape:
                             if image == prev_scrape[url]["image"]:
@@ -185,12 +242,18 @@ def scrape_headlines(limit, site=None):
                                 }
                             )
                         else:
+                            content = get_article_content(
+                                article_html, site_data
+                            )
                             image_color = get_image_dominant_color(image)
                             new_articles.append(
                                 {
                                     "id": curr_id,
                                     "site": site_name,
                                     "headline": headline,
+                                    "content": (
+                                        content if content else headline
+                                    ),
                                     "url": url,
                                     "image": image,
                                     "color": image_color,

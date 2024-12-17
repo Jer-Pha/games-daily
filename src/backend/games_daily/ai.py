@@ -58,22 +58,26 @@ def clean_article_data(data):
 
 def build_gemini_prompt(articles):
     """Builds the prompt for Gemini based on the dict of articles."""
-    urls = " , ".join([article["url"] for article in articles])
+    article_content = (
+        "```"
+        + "``` , ```".join([article["content"] for article in articles])
+        + "```"
+    )
 
     # Construct the prompt for Gemini
     prompt = f"""
     Please carefully analyze the following articles and provide the requested information:
 
-    Comma-separated article URLs: {urls}
+    Comma-separated article text, each surrounded by triple tics (```): {article_content}
 
     Tasks:
-    1. For each article, please summarize the article in 50-100 words, focusing on the main points and key takeaways. Use engaging language to entice readers to click and learn more. Maintain a neutral, third-person perspective, avoiding first-person pronouns. Summarize the article's main points and key findings factually, avoiding personal opinions or beliefs. Do not use line breaks or bullet points in the summary.
+    1. For each article, please summarize the article in 100-200 words, focusing on the main points and key takeaways. Use engaging language to entice readers to click and learn more. Maintain a neutral, third-person perspective, avoiding first-person pronouns. Summarize the article's main points and key findings factually, avoiding personal opinions or beliefs. Do not use line breaks or bullet points in the summary.
     2. For each article, identify the most prominent proper noun that represents the central theme or focus of the article, also known as the topic. For example, it may be about a specific video game title, or a video game developer, or a video game publisher, or a movie, or an actor, etc. Choose one proper noun that the article is about.
-    3. For each article, take a moment to review the information you provided for tasks 1 and 2. If you believe they are accurate, move on to the next article's URL. If you believe they need work, please repeat all tasks for the current article.
+    3. For each article, take a moment to review the information you provided for tasks 1 and 2. If you believe they are accurate, move on to the next article's text. If you believe they need work, please repeat all tasks for the current article.
     4. Take a breath, don't rush. Accuracy to the prompt is much more important than speed. When you're ready, go ahead and start the next article.
 
     Response:
-    Please return the information in the following structured JSON format, matching your response data with the correct URLs. The only change to the following format that you should make is replacing $YOUR_SUMMARY with your summary and replacing $YOUR_TOPIC with your topic. The matching URL for each article will be directly after the topic in the JSON array. Please note: all four values are strings, including `id`. I have included an example response after the JSON format. Before submitting your response, look over it one last time with fresh eyes and make sure it meets these instructions. You're doing great, thank you!
+    Please return the information in the following structured JSON format, matching your response data with the correct article id. The only change to the following format that you should make is replacing $YOUR_SUMMARY with your summary and replacing $YOUR_TOPIC with your topic. The matching article id for each article will be directly after the topic in the JSON array. Please note: all four values are strings, including `id`. I have included an example response after the JSON format. Before submitting your response, look over it one last time with fresh eyes and make sure it meets these instructions. You're doing great, thank you!
 
     JSON Format:
     [
@@ -84,7 +88,6 @@ def build_gemini_prompt(articles):
             {{
                 `summary`: `$YOUR_SUMMARY`,
                 `topic`: `$YOUR_TOPIC,
-                `url`: `{article['url']}`,
                 `id`: `{article['id']}`
             }}
         """
@@ -96,7 +99,6 @@ def build_gemini_prompt(articles):
         {{
             `summary`: `This article discusses the latest advancements in artificial intelligence, highlighting the potential benefits and challenges. The author discusses several steps being taken by leading companies.`,
             `topic`: `Artificial Intelligence`,
-            `url`: `https://www.example.com/ai-breakthroughs-and-what-they-mean`,
             `id`: `317`
         }}
     ]"""
