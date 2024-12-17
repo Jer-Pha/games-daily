@@ -70,7 +70,7 @@ def scrape_article_image(selector, domain, response):
                     start_index += 4
                     end_index = style_attribute.find(")", start_index)
                     if end_index != -1:
-                        img = build_url(
+                        image_url = build_url(
                             style_attribute[start_index:end_index], domain
                         )
         elif (
