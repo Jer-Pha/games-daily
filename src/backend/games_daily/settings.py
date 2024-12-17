@@ -30,9 +30,13 @@ SITES = {
     "purexbox": "Pure Xbox",
     "pushsquare": "Push Square",
     "rps": "Rock Paper Shotgun",
+    "screenrant": "Screen Rant",
+    "simulationdaily": "Simulation Daily",
     "theescapist": "The Escapist",
     "thegamepost": "The Game Post",
     "thegamer": "TheGamer",
+    "thesixthaxis": "TheSixthAxis",
+    "twistedvoxel": "Twisted Voxel",
     "vg247": "VG247",
     "vgc": "Video Games Chronicle",
 }
