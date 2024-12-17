@@ -35,8 +35,6 @@ SITES = {
     "theescapist": "The Escapist",
     "thegamepost": "The Game Post",
     "thegamer": "TheGamer",
-    "thesixthaxis": "TheSixthAxis",
-    "twistedvoxel": "Twisted Voxel",
     "vg247": "VG247",
     "vgc": "Video Games Chronicle",
 }

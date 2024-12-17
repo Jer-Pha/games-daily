@@ -60,24 +60,7 @@ def scrape_article_image(selector, domain, response):
 
     # Loop until an image matches the following criteria
     for img in images:
-        if (
-            domain == "thesixthaxis.com" and "[src]" not in selector
-        ):  # Fix for The Sixth Axis banner
-            style_attribute = img.get("style")
-            if style_attribute:
-                start_index = style_attribute.find("url(")
-                if start_index != -1:
-                    start_index += 4
-                    end_index = style_attribute.find(")", start_index)
-                    if end_index != -1:
-                        image_url = build_url(
-                            style_attribute[start_index:end_index], domain
-                        )
-        elif (
-            domain == "twistedvoxel.com" and "[src]" not in selector
-        ):  # Fix for Twisted Voxel banner
-            image_url = build_url(img["href"].split("?")[0], domain)
-        elif img.has_attr("data-src"):  # Fix for Indie Games Plus
+        if img.has_attr("data-src"):  # Fix for Indie Games Plus
             image_url = build_url(img["data-src"].split("?")[0], domain)
         else:
             image_url = build_url(img["src"].split("?")[0], domain)
