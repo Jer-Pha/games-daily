@@ -31,7 +31,6 @@ def clean_article_data(data):
     data = data.replace('"summary": "', f"{x}summary{x}: {x}")
     data = data.replace('"topic": "', f"{x}topic{x}: {x}")
     data = data.replace('"id": "', f"{x}id{x}: {x}")
-    data = data.replace('"url": "', f"{x}url{x}: {x}")
     data = sub(
         r'"( *\t*)(,? *\t*\n)',
         lambda m: x + m.group(2).rstrip() + "\n",
