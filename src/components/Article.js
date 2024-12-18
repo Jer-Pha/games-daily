@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { ArticleContext } from "../context/ArticleContext";
 import LazyImage from "./LazyImage";
 import * as Icons from "../utils/Icons";
+import { SITES } from "../utils/Constants";
 
 export default function Article({
   articleIdx,
@@ -58,7 +59,11 @@ export default function Article({
           {article.headline}
         </h3>
       </div>
-      <div className="absolute top-0 left-0 bg-black/55 p-2 text-white tablet:rounded-tl-lg">
+      <div
+        className="absolute top-0 left-0 bg-black/55 p-2 text-white tablet:rounded-tl-lg"
+        aria-label={`Outlet: ${SITES[article.site]}`}
+        title={SITES[article.site]}
+      >
         <SvgIcon key={article.site} className="h-7 tablet:h-5" />
       </div>
     </article>
