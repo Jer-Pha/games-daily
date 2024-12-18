@@ -310,4 +310,4 @@ def get_image_dominant_color(url):
         r, g, b = centroids[dominant_color[0]].astype(int)
         return f"rgb({r},{g},{b})"
     except:
-        return f"rgb(122,122,122)"
+        return "rgb(122,122,122)"
