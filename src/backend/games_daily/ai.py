@@ -169,10 +169,10 @@ def build_article_data(articles, limit):
         while not response:
             try:
                 response = get_gemini_response(_articles)
-            except ResourceExhausted as e:
+            except ResourceExhausted:
                 attempts += 1
                 if attempts >= 10:
-                    print(f"---- Quota hit ----")
+                    print("---- Quota hit ----")
                     break
                 sleep(REQUEST_DELAY)
             except Exception as e:
