@@ -228,15 +228,16 @@ def scrape_headlines(limit, site=None):
                             content = get_article_content(
                                 article_html, site_data
                             )
+                            if not content:
+                                continue
+
                             image_color = get_image_dominant_color(image)
                             new_articles.append(
                                 {
                                     "id": curr_id,
                                     "site": site_name,
                                     "headline": headline,
-                                    "content": (
-                                        content if content else headline
-                                    ),
+                                    "content": content,
                                     "url": url,
                                     "image": image,
                                     "color": image_color,
