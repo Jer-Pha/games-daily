@@ -1,7 +1,8 @@
 import React, { useRef, useEffect, useContext, useCallback } from "react";
 import { ArticleContext } from "../context/ArticleContext";
 import { ModalContext } from "../context/ModalContext";
-import { CloseIcon, QuestionMarkIcon } from "../utils/Icons";
+import { CloseIcon, ExternalLinkIcon, QuestionMarkIcon } from "../utils/Icons";
+import { SITES } from "../utils/Constants";
 
 export default function ArticleDetails({ article }) {
   const { setSelectedArticle } = useContext(ArticleContext);
@@ -62,35 +63,7 @@ export default function ArticleDetails({ article }) {
       <div
         id="article-details"
         ref={detailsRef}
-        className={`fixed
-        flex
-        flex-col
-        overflow-y-auto
-        overflow-x-hidden
-        w-[calc(100%-4px)]
-        tablet:w-56
-        desktop:w-72
-        max-h-[calc(100vh-32px)]
-        left-0
-        tablet:left-[auto]
-        desktop:left-[min(calc(100vw-320px),calc(50vw+700px))]
-        right-0
-        desktop:right-[auto]
-        tablet:top-1/2
-        bottom-0
-        tablet:bottom-[auto]
-        tablet:transform
-        tablet:-translate-y-1/2
-        p-2
-        tablet:p-4
-        tablet:m-4
-        border-[1px]
-        border-[var(--text-color)]
-        tablet:rounded-lg
-        bg-[var(--accent-color)]
-        text-sm
-        z-50
-        `}
+        className={`fixed flex flex-col overflow-y-auto overflow-x-hidden w-[calc(100%-4px)] tablet:w-56 desktop:w-72 max-h-[calc(100vh-84px)] left-0 tablet:left-[auto] desktop:left-[min(calc(100vw-320px),calc(50vw+700px))] right-0 desktop:right-[auto] tablet:top-1/2 bottom-0 tablet:bottom-[auto] tablet:transform tablet:-translate-y-1/2 p-2 tablet:p-4 tablet:m-4 border-[1px] border-[var(--text-color)] tablet:rounded-lg bg-[var(--accent-color)] text-sm z-50`}
       >
         <button
           onClick={handleCloseBtnClick}
@@ -100,18 +73,17 @@ export default function ArticleDetails({ article }) {
         >
           <CloseIcon />
         </button>
-        <h4 className="font-bold text-md tablet:text-lg desktop:text-xl mb-0 m-4">
-          {article.headline}
-        </h4>
-        <a
-          href={article.url}
-          className="underline my-2 tablet:my-4"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Read Article
-        </a>
-        <div className="bg-[var(--primary-color)] p-4 rounded-lg">
+        <div className="flex flex-col gap-1">
+          <h4 className="font-bold text-base tablet:text-lg desktop:text-xl mx-4 mt-4">
+            {article.headline}
+          </h4>
+          <div
+            className="w-[67%] h-[1px] bg-[var(--text-color)] mx-auto opacity-20"
+            aria-hidden="true"
+          />
+          <p className="mb-4 italic">{SITES[article.site]}</p>
+        </div>
+        <div className="flex flex-col gap-2 bg-[var(--primary-color)] p-4 rounded-lg">
           <div className="flex gap-2">
             <p className="text-left font-semibold">Summary</p>
             <button
@@ -122,9 +94,21 @@ export default function ArticleDetails({ article }) {
               <QuestionMarkIcon onClick={handleQuestionMarkClick} />
             </button>
           </div>
-          <p className="text-justify text-sm desktop:text-base">
+          <p className="text-justify text-sm overflow-y-auto">
             {article.summary}
           </p>
+          <a
+            href={article.url}
+            className="underline flex flex-nowrap gap-0.5 align-middle w-fit mx-auto"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit full article external"
+          >
+            Read Article
+            <div className="h-5 w-5" aria-hidden="true">
+              <ExternalLinkIcon />
+            </div>
+          </a>
         </div>
       </div>
       <div
