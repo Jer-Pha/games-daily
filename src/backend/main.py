@@ -23,11 +23,13 @@ if __name__ == "__main__":
         )
         # print(dumps(article_data, indent=4, ensure_ascii=False))
         topic_data = gd_utils.build_topic_data(article_data)
+        # print(dumps(topic_data, indent=4, ensure_ascii=False))
         articles_by_topic = gd_utils.organize_by_topic(
             article_data,
             topic_data,
             ARTICLE_LIMIT,
         )
+        # print(dumps(articles_by_topic, indent=4, ensure_ascii=False))
         articles_by_site = gd_utils.organize_by_site(article_data)
         print(dumps(articles_by_site, indent=4, ensure_ascii=False))
     else:
