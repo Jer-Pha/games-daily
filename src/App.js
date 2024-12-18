@@ -4,6 +4,7 @@ import { ArticleProvider } from "./context/ArticleContext";
 import { ModalProvider } from "./context/ModalContext";
 import ArticleViewContainer from "./components/ArticleViewContainer";
 import Modal from "./components/Modal";
+import Header from "./components/Header";
 
 export default function App() {
   useEffect(() => {
@@ -17,8 +18,11 @@ export default function App() {
   return (
     <ModalProvider>
       <ArticleProvider>
-        <div className="App flex">
-          <main className="w-screen min-h-screen relative">
+        <div className="App flex flex-col">
+          <div className="tablet:hidden">
+            <Header />
+          </div>
+          <main className="w-screen min-h-[calc(100vh-40px)] tablet:min-h-screen relative">
             <ArticleViewContainer />
           </main>
           <Modal />

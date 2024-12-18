@@ -12,6 +12,7 @@ module.exports = {
   ],
   theme: {
     screens: {
+      "sm-phone": { max: "374px" }, // => @media (max-width: 374px) { ... }
       tablet: "550px", // => @media (min-width: 550px) { ... }
       desktop: "1400px", // => @media (min-width: 1280px) { ... }
     },

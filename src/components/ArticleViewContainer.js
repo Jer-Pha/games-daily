@@ -128,7 +128,7 @@ export default function ArticleViewContainer() {
         </div>
         <div
           ref={scrollContainerRef}
-          className="flex flex-col w-full desktop:items-center overflow-x-hidden overflow-y-auto gutter max-h-[calc(100vh-58px)] tablet:max-h-[calc(100vh-42px)] pr-1 tablet:pr-0"
+          className="flex flex-col w-full desktop:items-center overflow-x-hidden overflow-y-auto gutter max-h-[calc(100vh-98px)] tablet:max-h-[calc(100vh-42px)] pr-1 tablet:pr-0"
         >
           <div className="relative">
             {selectedView === "topics" && (
