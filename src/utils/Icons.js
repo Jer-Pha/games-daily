@@ -31,12 +31,16 @@ export { ReactComponent as hardcoregamer } from "../img/svg/sites/hardcoregamer.
 export { ReactComponent as ign } from "../img/svg/sites/ign.svg";
 export { ReactComponent as indiegamesplus } from "../img/svg/sites/indiegamesplus.svg";
 export { ReactComponent as kotaku } from "../img/svg/sites/kotaku.svg";
+export { ReactComponent as mp1st } from "../img/svg/sites/mp1st.svg";
 export { ReactComponent as nintendolife } from "../img/svg/sites/nintendolife.svg";
 export { ReactComponent as pcgamer } from "../img/svg/sites/pcgamer.svg";
 export { ReactComponent as polygon } from "../img/svg/sites/polygon.svg";
 export { ReactComponent as purexbox } from "../img/svg/sites/purexbox.svg";
 export { ReactComponent as pushsquare } from "../img/svg/sites/pushsquare.svg";
 export { ReactComponent as rps } from "../img/svg/sites/rps.svg";
+export { ReactComponent as screenrant } from "../img/svg/sites/screenrant.svg";
+export { ReactComponent as simulationdaily } from "../img/svg/sites/simulationdaily.svg";
+export { ReactComponent as thegamepost } from "../img/svg/sites/thegamepost.svg";
 export { ReactComponent as theescapist } from "../img/svg/sites/theescapist.svg";
 export { ReactComponent as thegamer } from "../img/svg/sites/thegamer.svg";
 export { ReactComponent as vg247 } from "../img/svg/sites/vg247.svg";
