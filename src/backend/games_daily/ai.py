@@ -71,7 +71,7 @@ def build_gemini_prompt(articles):
     {article_content}
 
     Tasks for each article:
-    1. Summarize the article in 100-200 words, focusing on the main points and key takeaways. Use engaging language to entice readers to click and learn more. Maintain a neutral, third-person perspective, avoiding first-person pronouns. Summarize the article's main points and key findings factually, avoiding personal opinions or beliefs. Do not use line breaks or bullet points in the summary.
+    1. Summarize the article in 80-150 words, focusing on the main points and key takeaways. Use engaging language to entice readers to click and learn more. Maintain a neutral, third-person perspective, avoiding first-person pronouns. Summarize the article's main points and key findings factually, avoiding personal opinions or beliefs. Do not use line breaks or bullet points in the summary.
     2. Identify the most prominent proper noun that represents the central theme or focus of the article, also known as the topic. For example, it may be about a specific video game title, or a video game developer, or a video game publisher, or a movie, or an actor, etc. Choose one proper noun that the article is about.
     3. For each article, take a moment to review the information you provided for tasks 1 and 2. If you believe they are accurate, move on to the next article's text. If you believe they need work, please repeat all tasks for the current article.
     4. Take a breath, don't rush. Accuracy to the prompt is much more important than speed. When you're ready, go ahead and start the next article.
@@ -129,7 +129,9 @@ def add_data_to_gemini_response(data, articles):
 
 
 def get_gemini_response(articles):
-    """Sends a list of article URLs to the Gemini API and processes the response."""
+    """Sends a list of article texts to the Gemini API and processes
+    the response.
+    """
     # Build the prompt then send it to the Gemini API
     model = gemini.GenerativeModel(MODEL_NAME)
     prompt = build_gemini_prompt(articles)
@@ -187,9 +189,8 @@ def build_article_data(articles, limit):
 
 
 def get_canonical_topics(topics):
-    """Sends a list of article URLs to the Gemini API and processes the response."""
+    """Sends a list of topics to the Gemini API and processes the response."""
     # Build the prompt then send it to the Gemini API
-    model = gemini.GenerativeModel("gemini-2.0-flash-exp")
     prompt = f"""Please carefully analyze the following gaming/entertainment topics and provide the requested information:
 
         Topics: {topics}
@@ -222,6 +223,7 @@ def get_canonical_topics(topics):
                 ...
             }}
         """
+    model = gemini.GenerativeModel(MODEL_NAME)
     response = model.generate_content(prompt)
 
     # Combine text from all parts (should only be one, this is a failsafe)
