@@ -47,7 +47,9 @@ export default function Article({
       <div>
         <LazyImage
           checkCache={checkCache}
-          src={article.image}
+          src={article["image-412"] || article.image}
+          srcSet={`${article["image-296"]} 296w, ${article["image-412"]} 412w`}
+          sizes="(max-width: 549px) 537px, 296px"
           alt={article.headline}
           className="w-full aspect-video object-cover tablet:max-h-[article-img] z-10 tablet:rounded-lg"
           scrollContainerRef={scrollContainerRef}

@@ -7,6 +7,8 @@ export default function LazyImage({
   color,
   checkCache,
   scrollContainerRef,
+  srcSet,
+  sizes,
 }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const imgRef = useRef(null);
@@ -75,6 +77,8 @@ export default function LazyImage({
       <img
         ref={imgRef}
         src={isLoaded ? src : null}
+        srcSet={isLoaded ? srcSet : null}
+        sizes={sizes}
         alt={alt}
         className={`${className} ${!isLoaded ? "opacity-0" : ""}`}
       />
