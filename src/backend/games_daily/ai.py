@@ -100,6 +100,8 @@ def add_data_to_gemini_response(data, articles):
         article["id"]: {
             "headline": article["headline"],
             "image": article["image"],
+            "image-296": article["image-296"],
+            "image-412": article["image-412"],
             "color": article["color"],
             "site": article["site"],
             "url": article["url"],
@@ -117,6 +119,8 @@ def add_data_to_gemini_response(data, articles):
                 item["url"] = article_dict[id]["url"]
                 item["headline"] = article_dict[id]["headline"]
                 item["image"] = article_dict[id]["image"]
+                item["image-296"] = article_dict[id]["image-296"]
+                item["image-412"] = article_dict[id]["image-412"]
                 item["color"] = article_dict[id]["color"]
                 item["site"] = article_dict[id]["site"]
                 item["weight"] = article_dict[id]["weight"]
