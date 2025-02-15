@@ -5,8 +5,10 @@ from os import path
 from random import randint
 from requests import get, head
 from time import sleep
+from uuid import uuid4
 
 from games_daily.utils import get_image_dominant_color, get_previous_scrape
+from games_daily.images import process_image
 
 
 def check_is_image_url(url):
@@ -204,6 +206,7 @@ def scrape_headlines(limit, site=None):
                         article_html = get(url, headers=request_headers)
                         headline = get_headline_text(article, selectors)
                         image = get_image_url(article_html, site_data)
+                        filename = uuid4().hex
 
                         if url in prev_scrape:
                             if image == prev_scrape[url]["image"]:
@@ -218,6 +221,18 @@ def scrape_headlines(limit, site=None):
                                     "headline": headline,
                                     "url": url,
                                     "image": image,
+                                    "image-296": prev_scrape[url].get(
+                                        "image-296",
+                                        process_image(
+                                            image, f"{filename}-296.webp", 296
+                                        ),
+                                    ),
+                                    "image-412": prev_scrape[url].get(
+                                        "image-412",
+                                        process_image(
+                                            image, f"{filename}-412.webp", 412
+                                        ),
+                                    ),
                                     "color": image_color,
                                     "weight": weight,
                                     "summary": prev_scrape[url]["summary"],
@@ -239,7 +254,12 @@ def scrape_headlines(limit, site=None):
                                     "headline": headline,
                                     "content": content,
                                     "url": url,
-                                    "image": image,
+                                    "image-296": process_image(
+                                        image, f"{filename}-296.webp", 296
+                                    ),
+                                    "image-412": process_image(
+                                        image, f"{filename}-412.webp", 412
+                                    ),
                                     "color": image_color,
                                     "weight": weight,
                                 }
