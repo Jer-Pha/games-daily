@@ -62,4 +62,4 @@ def process_image(image_url, filename, image_width):
     image_data = resize_image(image_url, image_width)
     if image_data:
         return upload_image_to_r2(image_data, filename)
-    return ""
+    return None
