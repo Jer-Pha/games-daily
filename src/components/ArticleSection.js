@@ -15,7 +15,6 @@ export default function ArticleSection({
   backgroundColor,
   scrollContainerRef,
 }) {
-  // console.log("render ArticleSection");
   const containerRef = useRef(null);
   const articleRowRef = useRef(null);
   const [arrowBtnDisplayKey, setArrowBtnDisplayKey] = useState({});

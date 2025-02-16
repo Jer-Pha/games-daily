@@ -67,7 +67,6 @@ export default function Article({
       </div>
       <div
         className="absolute top-0 left-0 bg-black/55 p-2 text-white tablet:rounded-tl-lg"
-        aria-label={`Outlet: ${SITES[article.site]}`}
         title={SITES[article.site]}
       >
         <SvgIcon key={article.site} className="h-7 tablet:h-5" />
