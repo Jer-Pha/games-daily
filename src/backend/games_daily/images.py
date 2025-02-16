@@ -28,28 +28,28 @@ def upload_image_to_r2(image_data, filename):
             filename,
             ExtraArgs={
                 "ContentType": "image/webp",
-                "ACL": "public-read",  # Make the object publicly readable
-            },  # Adjust content type as needed
+                "ACL": "public-read",
+            },
         )
-        return f"{CLOUDFLARE_R2_ENDPOINT}/{CLOUDFLARE_BUCKET}/{filename}"
+        return filename
     except Exception as e:
         print(f"Error uploading to R2: {e}")
         return None
 
 
 def resize_image(image_url, image_width):
-    """Downloads an image, resizes it using Pillow, and returns a BytesIO object."""
+    """Downloads an image, resizes it using Pillow, and returns a
+    BytesIO object.
+    """
     try:
         response = get(image_url, stream=True)
-        response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
+        response.raise_for_status()
         image = Image.open(BytesIO(response.content))
         width, height = image.size
         new_height = int(height * (image_width / width))
         image = image.resize((image_width, new_height))
         image_io = BytesIO()
-        image.convert("RGB").save(
-            image_io, "WEBP", quality=80
-        )  # Adjust quality as needed
+        image.convert("RGB").save(image_io, "WEBP", quality=80)
         image_io.seek(0)
         return image_io
     except Exception as e:
@@ -61,6 +61,5 @@ def process_image(image_url, filename, image_width):
     """Resizes and uploads an image to Cloudflare R2."""
     image_data = resize_image(image_url, image_width)
     if image_data:
-        r2_url = upload_image_to_r2(image_data, filename)
-        return r2_url
-    return image_url
+        return upload_image_to_r2(image_data, filename)
+    return ""
