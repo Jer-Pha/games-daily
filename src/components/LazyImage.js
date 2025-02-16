@@ -17,7 +17,7 @@ export default function LazyImage({
     const options = {
       root: scrollContainerRef.current,
       threshold: 0.01,
-      rootMargin: "80px 20px",
+      rootMargin: "197px 148px",
     };
 
     if (checkCache) {
