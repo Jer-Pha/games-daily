@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import { ArticleContext } from "../context/ArticleContext";
 import LazyImage from "./LazyImage";
 import * as Icons from "../utils/Icons";
@@ -14,6 +14,8 @@ export default function Article({
   const { setSelectedArticle, selectedArticle } = useContext(ArticleContext);
   const SvgIcon = Icons[article.site] || (() => <div></div>);
   const [checkCache, setCheckCache] = useState(false);
+  const touchTimer = useRef(null);
+  const TOUCH_HOLD_DELAY = 350;
 
   const handleClick = () => {
     if (selectedArticle && selectedArticle.id === article.id) {
@@ -36,13 +38,30 @@ export default function Article({
     }
   };
 
+  const handlePointerDown = (event) => {
+    touchTimer.current = setTimeout(() => {
+      event.preventDefault();
+    }, TOUCH_HOLD_DELAY);
+  };
+
+  const handlePointerUp = () => {
+    clearTimeout(touchTimer.current);
+  };
+
+  const handlePointerLeave = () => {
+    clearTimeout(touchTimer.current);
+  };
+
   return (
     <article
       className={`${addClasses} w-[calc(100vw-8px)] tablet:min-w-[article-card] cursor-pointer overflow-hidden border-y-2 border-x-2 border-transparent snap-start snap-always relative z-10 tablet:rounded-lg touch-manipulation`}
       title={article.headline}
-      onClick={handleClick}
       tabIndex="0"
+      onClick={handleClick}
       onKeyDown={handleKeyDown}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerLeave={handlePointerLeave}
     >
       <div>
         <LazyImage
