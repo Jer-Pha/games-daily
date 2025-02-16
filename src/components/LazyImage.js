@@ -81,6 +81,7 @@ export default function LazyImage({
         sizes={sizes}
         alt={alt}
         className={`${className} ${!isLoaded ? "opacity-0" : ""}`}
+        loading="eager"
       />
       <div
         className="absolute left-0 top-0 w-full h-full -z-10 tablet:rounded-lg shimmer"

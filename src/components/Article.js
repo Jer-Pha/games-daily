@@ -67,8 +67,8 @@ export default function Article({
         <LazyImage
           checkCache={checkCache}
           src={
-            article["image-412"]
-              ? `/media/${article["image-412"]}`
+            article["image-296"]
+              ? `/media/${article["image-296"]}`
               : article.image
           }
           srcSet={`/media/${article["image-296"]} 296w, /media/${article["image-412"]} 412w`}
