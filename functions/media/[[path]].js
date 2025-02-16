@@ -11,6 +11,7 @@ export async function onRequestGet(context) {
     const headers = new Headers();
     object.writeHttpMetadata(headers);
     headers.set("etag", object.httpEtag);
+    headers.set("Cache-Control", "public, max-age=604800");
 
     return new Response(object.body, {
       headers,
