@@ -214,6 +214,20 @@ def scrape_headlines(limit, site=None):
                             else:
                                 image_color = get_image_dominant_color(image)
 
+                            if prev_scrape[url].get("image-296", None):
+                                image296 = prev_scrape[url]["image-296"]
+                            else:
+                                image296 = process_image(
+                                    image, f"{filename}-296.webp", 296
+                                )
+
+                            if prev_scrape[url].get("image-412", None):
+                                image412 = prev_scrape[url]["image-412"]
+                            else:
+                                image412 = process_image(
+                                    image, f"{filename}-412.webp", 412
+                                )
+
                             existing_articles.append(
                                 {
                                     "id": curr_id,
@@ -221,18 +235,8 @@ def scrape_headlines(limit, site=None):
                                     "headline": headline,
                                     "url": url,
                                     "image": image,
-                                    "image-296": prev_scrape[url].get(
-                                        "image-296",
-                                        process_image(
-                                            image, f"{filename}-296.webp", 296
-                                        ),
-                                    ),
-                                    "image-412": prev_scrape[url].get(
-                                        "image-412",
-                                        process_image(
-                                            image, f"{filename}-412.webp", 412
-                                        ),
-                                    ),
+                                    "image-296": image296,
+                                    "image-412": image412,
                                     "color": image_color,
                                     "weight": weight,
                                     "summary": prev_scrape[url]["summary"],

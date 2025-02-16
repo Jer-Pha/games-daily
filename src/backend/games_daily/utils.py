@@ -98,88 +98,6 @@ def build_topic_data(article_data):
     return data
 
 
-# def build_topic_data(article_data):
-#     """Identifies topics with the most total weight, combining
-#     substrings and returning a list of dictionaries.
-#     """
-#     topics_data = defaultdict(lambda: {"weight": 0, "count": 0})
-#     convert_topics = {}
-#     topics_seen = set()
-
-#     for article in article_data:
-#         # Check if the topic has already been converted
-#         # Use while loop to check for multiple conversions
-#         while article["topic"] in convert_topics:
-#             article["topic"] = convert_topics[article["topic"]]
-
-#         topic = article["topic"]
-
-#         # Remove surrounding quotes that Gemini sometimes adds
-#         if (topic[0] == "'" and topic[-1] == "'") or (
-#             topic[0] == '"' and topic[-1] == '"'
-#         ):
-#             topic = topic[1:-1]
-
-#         if topic not in topics_seen:
-#             # Find potential substring matches
-#             for existing_topic in topics_seen:
-#                 if topic.startswith(existing_topic):
-#                     topic = existing_topic  # Use the shorter string as key
-#                     article["topic"] = existing_topic
-#                     break
-#                 elif existing_topic.startswith(topic):
-#                     # Move data to shorter key and remove longer key
-#                     topics_data[topic]["weight"] += topics_data[
-#                         existing_topic
-#                     ]["weight"]
-#                     topics_data[topic]["count"] += topics_data[existing_topic][
-#                         "count"
-#                     ]
-#                     del topics_data[existing_topic]
-#                     # Remove the longer topic from topics_seen
-#                     topics_seen.remove(existing_topic)
-
-#                     # Track conversions
-#                     convert_topics[existing_topic] = topic
-#                     break
-
-#             topics_seen.add(topic)
-
-#         if "weight" not in article:
-#             print("###########################")
-#             print(dumps(article, indent=4))
-#             print("###########################")
-
-#         # Update topic data
-#         topics_data[topic]["weight"] += article["weight"]
-#         topics_data[topic]["count"] += 1
-
-#     # Check for converted topics in all articles
-#     for article in article_data:
-#         # Use while loop to check for multiple conversions
-#         while article["topic"] in convert_topics:
-#             article["topic"] = convert_topics[article["topic"]]
-
-#     # Sort topics and create list of dictionaries
-#     sorted_topics = sorted(
-#         topics_data.items(),
-#         key=lambda item: (item[1]["count"], item[1]["weight"]),
-#         reverse=True,
-#     )
-
-#     # Transform into list of dictionaries
-#     data = [
-#         {
-#             "topic": topic,
-#             "count": details["count"],
-#             "weight": details["weight"],
-#         }
-#         for topic, details in sorted_topics
-#     ]
-
-#     return data
-
-
 def organize_by_topic(articles, topics, limit):
     """Organizes article and topic data into the desired JSON structure."""
     data = {
@@ -250,7 +168,7 @@ def organize_by_site(articles):
 
 
 def get_previous_scrape():
-    """Returns a dictionary of articles from thelast scrape,
+    """Returns a dictionary of articles from the last scrape,
     transformed into the desired format."""
     response = get("https://www.kfdb.app/api/news/articles-by-topic").json()
 
@@ -259,6 +177,8 @@ def get_previous_scrape():
             "summary": article["summary"],
             "topic": article["topic"],
             "image": article["image"],
+            "image-296": article.get("image-296", None),
+            "image-412": article.get("image-412", None),
             "color": article["color"],
         }
         for article in response["trending"]
