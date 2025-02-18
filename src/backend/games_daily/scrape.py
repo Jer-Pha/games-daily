@@ -258,6 +258,7 @@ def scrape_headlines(limit, site=None):
                                     "headline": headline,
                                     "content": content,
                                     "url": url,
+                                    "image": image,
                                     "image-296": process_image(
                                         image, f"{filename}-296.webp", 296
                                     ),
