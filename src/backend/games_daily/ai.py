@@ -12,8 +12,6 @@ from .settings import SITES
 API_KEY = config("API_KEY")
 gemini.configure(api_key=API_KEY)
 MODEL_NAME, REQUEST_DELAY = "gemini-2.0-flash-exp", 4
-# MODEL_NAME, REQUEST_DELAY = "gemini-1.5-pro", 30
-# MODEL_NAME, REQUEST_DELAY = "gemini-1.5-flash", 4
 
 if not API_KEY:
     raise ValueError("Environment variable 'API_KEY' not found.")
@@ -168,13 +166,13 @@ def build_article_data(articles, limit):
 
     # Send URLs to Gemini
     for i in range(ceil(len(articles) / limit)):
-        _articles = articles[i * limit : (i + 1) * limit]
+        article_batch = articles[i * limit : (i + 1) * limit]
 
         response = None
         attempts = 0
         while not response:
             try:
-                response = get_gemini_response(_articles)
+                response = get_gemini_response(article_batch)
             except ResourceExhausted:
                 attempts += 1
                 if attempts >= 10:
