@@ -11,7 +11,7 @@ from .settings import SITES
 
 API_KEY = config("API_KEY")
 gemini.configure(api_key=API_KEY)
-MODEL_NAME, REQUEST_DELAY = "gemini-2.0-flash-exp", 4
+MODEL_NAME, REQUEST_DELAY = "gemini-2.5-flash-preview-05-20", 6
 
 if not API_KEY:
     raise ValueError("Environment variable 'API_KEY' not found.")
