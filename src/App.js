@@ -5,6 +5,7 @@ import { ModalProvider } from "./context/ModalContext";
 import ArticleViewContainer from "./components/ArticleViewContainer";
 import Modal from "./components/Modal";
 import Header from "./components/Header";
+import AnnouncementBanner from "./components/AnnouncementBanner";
 
 export default function App() {
   useEffect(() => {
@@ -18,6 +19,7 @@ export default function App() {
   return (
     <ModalProvider>
       <ArticleProvider>
+        <AnnouncementBanner />
         <div className="App flex flex-col">
           <div className="tablet:hidden">
             <Header />
