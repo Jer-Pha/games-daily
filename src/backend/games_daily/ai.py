@@ -1,17 +1,18 @@
-from decouple import config
 from json import loads
 from math import ceil
 from re import sub
 from time import sleep
 
 import google.generativeai as gemini
+from decouple import config
 from google.api_core.exceptions import ResourceExhausted
 
 from .settings import SITES
 
 API_KEY = config("API_KEY")
 gemini.configure(api_key=API_KEY)
-MODEL_NAME, REQUEST_DELAY = "gemini-2.5-flash-preview-05-20", 6
+MODEL_NAME, REQUEST_DELAY = "gemma-3-27b-it", 2
+# https://ai.google.dev/gemini-api/docs/models
 
 if not API_KEY:
     raise ValueError("Environment variable 'API_KEY' not found.")
@@ -162,7 +163,7 @@ def build_article_data(articles, limit):
     """This function passes all articles to Gemini and builds a dictionary"""
     data = []
 
-    print(f"Total articles for Gemini: {len(articles)}")
+    print(f"Total articles for {MODEL_NAME}: {len(articles)}")
 
     # Send URLs to Gemini
     for i in range(ceil(len(articles) / limit)):
