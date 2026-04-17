@@ -1,14 +1,14 @@
-from bs4 import BeautifulSoup
 from html import unescape
 from json import load
 from os import path
 from random import randint
-from requests import get, head
 from time import sleep
 from uuid import uuid4
 
-from games_daily.utils import get_image_dominant_color, get_previous_scrape
+from bs4 import BeautifulSoup
 from games_daily.images import process_image
+from games_daily.utils import get_image_dominant_color, get_previous_scrape
+from requests import get, head
 
 
 def check_is_image_url(url):
@@ -57,7 +57,7 @@ def build_url(url, domain):
 
 def scrape_article_image(selector, domain, response):
     """Get a single image URL from an individual article."""
-    soup = BeautifulSoup(response.content, "html.parser")
+    soup = BeautifulSoup(response.content, "lxml")
     images = soup.select(selector)
 
     # Loop until an image matches the following criteria
@@ -121,7 +121,7 @@ def get_image_url(response, site_data):
 def get_article_content(response, site_data):
     """Gets author content for selected article."""
 
-    soup = BeautifulSoup(response.content, "html.parser")
+    soup = BeautifulSoup(response.content, "lxml")
     content = soup.select_one(site_data["article"]["content"])
 
     if content:
@@ -176,7 +176,7 @@ def scrape_headlines(limit, site=None):
                 else ""
             )
             response = get(url, headers=request_headers)
-            soup = BeautifulSoup(response.content, "html.parser")
+            soup = BeautifulSoup(response.content, "lxml")
             section = soup.select_one(selectors["section"])
 
             if section:
