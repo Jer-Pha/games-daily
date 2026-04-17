@@ -168,7 +168,9 @@ def scrape_headlines(limit, site=None):
             elif article_count:
                 # Rate limit for multiple scrapes on the same domain
                 sleep(randint(1, 3))
-            url = "https://" + site_data["domain"]
+
+            domain = site_data["domain"]
+            url = "https://" + domain
             request_headers["Referer"] = url
             url += (
                 selectors["subdirectory"]
@@ -192,12 +194,11 @@ def scrape_headlines(limit, site=None):
 
                     if (
                         article_url[:4] == "http"
-                        and site_data["domain"]
-                        not in article_url.split("?")[0]
+                        and domain not in article_url.split("?")[0]
                     ):  # Don't use external URLs
                         continue
 
-                    url = build_url(article_url, site_data["domain"])
+                    url = build_url(article_url, domain)
 
                     if (
                         "url_filter" not in selectors
@@ -218,14 +219,20 @@ def scrape_headlines(limit, site=None):
                                 image296 = prev_scrape[url]["image-296"]
                             else:
                                 image296 = process_image(
-                                    image, f"{filename}-296.webp", 296
+                                    image,
+                                    f"{filename}-296.webp",
+                                    296,
+                                    source_domain=domain,
                                 )
 
                             if prev_scrape[url].get("image-412", None):
                                 image412 = prev_scrape[url]["image-412"]
                             else:
                                 image412 = process_image(
-                                    image, f"{filename}-412.webp", 412
+                                    image,
+                                    f"{filename}-412.webp",
+                                    412,
+                                    source_domain=domain,
                                 )
 
                             existing_articles.append(
@@ -260,10 +267,16 @@ def scrape_headlines(limit, site=None):
                                     "url": url,
                                     "image": image,
                                     "image-296": process_image(
-                                        image, f"{filename}-296.webp", 296
+                                        image,
+                                        f"{filename}-296.webp",
+                                        296,
+                                        source_domain=domain,
                                     ),
                                     "image-412": process_image(
-                                        image, f"{filename}-412.webp", 412
+                                        image,
+                                        f"{filename}-412.webp",
+                                        412,
+                                        source_domain=domain,
                                     ),
                                     "color": image_color,
                                     "weight": weight,

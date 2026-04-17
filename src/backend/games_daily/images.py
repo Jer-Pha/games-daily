@@ -1,8 +1,10 @@
-from boto3 import client
-from requests import get
 from io import BytesIO
-from PIL import Image
+from urllib.parse import urlparse
+
+from boto3 import client
 from decouple import config
+from PIL import Image
+from requests import get
 
 # Cloudflare R2 configuration
 CLOUDFLARE_ACCESS_KEY = config("CLOUDFLARE_ACCESS_KEY")
@@ -37,12 +39,24 @@ def upload_image_to_r2(image_data, filename):
         return None
 
 
-def resize_image(image_url, image_width):
+def resize_image(image_url, image_width, source_domain=None):
     """Downloads an image, resizes it using Pillow, and returns a
     BytesIO object.
     """
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    }
+
+    # Dynamically set the Referer
+    if source_domain:
+        headers["Referer"] = f"https://{source_domain}/"
+    else:
+        parsed_uri = urlparse(image_url)
+        headers["Referer"] = f"{parsed_uri.scheme}://{parsed_uri.netloc}/"
+
     try:
-        response = get(image_url, stream=True)
+        response = get(image_url, headers=headers, stream=True, timeout=10)
         response.raise_for_status()
         image = Image.open(BytesIO(response.content))
         width, height = image.size
@@ -57,9 +71,9 @@ def resize_image(image_url, image_width):
         return None
 
 
-def process_image(image_url, filename, image_width):
+def process_image(image_url, filename, image_width, source_domain=None):
     """Resizes and uploads an image to Cloudflare R2."""
-    image_data = resize_image(image_url, image_width)
+    image_data = resize_image(image_url, image_width, source_domain)
     if image_data:
         return upload_image_to_r2(image_data, filename)
     return None
