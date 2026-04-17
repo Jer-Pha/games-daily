@@ -39,7 +39,7 @@ def check_is_image_url(url):
             )
         )
 
-    except:
+    except Exception:
         return False
 
 
