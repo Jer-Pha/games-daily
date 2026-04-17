@@ -181,6 +181,16 @@ def scrape_headlines(limit, site=None):
             soup = BeautifulSoup(response.content, "lxml")
             section = soup.select_one(selectors["section"])
 
+            try:
+                response = get(url, headers=request_headers, timeout=20)
+                response.raise_for_status()
+
+                soup = BeautifulSoup(response.content, "lxml")
+                section = soup.select_one(selectors["section"])
+            except Exception as e:
+                print(f"      Skipping {url} due to error: {e}")
+                continue
+
             if section:
                 for article in section.select(selectors["article"]):
                     if article_count >= limit:
