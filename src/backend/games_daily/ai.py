@@ -11,7 +11,7 @@ from .settings import SITES
 
 API_KEY = config("API_KEY")
 gemini.configure(api_key=API_KEY)
-MODEL_NAME, REQUEST_DELAY = "gemma-4-31b-it", 5
+MODEL_NAME, REQUEST_DELAY = "gemma-4-31b-it", 4
 # https://ai.google.dev/gemini-api/docs/models
 
 if not API_KEY:
