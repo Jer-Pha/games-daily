@@ -136,7 +136,10 @@ def get_gemini_response(articles):
     the response.
     """
     # Build the prompt then send it to the Gemini API
-    model = gemini.GenerativeModel(MODEL_NAME)
+    model = gemini.GenerativeModel(
+        MODEL_NAME,
+        generation_config={"response_mime_type": "application/json"},
+    )
     prompt = build_gemini_prompt(articles)
     response = model.generate_content(prompt)
 
@@ -145,6 +148,7 @@ def get_gemini_response(articles):
         [part.text for part in response.candidates[0].content.parts]
     )
 
+    # It should already be clean JSON from `response_mime_type (failsafe)`
     data = clean_article_data(data)
 
     try:
@@ -226,7 +230,10 @@ def get_canonical_topics(topics):
                 ...
             }}
         """
-    model = gemini.GenerativeModel(MODEL_NAME)
+    model = gemini.GenerativeModel(
+        MODEL_NAME,
+        generation_config={"response_mime_type": "application/json"},
+    )
     response = model.generate_content(prompt)
 
     # Combine text from all parts (should only be one, this is a failsafe)
@@ -239,8 +246,8 @@ def get_canonical_topics(topics):
 
     try:
         data = loads(data)
-    except:
-        print("JSON Decode Error\n\n")
+    except Exception as e:
+        print(f"JSON Decode Error\n\n```{e}```\n\n")
         return {}
 
     return data
